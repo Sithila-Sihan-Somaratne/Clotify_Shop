@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane fx:id="LogInPane" prefHeight="900.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
+   <ImageView fx:id="bgView" fitHeight="900.0" fitWidth="1080.0" layoutY="-1.0">
+      <Image url="@../img/bg-img.jpg" />
+   </ImageView>
+   <Pane layoutX="300.0" layoutY="96.0" prefHeight="537.0" prefWidth="480.0" style="-fx-border-radius: 20px; -fx-background-color: rgba(255, 252, 252, 0.72);" />
+</AnchorPane>
