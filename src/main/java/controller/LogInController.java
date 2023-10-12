@@ -1,21 +1,16 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
+
 
 public class LogInController {
     @FXML
-    private ImageView bgView;
-
-    @FXML
-    private AnchorPane LogInPane;
+    private StackPane PaneContainer;
 
     @FXML
     void initialize() {
-        LogInPane.widthProperty().addListener(observable -> {
-            bgView.setFitWidth(LogInPane.getWidth());
-            bgView.setFitHeight(LogInPane.getHeight());
-        });
+        PaneContainer.setAlignment(Pos.CENTER);
     }
 }

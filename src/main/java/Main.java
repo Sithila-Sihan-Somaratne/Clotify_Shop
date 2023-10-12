@@ -16,7 +16,6 @@ public class Main extends Application {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("view/LogInWindow.fxml")))));
         } catch (Exception ignored) {}
         stage.show();
-        stage.setMaximized(true);
         stage.setResizable(false);
     }
 }
