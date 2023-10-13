@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
    <ImageView fitHeight="801.0" fitWidth="980.0" layoutY="-1.0">
       <Image url="@../img/bg-img.jpg" />
    </ImageView>
-   <StackPane fx:id="PaneContainer" layoutX="250.0" layoutY="132.0" opacity="0.7" prefHeight="537.0" prefWidth="480.0" style="-fx-background-color: white; -fx-alignment: CENTER; -fx-border-radius: 20px;" />
+   <StackPane fx:id="PaneContainer" layoutX="250.0" layoutY="138.0" prefHeight="537.0" prefWidth="480.0" style="-fx-background-color: white; -fx-border-radius: 20px;">
+      <ImageView translateY="-170.0">
+         <Image url="@../img/User-img.png" />
+      </ImageView>
+      <Label ellipsisString="" prefHeight="17.0" prefWidth="74.0" text="Username* :" translateX="-152.0" translateY="-100.0" />
+      <JFXTextField fx:id="txtUserName" maxHeight="20.0" maxWidth="400.0" promptText="Enter Username" translateX="10.0" translateY="-80.0" />
+      <Label ellipsisString="" prefHeight="17.0" prefWidth="74.0" text="Password* :" translateX="-152.0" translateY="-40.0" />
+      <JFXPasswordField fx:id="txtPassword" maxHeight="20.0" maxWidth="400.0" promptText="Enter password" translateX="10.0" translateY="-20.0" />
+      <Hyperlink onAction="#forgotPwd" prefHeight="23.0" prefWidth="180.0" style="-fx-text-fill: blue; -fx-font-weight: 800; -fx-underline: false;" text="Did you forgot the password?" translateX="-102.0" translateY="50.0" />
+      <JFXCheckBox fx:id="showPwdCheckBox" onAction="#showPwd" text="Show password" translateX="140.0" translateY="50.0" />
+      <JFXButton onAction="#SignIn" prefHeight="49.0" prefWidth="94.0" style="-fx-background-color: #e12e2e;" text="Sign In" textFill="WHITE" translateX="-142.0" translateY="150.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton onAction="#LogIn" prefHeight="49.0" prefWidth="94.0" style="-fx-background-color: #38af52;" text="Log In" textFill="WHITE" translateX="140.0" translateY="150.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+   </StackPane>
 </AnchorPane>
