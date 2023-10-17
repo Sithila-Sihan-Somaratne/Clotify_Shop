@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
+<AnchorPane fx:id="ForgotPane" maxHeight="518.0" maxWidth="465.0" prefHeight="518.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ForgotPwdWindow">
+    <Label layoutX="12.0" layoutY="54.0" prefHeight="31.0" prefWidth="395.0" text="If you forgot your password, then click the “Send OTP” button,">
+        <font>
+          <Font name="System Bold" size="12.0" />
+        </font>
+    </Label>
+    <Label layoutX="9.0" layoutY="77.0" text=" and enter the pin you received on your email and write it near the “OK” button">
+        <font>
+          <Font name="System Bold" size="12.0" />
+        </font>
+    </Label>
+    <Label layoutX="9.0" layoutY="94.0" text=" and after that, you can change your password.">
+        <font>
+          <Font name="System Bold" size="12.0" />
+        </font>
+    </Label>
+   <JFXButton layoutX="14.0" layoutY="134.0" onAction="#sendOTP" prefHeight="41.0" prefWidth="93.0" style="-fx-background-color: #0288D1;" text="Send OTP" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </JFXButton>
+   <JFXTextField fx:id="otpText" layoutX="14.0" layoutY="198.0" prefHeight="25.0" prefWidth="40.0" promptText=" * * * * " />
+   <JFXButton layoutX="76.0" layoutY="190.0" onAction="#btnOkOnClick" prefHeight="41.0" prefWidth="93.0" style="-fx-background-color: #0288D1;" text="OK" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </JFXButton>
+   <Label layoutX="60.0" layoutY="316.0" text="New Password* :">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <Label layoutX="59.0" layoutY="348.0" prefHeight="17.0" prefWidth="128.0" text="Confirm Password* :">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+   <JFXPasswordField fx:id="newPwdTxt" layoutX="233.0" layoutY="312.0" prefHeight="25.0" prefWidth="144.0" promptText="Enter new password" />
+   <JFXPasswordField fx:id="ConfirmNewPwdTxt" layoutX="233.0" layoutY="344.0" prefHeight="25.0" prefWidth="144.0" promptText="Enter new password again" />
+   <JFXCheckBox fx:id="showPwdCheckBox" layoutX="236.0" layoutY="385.0" onAction="#showBothPwd" text="Show password" />
+   <JFXButton fx:id="savePwdBtn" layoutX="314.0" layoutY="437.0" onAction="#savePwd" prefHeight="41.0" prefWidth="93.0" style="-fx-background-color: #0288D1;" text="Save" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </JFXButton>
 </AnchorPane>
