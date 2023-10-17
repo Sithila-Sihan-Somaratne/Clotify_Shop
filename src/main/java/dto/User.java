@@ -14,10 +14,12 @@ import javax.persistence.Id;
 public class User {
     @Id
     @Column(name = "name")
-    private String name;
-    private String email;
-    private String password;
-    private String type;
+    public String name;
+    public String email;
+    public String password;
+    public String type;
+
+    public User(){}
 
     @Override
     public String toString() {
