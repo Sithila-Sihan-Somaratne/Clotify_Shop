@@ -1,15 +1,13 @@
 package dto;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 public class User {
     @Id
     @Column(name = "name")
@@ -18,6 +16,15 @@ public class User {
     public String email;
     public String password;
     public String type;
+
+    public User(String name, String email, String password, String type) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+    }
+
+    public User() {}
 
     @Override
     public String toString() {

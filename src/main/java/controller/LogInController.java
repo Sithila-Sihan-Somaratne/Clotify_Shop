@@ -35,42 +35,48 @@ public class LogInController {
 
     @FXML
     public void LogIn(ActionEvent ignored) {
-        try{
-            if (!Objects.equals(txtUserName.getText(), "") && (!Objects.equals(txtVisiblePassword.getText(), ""))){
-                String name = txtUserName.getText();
-                Session session = HibernateUtil.getSession();
-                User user = session.find(User.class, name);
-                String encryptPwd = user.getPassword();
-                session.close();
-                String pwd = txtVisiblePassword.getText();
-                String user_type = user.getType();
-                boolean samePwd = checkPwd(encryptPwd,pwd);
-                if(Objects.equals(user.getName(), name) && samePwd){
-                    Stage stg = (Stage) dashboardPane.getScene().getWindow();
-                    stg.close();
-                    Stage stage = new Stage();
-                    if (Objects.equals(user_type, "Admin")){
-                        stage.setTitle("Home Window (Admin)");
-                        try {
-                            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
-                        } catch (Exception ignoreExceptiton) {}
+        String pass = txtPassword.getText();
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}";
+        if (!pass.matches(pattern)){
+            new Alert(Alert.AlertType.WARNING,"Password must contain a capital letter, numbers and a symbol. And it should be between 8 and 20 characters.").show();
+        }else{
+            try{
+                if (!Objects.equals(txtUserName.getText(), "") && (!Objects.equals(txtVisiblePassword.getText(), ""))){
+                    String name = txtUserName.getText();
+                    Session session = HibernateUtil.getSession();
+                    User user = session.find(User.class, name);
+                    String encryptPwd = user.getPassword();
+                    session.close();
+                    String pwd = txtVisiblePassword.getText();
+                    String user_type = user.getType();
+                    boolean samePwd = checkPwd(encryptPwd,pwd);
+                    if(Objects.equals(user.getName(), name) && samePwd){
+                        Stage stg = (Stage) dashboardPane.getScene().getWindow();
+                        stg.close();
+                        Stage stage = new Stage();
+                        if (Objects.equals(user_type, "Admin")){
+                            stage.setTitle("Home Window (Admin)");
+                            try {
+                                stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
+                            } catch (Exception ignoreExceptiton) {}
 
+                        }else{
+                            stage.setTitle("Home Window (Default)");
+                            try {
+                                stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
+                            } catch (Exception ignoreExceptiton) {}
+                        }
+                        stage.show();
+                        stage.setResizable(false);
                     }else{
-                        stage.setTitle("Home Window (Default)");
-                        try {
-                            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
-                        } catch (Exception ignoreExceptiton) {}
+                        new Alert(Alert.AlertType.WARNING,"Password is unknown. Please try again!").show();
                     }
-                    stage.show();
-                    stage.setResizable(false);
                 }else{
-                    new Alert(Alert.AlertType.WARNING,"Password is unknown. Please try again!").show();
+                    new Alert(Alert.AlertType.WARNING,"Don't leave blank text fields please!").show();
                 }
-            }else{
-                new Alert(Alert.AlertType.WARNING,"Don't leave blank text fields please!").show();
+            }catch(Exception ex){
+                new Alert(Alert.AlertType.WARNING,"Username is unknown. Please try again!").show();
             }
-        }catch(Exception ex){
-            new Alert(Alert.AlertType.WARNING,"Username is unknown. Please try again!").show();
         }
     }
 
@@ -94,13 +100,13 @@ public class LogInController {
 
     @FXML
     public void SignIn(ActionEvent ignored) {
-        Stage stage = new Stage();
-        stage.setTitle("Sign In Window.");
+        Stage stage = (Stage) PaneContainer.getScene().getWindow();
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/SignInWindow.fxml")))));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        stage.setTitle("Sign In Window.");
         stage.show();
         stage.setResizable(false);
     }
