@@ -13,8 +13,10 @@ public class Main extends Application {
     public void start(Stage stage) {
         stage.setTitle("Log In Window");
         try {
-            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("view/LogInWindow.fxml")))));
-        } catch (Exception ignored) {}
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LogInWindow.fxml")))));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         stage.show();
         stage.setResizable(false);
     }

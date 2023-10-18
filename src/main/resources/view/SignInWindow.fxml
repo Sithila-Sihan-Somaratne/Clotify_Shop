@@ -22,7 +22,7 @@
          </font>
       </Label>
       <Label layoutX="64.0" layoutY="134.0" text="Admin username*: " />
-      <JFXTextField fx:id="adminEmailtxt" layoutX="240.0" layoutY="130.0" prefHeight="25.0" prefWidth="175.0" promptText="admin@gmail.com" />
+      <JFXTextField fx:id="adminEmailtxt" layoutX="240.0" layoutY="130.0" prefHeight="25.0" prefWidth="175.0" promptText="Enter username" />
       <Label layoutX="64.0" layoutY="164.0" text="Admin password*: " />
       <JFXCheckBox fx:id="showPwdCheckBox1" layoutX="213.0" layoutY="202.0" onAction="#showAdminPwd" text="Show Password" />
       <JFXButton layoutX="370.0" layoutY="197.0" onAction="#CheckAdmin" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #38af52;" text="Check" textFill="WHITE">
@@ -30,10 +30,12 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </JFXButton>
-      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="326.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="64.0" layoutY="241.0" prefHeight="17.0" prefWidth="40.0" text="OTP*: " />
-      <JFXTextField fx:id="OTPtxt" layoutX="114.0" layoutY="237.0" prefHeight="25.0" prefWidth="33.0" promptText="* * * *" />
-      <JFXButton layoutX="178.0" layoutY="232.0" onAction="#SendOTP" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #0288D1;" text="Send" textFill="WHITE">
+      <ImageView fx:id="imageCheck" fitHeight="25.0" fitWidth="25.0" layoutX="330.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../img/blank.png" />
+      </ImageView>
+      <Label layoutX="155.0" layoutY="241.0" prefHeight="17.0" prefWidth="40.0" text="OTP*: " />
+      <JFXTextField fx:id="OTPtxt" layoutX="205.0" layoutY="237.0" prefHeight="25.0" prefWidth="33.0" promptText="* * * *" />
+      <JFXButton fx:id="sendOTPbtn" layoutX="65.0" layoutY="232.0" onAction="#SendOTP" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #0288D1;" text="Send" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -50,7 +52,7 @@
       <Label layoutX="65.0" layoutY="413.0" text="Confirm password*: " />
       <JFXPasswordField fx:id="newConfirmPwdtxt" layoutX="241.0" layoutY="409.0" prefHeight="25.0" prefWidth="175.0" promptText="Enter password again" />
       <JFXCheckBox fx:id="showPwdCheckBox2" layoutX="213.0" layoutY="444.0" onAction="#showNewPwds" text="Show Password" />
-      <JFXButton layoutX="370.0" layoutY="474.0" onAction="#SignIn" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #e12e2e;" text="Sign in" textFill="WHITE">
+      <JFXButton fx:id="signInBtn" layoutX="370.0" layoutY="474.0" onAction="#SignIn" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #e12e2e;" text="Sign in" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

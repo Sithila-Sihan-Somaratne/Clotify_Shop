@@ -88,6 +88,7 @@ public class LogInController {
         } catch (NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.WARNING,"Oops! Something went wrong!").show();
         }
+        System.out.println(Objects.equals(encryptPwd, encryptedpassword));
         return Objects.equals(encryptPwd, encryptedpassword);
     }
 

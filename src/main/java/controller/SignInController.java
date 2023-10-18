@@ -1,15 +1,22 @@
 package controller;
 
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
+import dto.User;
+import email.Email;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.hibernate.Session;
+import util.HibernateUtil;
 
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SignInController {
@@ -42,6 +49,12 @@ public class SignInController {
 
     public JFXComboBox<String> userComboBox;
 
+    public ImageView imageCheck;
+
+    public JFXButton sendOTPbtn;
+
+    public JFXButton signInBtn;
+
     public JFXTextField showAdminpwd = new JFXTextField();
 
     public JFXTextField showNewPwd = new JFXTextField();
@@ -55,7 +68,53 @@ public class SignInController {
 
     @FXML
     void CheckAdmin(ActionEvent event) {
+        try{
+            String name = adminEmailtxt.getText();
+            String pwd = adminPwdtxt.getText();
+            Session session = HibernateUtil.getSession();
+            User user = session.find(User.class, name);
+            session.close();
+            if (user!=null){
+                if (Objects.equals(name, user.getName()) && checkPwd(user.getPassword(), pwd)){
+                    Email.user = user;
+                    if ((Objects.equals(user.getType(), "Admin"))){
+                        URL url = getClass().getResource("/img/tick_icon.png");
+                        Image image = new Image(Objects.requireNonNull(url).toExternalForm());
+                        imageCheck.setImage(image);
+                        sendOTPbtn.setDisable(false);
+                    }else{
+                        new Alert(Alert.AlertType.WARNING,"User isn't Admin. Please enter another user!").show();
+                        URL url = getClass().getResource("/img/cross_icon.png");
+                        Image image = new Image(Objects.requireNonNull(url).toExternalForm());
+                        imageCheck.setImage(image);
+                        sendOTPbtn.setDisable(true);
+                    }
+                }else{
+                    new Alert(Alert.AlertType.WARNING,"Username or password is wrong. Please try again!").show();
+                }
+            }else{
+                new Alert(Alert.AlertType.WARNING,"Enter the right name of user!").show();
+            }
+        }catch(Exception ignored){
+            new Alert(Alert.AlertType.ERROR,"Oops! Something went wrong!");
+        }
+    }
 
+    private boolean checkPwd(String encryptPwd, String pwd) {
+        String encryptedpassword = null;
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(pwd.getBytes());
+            byte[] bytes = m.digest();
+            StringBuilder s = new StringBuilder();
+            for (byte aByte : bytes) {
+                s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            }
+            encryptedpassword = s.toString();
+        } catch (NoSuchAlgorithmException e) {
+            new Alert(Alert.AlertType.WARNING,"Oops! Something went wrong!").show();
+        }
+        return Objects.equals(encryptPwd, encryptedpassword);
     }
 
     @FXML
@@ -129,6 +188,15 @@ public class SignInController {
         userComboBox.getItems().add(new Label("Admin").getText());
         userComboBox.getItems().add(new Label("Default").getText());
         userComboBox.setPromptText("Select");
-
+        /*----------------------------------------------------------------------------*/
+        sendOTPbtn.setDisable(true);
+        signInBtn.setDisable(true);
+        showPwdCheckBox2.setDisable(true);
+        userComboBox.setDisable(true);
+        OTPtxt.setEditable(false);
+        newUsernametxt.setEditable(false);
+        newEmailtxt.setEditable(false);
+        newPwdtxt.setEditable(false);
+        newConfirmPwdtxt.setEditable(false);
     }
 }
