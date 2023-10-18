@@ -109,20 +109,16 @@ public class ForgotPwdWindow {
 
     @FXML
     void showBothPwd(ActionEvent event) {
-        if (!Objects.equals(newPwdTxt.getText(), ConfirmNewPwdTxt.getText())){
-            new Alert(Alert.AlertType.WARNING,"Both text fields must have the same content.").show();
-        }else{
-            if (showPwdCheckBox.isSelected()) {
-                showNewPwdText.setVisible(true);
-                showConfirmedNewPwdText.setVisible(true);
-                newPwdTxt.setVisible(false);
-                ConfirmNewPwdTxt.setVisible(false);
-            } else {
-                newPwdTxt.setVisible(true);
-                ConfirmNewPwdTxt.setVisible(true);
-                showNewPwdText.setVisible(false);
-                showConfirmedNewPwdText.setVisible(false);
-            }
+        if (showPwdCheckBox.isSelected()) {
+            showNewPwdText.setVisible(true);
+            showConfirmedNewPwdText.setVisible(true);
+            newPwdTxt.setVisible(false);
+            ConfirmNewPwdTxt.setVisible(false);
+        } else {
+            newPwdTxt.setVisible(true);
+            ConfirmNewPwdTxt.setVisible(true);
+            showNewPwdText.setVisible(false);
+            showConfirmedNewPwdText.setVisible(false);
         }
     }
 

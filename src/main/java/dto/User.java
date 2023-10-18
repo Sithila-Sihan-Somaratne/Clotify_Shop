@@ -1,4 +1,3 @@
-
 package dto;
 
 import lombok.*;
@@ -15,11 +14,10 @@ public class User {
     @Id
     @Column(name = "name")
     public String name;
+    @Column(name = "email")
     public String email;
     public String password;
     public String type;
-
-    public User(){}
 
     @Override
     public String toString() {

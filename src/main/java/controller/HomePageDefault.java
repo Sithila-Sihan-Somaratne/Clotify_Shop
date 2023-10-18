@@ -1,5 +1,6 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -24,8 +25,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class HomePageAdmin {
+public class HomePageDefault {
 
+    public JFXButton btnSalesReport;
+    
     @FXML
     private ResourceBundle resources;
 
@@ -79,12 +82,7 @@ public class HomePageAdmin {
     void orderDetailsBtn(ActionEvent ignored) {
 
     }
-
-    @FXML
-    void salesReportBtn(ActionEvent ignored) {
-
-    }
-
+    
     @FXML
     void salesReturnBtn(ActionEvent ignored) {
 
@@ -105,6 +103,7 @@ public class HomePageAdmin {
                         new PieChart.Data("Others", 0));
         pieClothes.setData(pieChartData);
         manageDateAndTime();
+        btnSalesReport.setDisable(true);
     }
 
     private void manageDateAndTime() {
