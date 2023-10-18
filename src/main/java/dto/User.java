@@ -1,4 +1,3 @@
-
 package dto;
 
 import lombok.*;
@@ -18,8 +17,6 @@ public class User {
     public String email;
     public String password;
     public String type;
-
-    public User(){}
 
     @Override
     public String toString() {

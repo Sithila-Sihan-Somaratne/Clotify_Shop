@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="611.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomePageAdmin">
+<AnchorPane prefHeight="611.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomePageDefault">
    <ImageView fitHeight="611.0" fitWidth="1000.0">
       <Image url="@../img/bg-img.jpg" />
    </ImageView>
@@ -46,7 +46,7 @@
             <Font name="System Bold" size="18.0"/>
          </font>
       </JFXButton>
-      <JFXButton contentDisplay="TOP" layoutX="51.0" layoutY="458.0" onAction="#salesReportBtn" prefHeight="49.0"
+      <JFXButton fx:id="btnSalesReport" contentDisplay="TOP" layoutX="51.0" layoutY="458.0"  prefHeight="49.0"
                  prefWidth="167.0" style="-fx-background-color: lightgrey;" text="📈 Sales Report" textFill="#ff5100">
          <font>
             <Font name="System Bold" size="18.0"/>

@@ -8,11 +8,9 @@ import dto.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -23,7 +21,7 @@ import java.util.Objects;
 
 public class LogInController {
 
-    public StackPane PaneContainer;
+    public AnchorPane PaneContainer;
 
     public JFXCheckBox showPwdCheckBox;
 
@@ -50,18 +48,21 @@ public class LogInController {
                 if(Objects.equals(user.getName(), name) && samePwd){
                     Stage stg = (Stage) dashboardPane.getScene().getWindow();
                     stg.close();
+                    Stage stage = new Stage();
                     if (Objects.equals(user_type, "Admin")){
-                        Stage stage = new Stage();
                         stage.setTitle("Home Window (Admin)");
                         try {
                             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
                         } catch (Exception ignoreExceptiton) {}
-                        stage.show();
-                        stage.setResizable(false);
 
-                    }else if (Objects.equals(user_type, "User")){
-                        new Alert(Alert.AlertType.INFORMATION,"You are a normal user!").show();
+                    }else{
+                        stage.setTitle("Home Window (Default)");
+                        try {
+                            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
+                        } catch (Exception ignoreExceptiton) {}
                     }
+                    stage.show();
+                    stage.setResizable(false);
                 }else{
                     new Alert(Alert.AlertType.WARNING,"Password is unknown. Please try again!").show();
                 }
@@ -127,15 +128,14 @@ public class LogInController {
 
     @FXML
     public void initialize() {
-        PaneContainer.setAlignment(Pos.CENTER);
         PaneContainer.getChildren().add(txtVisiblePassword);
         txtVisiblePassword.managedProperty().bind(txtVisiblePassword.visibleProperty());
         txtPassword.managedProperty().bind(txtPassword.visibleProperty());
         txtVisiblePassword.textProperty().bindBidirectional(txtPassword.textProperty());
-        txtVisiblePassword.translateXProperty().bind(txtPassword.translateXProperty());
-        txtVisiblePassword.translateYProperty().bind(txtPassword.translateYProperty());
-        txtVisiblePassword.setMaxWidth(400);
-        txtVisiblePassword.setMaxHeight(20);
+        txtVisiblePassword.setLayoutX(txtPassword.getLayoutX());
+        txtVisiblePassword.setLayoutY(txtPassword.getLayoutY());
+        txtVisiblePassword.setPrefWidth(txtPassword.getPrefWidth());
+        txtVisiblePassword.setPrefHeight(txtPassword.getPrefHeight());
         txtVisiblePassword.setVisible(false);
     }
 }
