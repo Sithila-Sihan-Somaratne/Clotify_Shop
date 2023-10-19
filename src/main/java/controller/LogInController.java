@@ -21,17 +21,22 @@ import java.util.Objects;
 
 public class LogInController {
 
-    public AnchorPane PaneContainer;
+    @FXML
+    private AnchorPane PaneContainer;
 
-    public JFXCheckBox showPwdCheckBox;
+    @FXML
+    private AnchorPane dashboardPane;
 
-    public JFXTextField txtUserName;
+    @FXML
+    private JFXCheckBox showPwdCheckBox;
 
-    public JFXPasswordField txtPassword;
+    @FXML
+    private JFXPasswordField txtPassword;
 
-    public AnchorPane dashboardPane;
+    @FXML
+    private JFXTextField txtUserName;
 
-    public JFXTextField txtVisiblePassword = new JFXTextField();
+    private final JFXTextField txtVisiblePassword = new JFXTextField();
 
     @FXML
     public void LogIn(ActionEvent ignored) {
@@ -94,7 +99,6 @@ public class LogInController {
         } catch (NoSuchAlgorithmException e) {
             new Alert(Alert.AlertType.WARNING,"Oops! Something went wrong!").show();
         }
-        System.out.println(Objects.equals(encryptPwd, encryptedpassword));
         return Objects.equals(encryptPwd, encryptedpassword);
     }
 

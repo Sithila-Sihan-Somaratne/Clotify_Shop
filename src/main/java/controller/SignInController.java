@@ -22,50 +22,57 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.Random;
-import java.util.ResourceBundle;
 
 public class SignInController {
 
     @FXML
-    private ResourceBundle resources;
+    private JFXTextField OTPtxt;
 
     @FXML
-    private URL location;
+    private AnchorPane SignInPane;
 
-    public JFXTextField OTPtxt;
+    @FXML
+    private JFXTextField adminEmailtxt;
 
-    public AnchorPane SignInPane;
+    @FXML
+    private JFXPasswordField adminPwdtxt;
 
-    public JFXTextField adminEmailtxt;
+    @FXML
+    private JFXPasswordField newConfirmPwdtxt;
 
-    public JFXPasswordField adminPwdtxt;
+    @FXML
+    private JFXTextField newEmailtxt;
 
-    public JFXPasswordField newConfirmPwdtxt;
+    @FXML
+    private JFXPasswordField newPwdtxt;
 
-    public JFXTextField newEmailtxt;
+    @FXML
+    private JFXTextField newUsernametxt;
 
-    public JFXPasswordField newPwdtxt;
+    @FXML
+    private JFXCheckBox showPwdCheckBox1;
 
-    public JFXTextField newUsernametxt;
+    @FXML
+    private JFXCheckBox showPwdCheckBox2;
 
-    public JFXCheckBox showPwdCheckBox1;
+    @FXML
+    private JFXComboBox<String> userComboBox;
 
-    public JFXCheckBox showPwdCheckBox2;
+    @FXML
+    private ImageView imageCheck;
 
-    public JFXComboBox<String> userComboBox;
+    @FXML
+    private JFXButton sendOTPbtn;
 
-    public ImageView imageCheck;
+    @FXML
+    private JFXButton signInBtn;
 
-    public JFXButton sendOTPbtn;
+    private final JFXTextField showAdminpwd = new JFXTextField();
 
-    public JFXButton signInBtn;
+    private final JFXTextField showNewPwd = new JFXTextField();
 
-    public JFXTextField showAdminpwd = new JFXTextField();
-
-    public JFXTextField showNewPwd = new JFXTextField();
-
-    public JFXTextField showNewConfirmedPwd = new JFXTextField();
-    public int randomNumber = 0;
+    private final JFXTextField showNewConfirmedPwd = new JFXTextField();
+    private int randomNumber = 0;
 
     @FXML
     void BackToHome(ActionEvent event) {
