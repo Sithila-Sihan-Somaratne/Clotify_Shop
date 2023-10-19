@@ -1,5 +1,6 @@
 package controller;
 
+import dto.User;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,6 +37,8 @@ public class HomePageAdmin {
     @FXML
     private Label timeLabel;
 
+    public static User user = new User();
+
     @FXML
     void employerBtn(ActionEvent ignored) {
 
@@ -53,6 +56,7 @@ public class HomePageAdmin {
             Stage stage = (Stage) HomePane.getScene().getWindow();
             stage.close();
             Stage stg = new Stage();
+            stg.setTitle("Log In Page");
             try {
                 stg.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LogInWindow.fxml")))));
             } catch (Exception e) {
@@ -81,9 +85,10 @@ public class HomePageAdmin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        stage.setTitle("Order Window");
         stage.setResizable(false);
         stage.show();
-        new OrderController().classTitle = "HomePageAdmin";
+        OrderController.user = user;
     }
 
     @FXML

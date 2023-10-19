@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import dto.User;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -47,6 +48,8 @@ public class HomePageDefault {
     @FXML
     private JFXButton btnSalesReport;
 
+    public static User user = new User();
+
     @FXML
     void employerBtn(ActionEvent ignored) {
 
@@ -64,6 +67,7 @@ public class HomePageDefault {
             Stage stage = (Stage) pieClothes.getScene().getWindow();
             stage.close();
             Stage stg = new Stage();
+            stg.setTitle("Log In Page");
             try {
                 stg.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LogInWindow.fxml")))));
             } catch (Exception e) {
@@ -92,9 +96,9 @@ public class HomePageDefault {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        stage.setTitle("Order Window");
         stage.setResizable(false);
         stage.show();
-        new OrderController().classTitle = "HomePageDefault";
     }
 
     @FXML

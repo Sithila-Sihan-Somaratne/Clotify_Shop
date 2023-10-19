@@ -11,56 +11,71 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignInController">
-   <ImageView fitHeight="801.0" fitWidth="980.0" layoutY="-1.0">
+<AnchorPane prefHeight="527.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignInController">
+   <ImageView fitHeight="534.0" fitWidth="680.0" layoutY="-1.0">
       <Image url="@../img/bg-img.jpg" />
    </ImageView>
-   <AnchorPane fx:id="SignInPane" layoutX="250.0" layoutY="144.0" prefHeight="537.0" prefWidth="480.0" style="-fx-background-color: white; -fx-border-radius: 20px;">
-      <Label layoutX="142.0" layoutY="44.0" text="User Registration" textFill="#0288d1">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="64.0" layoutY="134.0" text="Admin username*: " />
-      <JFXTextField fx:id="adminEmailtxt" layoutX="240.0" layoutY="130.0" prefHeight="25.0" prefWidth="175.0" promptText="Enter username" />
-      <Label layoutX="64.0" layoutY="164.0" text="Admin password*: " />
-      <JFXCheckBox fx:id="showPwdCheckBox1" layoutX="213.0" layoutY="202.0" onAction="#showAdminPwd" text="Show Password" />
-      <JFXButton layoutX="370.0" layoutY="197.0" onAction="#CheckAdmin" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #38af52;" text="Check" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
-      <ImageView fx:id="imageCheck" fitHeight="25.0" fitWidth="25.0" layoutX="330.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
-         <Image url="@../img/blank.png" />
-      </ImageView>
-      <Label layoutX="155.0" layoutY="241.0" prefHeight="17.0" prefWidth="40.0" text="OTP*: " />
-      <JFXTextField fx:id="OTPtxt" layoutX="205.0" layoutY="237.0" prefHeight="25.0" prefWidth="33.0" promptText="* * * *" />
-      <JFXButton fx:id="sendOTPbtn" layoutX="65.0" layoutY="232.0" onAction="#SendOTP" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #0288D1;" text="Send" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
-      <Label layoutX="267.0" layoutY="241.0" text="User Type*:" />
-      <JFXComboBox fx:id="userComboBox" layoutX="342.0" layoutY="237.0" prefHeight="25.0" prefWidth="89.0" />
-      <JFXPasswordField fx:id="adminPwdtxt" layoutX="240.0" layoutY="160.0" prefHeight="25.0" prefWidth="175.0" promptText="Enter password" />
-      <Label layoutX="65.0" layoutY="291.0" text="New username*: " />
-      <JFXTextField fx:id="newUsernametxt" layoutX="241.0" layoutY="287.0" prefHeight="25.0" prefWidth="175.0" promptText="New name" />
-      <Label layoutX="65.0" layoutY="369.0" text="New password*: " />
-      <JFXPasswordField fx:id="newPwdtxt" layoutX="241.0" layoutY="365.0" prefHeight="25.0" prefWidth="175.0" promptText="Enter password" />
-      <Label layoutX="65.0" layoutY="329.0" text="Email*: " />
-      <JFXTextField fx:id="newEmailtxt" layoutX="241.0" layoutY="325.0" prefHeight="25.0" prefWidth="175.0" promptText="email@yahoo.com" />
-      <Label layoutX="65.0" layoutY="413.0" text="Confirm password*: " />
-      <JFXPasswordField fx:id="newConfirmPwdtxt" layoutX="241.0" layoutY="409.0" prefHeight="25.0" prefWidth="175.0" promptText="Enter password again" />
-      <JFXCheckBox fx:id="showPwdCheckBox2" layoutX="213.0" layoutY="444.0" onAction="#showNewPwds" text="Show Password" />
-      <JFXButton fx:id="signInBtn" layoutX="370.0" layoutY="474.0" onAction="#SignIn" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #e12e2e;" text="Sign in" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
-      <JFXButton layoutX="267.0" layoutY="474.0" onAction="#BackToHome" prefHeight="35.0" prefWidth="62.0" style="-fx-background-color: #e1af2e;" text="Back">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </JFXButton>
-   </AnchorPane>
+    <AnchorPane fx:id="SignInPane" layoutX="124.0" layoutY="23.0" prefHeight="486.0" prefWidth="433.0"
+                style="-fx-background-color: white; -fx-border-radius: 20px;">
+        <Label layoutX="111.0" layoutY="14.0" text="User Registration" textFill="#0288d1">
+           <font>
+               <Font name="System Bold" size="24.0"/>
+           </font>
+        </Label>
+        <Label layoutX="33.0" layoutY="104.0" text="Admin username*: "/>
+        <JFXTextField fx:id="adminEmailtxt" layoutX="209.0" layoutY="100.0" prefHeight="25.0" prefWidth="175.0"
+                      promptText="Enter username"/>
+        <Label layoutX="33.0" layoutY="134.0" text="Admin password*: "/>
+        <JFXCheckBox fx:id="showPwdCheckBox1" layoutX="182.0" layoutY="172.0" onAction="#showAdminPwd"
+                     text="Show Password"/>
+        <JFXButton layoutX="339.0" layoutY="167.0" onAction="#CheckAdmin" prefHeight="35.0" prefWidth="62.0"
+                   style="-fx-background-color: #38af52;" text="Check" textFill="WHITE">
+           <font>
+               <Font name="System Bold" size="13.0"/>
+           </font>
+        </JFXButton>
+        <ImageView fx:id="imageCheck" fitHeight="25.0" fitWidth="25.0" layoutX="299.0" layoutY="169.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/blank.png"/>
+        </ImageView>
+        <Label layoutX="124.0" layoutY="211.0" prefHeight="17.0" prefWidth="40.0" text="OTP*: "/>
+        <JFXTextField fx:id="OTPtxt" layoutX="174.0" layoutY="207.0" prefHeight="25.0" prefWidth="33.0"
+                      promptText="* * * *"/>
+        <JFXButton fx:id="sendOTPbtn" layoutX="34.0" layoutY="202.0" onAction="#SendOTP" prefHeight="35.0"
+                   prefWidth="62.0" style="-fx-background-color: #0288D1;" text="Send" textFill="WHITE">
+           <font>
+               <Font name="System Bold" size="13.0"/>
+           </font>
+        </JFXButton>
+        <Label layoutX="236.0" layoutY="211.0" text="User Type*:"/>
+        <JFXComboBox fx:id="userComboBox" layoutX="311.0" layoutY="207.0" prefHeight="25.0" prefWidth="89.0"/>
+        <JFXPasswordField fx:id="adminPwdtxt" layoutX="209.0" layoutY="130.0" prefHeight="25.0" prefWidth="175.0"
+                          promptText="Enter password"/>
+        <Label layoutX="34.0" layoutY="261.0" text="New username*: "/>
+        <JFXTextField fx:id="newUsernametxt" layoutX="210.0" layoutY="257.0" prefHeight="25.0" prefWidth="175.0"
+                      promptText="New name"/>
+        <Label layoutX="34.0" layoutY="339.0" text="New password*: "/>
+        <JFXPasswordField fx:id="newPwdtxt" layoutX="210.0" layoutY="335.0" prefHeight="25.0" prefWidth="175.0"
+                          promptText="Enter password"/>
+        <Label layoutX="34.0" layoutY="299.0" text="Email*: "/>
+        <JFXTextField fx:id="newEmailtxt" layoutX="210.0" layoutY="295.0" prefHeight="25.0" prefWidth="175.0"
+                      promptText="email@yahoo.com"/>
+        <Label layoutX="34.0" layoutY="383.0" text="Confirm password*: "/>
+        <JFXPasswordField fx:id="newConfirmPwdtxt" layoutX="210.0" layoutY="379.0" prefHeight="25.0" prefWidth="175.0"
+                          promptText="Enter password again"/>
+        <JFXCheckBox fx:id="showPwdCheckBox2" layoutX="182.0" layoutY="414.0" onAction="#showNewPwds"
+                     text="Show Password"/>
+        <JFXButton fx:id="signInBtn" layoutX="339.0" layoutY="444.0" onAction="#SignIn" prefHeight="35.0"
+                   prefWidth="62.0" style="-fx-background-color: #e12e2e;" text="Sign in" textFill="WHITE">
+           <font>
+               <Font name="System Bold" size="13.0"/>
+           </font>
+        </JFXButton>
+        <JFXButton layoutX="236.0" layoutY="444.0" onAction="#BackToHome" prefHeight="35.0" prefWidth="62.0"
+                   style="-fx-background-color: #e1af2e;" text="Back">
+           <font>
+               <Font name="System Bold" size="13.0"/>
+           </font>
+        </JFXButton>
+    </AnchorPane>
 </AnchorPane>

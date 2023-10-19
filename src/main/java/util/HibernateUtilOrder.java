@@ -1,6 +1,7 @@
 package util;
 
 
+import dto.Orders;
 import dto.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,7 +11,7 @@ import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class HibernateUtil {
+public class HibernateUtilOrder {
     private static final SessionFactory sessionFactory = createSessionFactory();
 
     private static SessionFactory createSessionFactory() {
@@ -19,7 +20,7 @@ public class HibernateUtil {
                 .build();
 
         Metadata metadata = new MetadataSources(standardRegistry)
-                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Orders.class)
                 .getMetadataBuilder()
                 .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
                 .build();

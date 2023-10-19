@@ -11,26 +11,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="dashboardPane" prefHeight="800.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
-   <ImageView fitHeight="801.0" fitWidth="980.0" layoutY="-1.0">
+<AnchorPane fx:id="dashboardPane" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
+   <ImageView fitHeight="507.0" fitWidth="680.0" layoutY="-1.0">
       <Image url="@../img/bg-img.jpg" />
    </ImageView>
-   <AnchorPane fx:id="PaneContainer" layoutX="250.0" layoutY="138.0" prefHeight="537.0" prefWidth="480.0" style="-fx-background-color: white; -fx-border-radius: 20px;">
-      <ImageView layoutX="196.0" layoutY="40.0">
+   <AnchorPane fx:id="PaneContainer" layoutX="127.0" layoutY="25.0" prefHeight="455.0" prefWidth="427.0" style="-fx-background-color: white; -fx-border-radius: 20px;">
+      <ImageView layoutX="169.0" layoutY="14.0">
          <Image url="@../img/User-img.png" />
       </ImageView>
-      <Label ellipsisString="" layoutX="41.0" layoutY="164.0" prefHeight="17.0" prefWidth="74.0" text="Username* :" />
-      <JFXTextField fx:id="txtUserName" layoutX="41.0" layoutY="189.0" maxHeight="25.0" maxWidth="400.0" prefHeight="25.0" prefWidth="399.0" promptText="Enter Username" />
-      <Label ellipsisString="" layoutX="41.0" layoutY="232.0" prefHeight="17.0" prefWidth="74.0" text="Password* :" />
-      <JFXPasswordField fx:id="txtPassword" layoutX="41.0" layoutY="258.0" maxHeight="25.0" maxWidth="400.0" prefHeight="25.0" prefWidth="399.0" promptText="Enter password" />
-      <Hyperlink layoutX="41.0" layoutY="321.0" onAction="#forgotPwd" prefHeight="23.0" prefWidth="180.0" style="-fx-text-fill: blue; -fx-font-weight: 800; -fx-underline: false;" text="Did you forgot the password?" />
-      <JFXCheckBox fx:id="showPwdCheckBox" layoutX="326.0" layoutY="324.0" onAction="#showPwd" text="Show password" />
-      <JFXButton layoutX="41.0" layoutY="425.0" onAction="#SignIn" prefHeight="49.0" prefWidth="94.0" style="-fx-background-color: #e12e2e;" text="Sign In" textFill="WHITE">
+      <Label ellipsisString="" layoutX="29.0" layoutY="138.0" prefHeight="17.0" prefWidth="74.0" text="Username* :" />
+      <JFXTextField fx:id="txtUserName" layoutX="29.0" layoutY="164.0" maxHeight="25.0" maxWidth="400.0" prefHeight="25.0" prefWidth="370.0" promptText="Enter Username" />
+      <Label ellipsisString="" layoutX="29.0" layoutY="211.0" prefHeight="17.0" prefWidth="74.0" text="Password* :" />
+      <JFXPasswordField fx:id="txtPassword" layoutX="29.0" layoutY="235.0" maxHeight="25.0" maxWidth="400.0" prefHeight="25.0" prefWidth="370.0" promptText="Enter password" />
+      <Hyperlink layoutX="29.0" layoutY="296.0" onAction="#forgotPwd" prefHeight="23.0" prefWidth="180.0" style="-fx-text-fill: blue; -fx-font-weight: 800; -fx-underline: false;" text="Did you forgot the password?" />
+      <JFXCheckBox fx:id="showPwdCheckBox" layoutX="291.0" layoutY="299.0" onAction="#showPwd" text="Show password" />
+      <JFXButton layoutX="38.0" layoutY="375.0" onAction="#SignIn" prefHeight="49.0" prefWidth="94.0" style="-fx-background-color: #e12e2e;" text="Sign In" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="340.0" layoutY="425.0" onAction="#LogIn" prefHeight="49.0" prefWidth="94.0" style="-fx-background-color: #38af52;" text="Log In" textFill="WHITE">
+      <JFXButton layoutX="291.0" layoutY="375.0" onAction="#LogIn" prefHeight="49.0" prefWidth="94.0" style="-fx-background-color: #38af52;" text="Log In" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

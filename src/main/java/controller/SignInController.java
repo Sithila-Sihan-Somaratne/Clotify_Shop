@@ -15,7 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateUtil;
+import util.HibernateUtilUser;
 
 import java.net.URL;
 import java.security.MessageDigest;
@@ -92,7 +92,7 @@ public class SignInController {
         try{
             String name = adminEmailtxt.getText();
             String pwd = adminPwdtxt.getText();
-            Session session = HibernateUtil.getSession();
+            Session session = HibernateUtilUser.getSession();
             User user = session.find(User.class, name);
             session.close();
             if (user!=null){
@@ -161,7 +161,7 @@ public class SignInController {
             String encryptedPwd = encryptPwd(pass);
             String type = userComboBox.getValue();
             User user = new User(name, email, encryptedPwd, type);
-            Session session = HibernateUtil.getSession();
+            Session session = HibernateUtilUser.getSession();
             Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();

@@ -13,7 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.hibernate.Session;
-import util.HibernateUtil;
+import util.HibernateUtilUser;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -48,7 +48,7 @@ public class LogInController {
             try{
                 if (!Objects.equals(txtUserName.getText(), "") && (!Objects.equals(txtVisiblePassword.getText(), ""))){
                     String name = txtUserName.getText();
-                    Session session = HibernateUtil.getSession();
+                    Session session = HibernateUtilUser.getSession();
                     User user = session.find(User.class, name);
                     String encryptPwd = user.getPassword();
                     session.close();
@@ -63,13 +63,15 @@ public class LogInController {
                             stage.setTitle("Home Window (Admin)");
                             try {
                                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
-                            } catch (Exception ignoreExceptiton) {}
+                                HomePageAdmin.user = user;
+                            } catch (Exception ignoreException) {}
 
                         }else{
                             stage.setTitle("Home Window (Default)");
                             try {
                                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
-                            } catch (Exception ignoreExceptiton) {}
+                                HomePageDefault.user = user;
+                            } catch (Exception ignoreException) {}
                         }
                         stage.show();
                         stage.setResizable(false);

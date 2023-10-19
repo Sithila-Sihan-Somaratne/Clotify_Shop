@@ -13,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import util.HibernateUtil;
+import util.HibernateUtilUser;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -46,7 +46,7 @@ public class ForgotPwdWindow {
 
     public void storeUser(String userName){
         try{
-            Session session = HibernateUtil.getSession();
+            Session session = HibernateUtilUser.getSession();
             User user = session.find(User.class, userName);
             if (user!=null){
                 Email.user = user;
@@ -79,7 +79,7 @@ public class ForgotPwdWindow {
             new Alert(Alert.AlertType.WARNING,"Both text fields must have the same content.").show();
         }else{
             String newPassword = newPwdTxt.getText();
-            Session session = HibernateUtil.getSession();
+            Session session = HibernateUtilUser.getSession();
             User user = session.find(User.class, Email.user.getName());
             user.setPassword(updatePwd(newPassword));
             Transaction transaction = session.beginTransaction();

@@ -4,23 +4,27 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
+import dto.Orders;
+import dto.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import util.HibernateUtilOrder;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class OrderController {
-
     @FXML
     private ResourceBundle resources;
 
@@ -132,7 +136,7 @@ public class OrderController {
     @FXML
     private JFXComboBox<?> supplierComboBox;
 
-    public String classTitle = "";
+    public static User user = new User();
 
     @FXML
     void AddOrderToCart(ActionEvent event) {
@@ -141,7 +145,13 @@ public class OrderController {
 
     @FXML
     void Clear(ActionEvent event) {
-
+        employerNameTxt.setText("");
+        customerNametxt.setText("");
+        customerEmail.setText("");
+        customerContacttxt.setText("");
+        itemCodetxt.setText("");
+        sellingPricetxt.setText("");
+        cashTxt.setText("");
     }
 
     @FXML
@@ -162,20 +172,20 @@ public class OrderController {
     @FXML
     void backToHome(ActionEvent event) {
         Stage stage = (Stage) orderPane.getScene().getWindow();
-        if (Objects.equals(classTitle, "HomePageAdmin")){
+        if (Objects.equals(user.getType(), "Admin")){
+            stage.setTitle("Home Page (Admin)");
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else if(Objects.equals(classTitle,"HomePageDefault")){
+        }else if(Objects.equals(user.getType(),"Default")){
+            stage.setTitle("Home Page (Default)");
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
-            new Alert(Alert.AlertType.WARNING,"Class not found!").show();
         }
         stage.setResizable(false);
         stage.show();
@@ -183,7 +193,12 @@ public class OrderController {
 
     @FXML
     void openCalculator(ActionEvent event) {
-
+        Runtime run = Runtime.getRuntime();
+        try {
+            run.exec("calc");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
