@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="orderPane" prefHeight="611.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderController">
+   <ImageView fitHeight="611.0" fitWidth="1000.0">
+      <Image url="@../img/bg-img.jpg" />
+   </ImageView>
+   <AnchorPane layoutX="49.0" layoutY="32.0" prefHeight="548.0" prefWidth="885.0" style="-fx-background-color: white;">
+      <JFXButton layoutX="23.0" layoutY="20.0" onAction="#backToHome" style="-fx-background-color: #ff5100;" text="Back" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="25.0" layoutY="81.0" prefHeight="17.0" prefWidth="64.0" text="Employer *:" />
+      <JFXComboBox fx:id="employerComboBox" layoutX="165.0" layoutY="77.0" promptText="Select ID" />
+      <JFXTextField fx:id="employerNameTxt" layoutX="280.0" layoutY="77.0" promptText="Employer Name" />
+      <Label layoutX="24.0" layoutY="114.0" text="Customer Name *:" />
+      <JFXTextField fx:id="customerNametxt" layoutX="166.0" layoutY="110.0" prefHeight="25.0" prefWidth="258.0" promptText="Customer Name" />
+      <Label layoutX="23.0" layoutY="148.0" text="Customer Contact *:" />
+      <JFXTextField fx:id="customerContacttxt" layoutX="167.0" layoutY="144.0" prefHeight="25.0" prefWidth="258.0" promptText="Customer Contact" />
+      <Label layoutX="25.0" layoutY="221.0" prefHeight="17.0" prefWidth="46.0" text="Date *:" />
+      <JFXTextField fx:id="customerEmail" layoutX="169.0" layoutY="179.0" prefHeight="25.0" prefWidth="258.0" promptText="Customer Email" />
+      <Label layoutX="25.0" layoutY="183.0" text="Customer Email *:" />
+      <DatePicker fx:id="datePicker" layoutX="162.0" layoutY="217.0" prefHeight="25.0" prefWidth="269.0" />
+      <Label layoutX="27.0" layoutY="256.0" prefHeight="17.0" prefWidth="71.0" text="Payment *:" />
+      <JFXCheckBox fx:id="cashComboBox" layoutX="164.0" layoutY="256.0" prefHeight="18.0" prefWidth="64.0" text="Cash" />
+      <JFXCheckBox fx:id="cardComboBox" layoutX="286.0" layoutY="256.0" prefHeight="18.0" prefWidth="64.0" text="Card" />
+      <Label layoutX="668.0" layoutY="31.0" text="Order ID * : " />
+      <Label fx:id="orderID" layoutX="771.0" layoutY="31.0" text="ORD-00000001" />
+      <JFXTreeTableView fx:id="orderTable" layoutX="39.0" layoutY="325.0" prefHeight="175.0" prefWidth="808.0">
+         <columns>
+            <TreeTableColumn fx:id="ItemCodeCol" prefWidth="73.0" text="Item Code" />
+            <TreeTableColumn fx:id="DescriptionCol" prefWidth="105.0" text="Description" />
+            <TreeTableColumn fx:id="QtyCol" prefWidth="47.0" text="Qty" />
+            <TreeTableColumn fx:id="UnitPriceCol" prefWidth="75.0" text="Unit Price" />
+            <TreeTableColumn fx:id="DateCol" prefWidth="102.0" text="Date" />
+            <TreeTableColumn fx:id="DiscountCol" prefWidth="85.0" text="Discount %" />
+            <TreeTableColumn fx:id="TypeCol" prefWidth="38.0" text="Type" />
+            <TreeTableColumn fx:id="SizeCol" prefWidth="37.0" text="Size" />
+            <TreeTableColumn fx:id="AmountCol" prefWidth="134.0" text="Amount" />
+            <TreeTableColumn fx:id="OptionCol" prefWidth="111.0" text="Option" />
+         </columns></JFXTreeTableView>
+      <Label layoutX="473.0" layoutY="81.0" prefHeight="17.0" prefWidth="72.0" text="Item Code *:" />
+      <JFXComboBox fx:id="supplierComboBox" layoutX="752.0" layoutY="77.0" promptText="Select " />
+      <JFXTextField fx:id="itemCodetxt" layoutX="608.0" layoutY="77.0" promptText="P-00000" />
+      <Label layoutX="473.0" layoutY="114.0" text="Description *:" />
+      <JFXTextField fx:id="Descriptiontxt" layoutX="602.0" layoutY="110.0" prefHeight="25.0" prefWidth="258.0" promptText="Description" />
+      <Label layoutX="473.0" layoutY="148.0" prefHeight="17.0" prefWidth="37.0" text="Qty*:" />
+      <JFXTextField fx:id="Qtytxt" layoutX="518.0" layoutY="144.0" promptText="0" />
+      <Label layoutX="668.0" layoutY="148.0" prefHeight="17.0" prefWidth="82.0" text="Qty on Hand *:" />
+      <JFXTextField fx:id="QtyOnhandtxt" layoutX="759.0" layoutY="144.0" prefHeight="25.0" prefWidth="89.0" promptText="0" />
+      <Label layoutX="473.0" layoutY="179.0" prefHeight="17.0" prefWidth="77.0" text="Selling Price *:" />
+      <JFXTextField fx:id="sellingPricetxt" layoutX="555.0" layoutY="175.0" prefHeight="25.0" prefWidth="98.0" promptText="0.00" />
+      <Label layoutX="668.0" layoutY="179.0" prefHeight="17.0" prefWidth="54.0" text="Profit *:" />
+      <JFXTextField fx:id="Profittxt" layoutX="728.0" layoutY="175.0" prefHeight="25.0" prefWidth="120.0" promptText="0.00" />
+      <Label layoutX="473.0" layoutY="209.0" prefHeight="17.0" prefWidth="77.0" text="Type *:" />
+      <JFXTextField fx:id="Typetxt" layoutX="553.0" layoutY="205.0" prefHeight="25.0" prefWidth="98.0" />
+      <Label layoutX="668.0" layoutY="209.0" prefHeight="17.0" prefWidth="54.0" text="Size*:" />
+      <JFXTextField fx:id="Sizetxt" layoutX="728.0" layoutY="205.0" prefHeight="25.0" prefWidth="120.0" />
+      <Label layoutX="473.0" layoutY="242.0" prefHeight="17.0" prefWidth="71.0" text="Discount*:" />
+      <JFXTextField fx:id="Discounttxt" layoutX="548.0" layoutY="238.0" prefHeight="25.0" prefWidth="120.0" promptText="0.00" />
+      <Label layoutX="674.0" layoutY="242.0" prefHeight="17.0" prefWidth="18.0" text="\%" />
+      <JFXButton layoutX="358.0" layoutY="274.0" onAction="#RemoveOrder" style="-fx-background-color: #c82ee1;" text="Remove Order" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="535.0" layoutY="274.0" onAction="#Clear" style="-fx-background-color: #38af52;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="625.0" layoutY="274.0" onAction="#UpdateOrder" style="-fx-background-color: #3280c7;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="734.0" layoutY="274.0" onAction="#AddOrderToCart" style="-fx-background-color: #f8c238;" text="🛒Add to Cart" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="230.0" layoutY="268.0" onAction="#openCalculator" prefHeight="51.0" prefWidth="46.0" text="🖩" textFill="#ff5100">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="49.0" layoutY="517.0" text="Total *:" />
+      <Label fx:id="Totaltxt" layoutX="98.0" layoutY="517.0" text="0.00" />
+      <Label layoutX="230.0" layoutY="517.0" text="Discount:" />
+      <Label fx:id="discountLabeltxt" layoutX="287.0" layoutY="517.0" text="0.00" />
+      <Label layoutX="387.0" layoutY="517.0" text="Balance:" />
+      <Label fx:id="Balancetxt" layoutX="444.0" layoutY="517.0" text="0.00" />
+      <Label layoutX="513.0" layoutY="517.0" prefHeight="17.0" prefWidth="44.0" text="Cash:" />
+      <JFXTextField fx:id="cashTxt" layoutX="555.0" layoutY="513.0" prefHeight="25.0" prefWidth="98.0" />
+      <JFXButton layoutX="751.0" layoutY="506.0" onAction="#PlaceOrder" style="-fx-background-color: #e12e2e;" text="Place Order" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+   </AnchorPane>
+</AnchorPane>

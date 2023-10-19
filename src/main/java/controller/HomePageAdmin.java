@@ -13,30 +13,28 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 public class HomePageAdmin {
 
     @FXML
-    private ResourceBundle resources;
+    private AnchorPane HomePane;
 
     @FXML
-    private URL location;
+    private Label dateLabel;
 
-    public Label dateLabel;
+    @FXML
+    private PieChart pieClothes;
 
-    public PieChart pieClothes;
-
-    public Label timeLabel;
+    @FXML
+    private Label timeLabel;
 
     @FXML
     void employerBtn(ActionEvent ignored) {
@@ -52,12 +50,12 @@ public class HomePageAdmin {
     void logOut(ActionEvent ignored) {
         Optional<ButtonType> option = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to log out?", ButtonType.YES, ButtonType.NO).showAndWait();
         if (option.isPresent() && (option.get() == ButtonType.YES)){
-            Stage stage = (Stage) pieClothes.getScene().getWindow();
+            Stage stage = (Stage) HomePane.getScene().getWindow();
             stage.close();
             Stage stg = new Stage();
             try {
                 stg.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LogInWindow.fxml")))));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             stg.setResizable(false);
@@ -67,12 +65,25 @@ public class HomePageAdmin {
 
     @FXML
     void openCalculator(ActionEvent ignored) {
-
+        Runtime run = Runtime.getRuntime();
+        try {
+            run.exec("calc");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void orderBtn(ActionEvent ignored) {
-
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderWindow.fxml")))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.setResizable(false);
+        stage.show();
+        new OrderController().classTitle = "HomePageAdmin";
     }
 
     @FXML

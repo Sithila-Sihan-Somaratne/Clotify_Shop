@@ -22,15 +22,23 @@ import java.util.Random;
 
 public class ForgotPwdWindow {
 
-    public AnchorPane ForgotPane;
+    @FXML
+    private AnchorPane ForgotPane;
 
-    public JFXPasswordField ConfirmNewPwdTxt;
+    @FXML
+    private JFXPasswordField ConfirmNewPwdTxt;
 
-    public JFXPasswordField newPwdTxt;
+    @FXML
+    private JFXPasswordField newPwdTxt;
 
-    public JFXTextField otpText;
-    public JFXCheckBox showPwdCheckBox;
-    public JFXButton savePwdBtn;
+    @FXML
+    private JFXTextField otpText;
+
+    @FXML
+    private JFXCheckBox showPwdCheckBox;
+
+    @FXML
+    private JFXButton savePwdBtn;
     private final JFXTextField showNewPwdText = new JFXTextField();
 
     private final JFXTextField showConfirmedNewPwdText = new JFXTextField();

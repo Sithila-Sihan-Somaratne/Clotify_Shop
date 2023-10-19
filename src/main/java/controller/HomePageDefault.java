@@ -14,10 +14,10 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,20 +26,26 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HomePageDefault {
-
-    public JFXButton btnSalesReport;
-    
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
 
-    public Label dateLabel;
+    @FXML
+    private AnchorPane HomePane;
 
-    public PieChart pieClothes;
+    @FXML
+    private Label dateLabel;
 
-    public Label timeLabel;
+    @FXML
+    private PieChart pieClothes;
+
+    @FXML
+    private Label timeLabel;
+
+    @FXML
+    private JFXButton btnSalesReport;
 
     @FXML
     void employerBtn(ActionEvent ignored) {
@@ -60,7 +66,7 @@ public class HomePageDefault {
             Stage stg = new Stage();
             try {
                 stg.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LogInWindow.fxml")))));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             stg.setResizable(false);
@@ -70,12 +76,25 @@ public class HomePageDefault {
 
     @FXML
     void openCalculator(ActionEvent ignored) {
-
+        Runtime run = Runtime.getRuntime();
+        try {
+            run.exec("calc");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void orderBtn(ActionEvent ignored) {
-
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderWindow.fxml")))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.setResizable(false);
+        stage.show();
+        new OrderController().classTitle = "HomePageDefault";
     }
 
     @FXML
