@@ -203,7 +203,21 @@ public class OrderController {
 
     @FXML
     void initialize() {
+        generateId();
+    }
 
+    private void generateId() {
+        Session session = HibernateUtilOrder.getSession();
+        String qry = "orderId FROM dto.Orders ORDER BY orderId DESC LIMIT 1";
+        Query query = session.createQuery(qry);
+        List list = query.list();
+        if (list.iterator().hasNext()){
+            int num = Integer.parseInt(list.get(1).toString().split("ORD-")[1]);
+            num++;
+            orderID.setText(String.format("ORD-%07d",num));
+        }else {
+            orderID.setText("ORD-00000001");
+        }
     }
 
 }

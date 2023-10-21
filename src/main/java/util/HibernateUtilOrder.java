@@ -14,7 +14,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 public class HibernateUtilOrder {
     private static final SessionFactory sessionFactory = createSessionFactory();
 
-    private static SessionFactory createSessionFactory() {
+    public static SessionFactory createSessionFactory() {
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
                 .configure("hibernate.cfg.xml")
                 .build();
