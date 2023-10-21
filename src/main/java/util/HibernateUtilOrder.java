@@ -11,7 +11,7 @@ import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class HibernateUtilOrder {
+public class HibernateUtilOrder{
     private static final SessionFactory sessionFactory = createSessionFactory();
 
     public static SessionFactory createSessionFactory() {

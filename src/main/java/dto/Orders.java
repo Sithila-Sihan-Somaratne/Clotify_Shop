@@ -6,8 +6,11 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity
+@IdClass(Orders.class)
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
