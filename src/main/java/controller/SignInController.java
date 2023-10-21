@@ -90,31 +90,21 @@ public class SignInController {
     @FXML
     void CheckAdmin(ActionEvent event) {
         try{
+            User user = new User("Sithila Sihan Somaratne","sithi.ss23@gmail.com","5386738e14239004fcb0bf6c08befe93","Admin");
             String name = adminEmailtxt.getText();
             String pwd = adminPwdtxt.getText();
-            Session session = HibernateUtilUser.getSession();
-            User user = session.find(User.class, name);
-            session.close();
-            if (user!=null){
-                if (Objects.equals(name, user.getName()) && checkPwd(user.getPassword(), pwd)){
-                    Email.user = user;
-                    if ((Objects.equals(user.getType(), "Admin"))){
-                        URL url = getClass().getResource("/img/tick_icon.png");
-                        Image image = new Image(Objects.requireNonNull(url).toExternalForm());
-                        imageCheck.setImage(image);
-                        sendOTPbtn.setDisable(false);
-                    }else{
-                        new Alert(Alert.AlertType.WARNING,"User isn't Admin. Please enter another user!").show();
-                        URL url = getClass().getResource("/img/cross_icon.png");
-                        Image image = new Image(Objects.requireNonNull(url).toExternalForm());
-                        imageCheck.setImage(image);
-                        sendOTPbtn.setDisable(true);
-                    }
-                }else{
-                    new Alert(Alert.AlertType.WARNING,"Username or password is wrong. Please try again!").show();
-                }
-            }else{
-                new Alert(Alert.AlertType.WARNING,"Enter the right name of user!").show();
+            if (Objects.equals(name, user.getName()) && checkPwd(user.getPassword(), pwd)) {
+                Email.user = user;
+                URL url = getClass().getResource("/img/tick_icon.png");
+                Image image = new Image(Objects.requireNonNull(url).toExternalForm());
+                imageCheck.setImage(image);
+                sendOTPbtn.setDisable(false);
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Username or password is wrong. Please try again!").show();
+                URL url = getClass().getResource("/img/cross_icon.png");
+                Image image = new Image(Objects.requireNonNull(url).toExternalForm());
+                imageCheck.setImage(image);
+                sendOTPbtn.setDisable(true);
             }
         }catch(Exception ignored){
             new Alert(Alert.AlertType.ERROR,"Oops! Something went wrong!");
@@ -160,13 +150,17 @@ public class SignInController {
             String email = newEmailtxt.getText();
             String encryptedPwd = encryptPwd(pass);
             String type = userComboBox.getValue();
-            User user = new User(name, email, encryptedPwd, type);
-            Session session = HibernateUtilUser.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-            session.close();
-            new Alert(Alert.AlertType.INFORMATION,"User has been added successfully!").show();
+            if(Objects.equals(type, "")){
+                new Alert(Alert.AlertType.WARNING,"You need to select \"Admin\" or \"Default\"").show();
+            }else{
+                User user = new User(name, email, encryptedPwd, type);
+                Session session = HibernateUtilUser.getSession();
+                Transaction transaction = session.beginTransaction();
+                session.save(user);
+                transaction.commit();
+                session.close();
+                new Alert(Alert.AlertType.INFORMATION,"User has been added successfully!").show();
+            }
         }
     }
 

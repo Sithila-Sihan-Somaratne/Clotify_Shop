@@ -25,11 +25,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class OrderController {
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private AnchorPane orderPane;
@@ -208,11 +203,11 @@ public class OrderController {
 
     private void generateId() {
         Session session = HibernateUtilOrder.getSession();
-        String qry = "orderId FROM dto.Orders ORDER BY orderId DESC LIMIT 1";
+        String qry = "FROM Orders ORDER BY orderId DESC";
         Query query = session.createQuery(qry);
-        List list = query.list();
-        if (list.iterator().hasNext()){
-            int num = Integer.parseInt(list.get(1).toString().split("ORD-")[1]);
+        List<Orders> list = query.list();
+        if ((long) list.size() > 0){
+            int num = Integer.parseInt(list.get(0).getOrderId().split("ORD-")[1]);
             num++;
             orderID.setText(String.format("ORD-%07d",num));
         }else {

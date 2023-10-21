@@ -72,7 +72,7 @@
            </font>
         </JFXButton>
         <JFXButton layoutX="236.0" layoutY="444.0" onAction="#BackToHome" prefHeight="35.0" prefWidth="62.0"
-                   style="-fx-background-color: #e1af2e;" text="Back">
+                   style="-fx-background-color: #e1af2e;" text="Back" textFill="WHITE">
            <font>
                <Font name="System Bold" size="13.0"/>
            </font>

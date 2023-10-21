@@ -41,7 +41,16 @@ public class HomePageAdmin {
 
     @FXML
     void employerBtn(ActionEvent ignored) {
-
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/EmployersWindow.fxml")))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.setTitle("Employer Window");
+        stage.setResizable(false);
+        stage.show();
+        EmployersController.user = user;
     }
 
     @FXML

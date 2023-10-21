@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="employerPane" prefHeight="611.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EmployersController">
+   <ImageView fitHeight="611.0" fitWidth="1000.0">
+      <Image url="@../img/bg-img.jpg" />
+   </ImageView>
+   <AnchorPane layoutX="58.0" layoutY="32.0" prefHeight="548.0" prefWidth="885.0" style="-fx-background-color: white;">
+      <JFXButton layoutX="23.0" layoutY="20.0" onAction="#backToHome" style="-fx-background-color: #ff5100;" text="Back" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="23.0" layoutY="114.0" prefHeight="17.0" prefWidth="98.0" text="Name*:" />
+      <JFXComboBox fx:id="employerTitleComboBox" layoutX="165.0" layoutY="110.0" promptText="Select " />
+      <JFXTextField fx:id="employerNameTxt" layoutX="280.0" layoutY="110.0" promptText="Employer Name" />
+      <Label layoutX="23.0" layoutY="81.0" text="Employer ID*:" />
+      <JFXTextField fx:id="employerIdtxt" layoutX="165.0" layoutY="77.0" prefHeight="25.0" prefWidth="258.0" promptText="Employer ID" text="EMP-000001" />
+      <Label layoutX="23.0" layoutY="148.0" text="NIC *:" />
+      <JFXTextField fx:id="employerNICtxt" layoutX="165.0" layoutY="144.0" prefHeight="25.0" prefWidth="258.0" promptText="NIC" />
+      <Label layoutX="23.0" layoutY="188.0" prefHeight="17.0" prefWidth="46.0" text="DOB *:" />
+      <JFXTextField fx:id="employerAddresstxt" layoutX="603.0" layoutY="77.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter address" />
+      <Label layoutX="472.0" layoutY="81.0" text="Address *:" />
+      <DatePicker fx:id="datePicker" layoutX="153.0" layoutY="184.0" prefHeight="25.0" prefWidth="269.0" />
+      <JFXTreeTableView fx:id="employerTable" layoutX="28.0" layoutY="294.0" prefHeight="220.0" prefWidth="830.0">
+         <columns>
+            <TreeTableColumn fx:id="employerIDCol" prefWidth="73.0" text="ID" />
+            <TreeTableColumn fx:id="titleCol" prefWidth="41.0" text="Title" />
+            <TreeTableColumn fx:id="nameCol" prefWidth="94.0" text="Name" />
+            <TreeTableColumn fx:id="NICCol" prefWidth="81.0" text="NIC" />
+            <TreeTableColumn fx:id="DOBCol" prefWidth="86.0" text="DOB" />
+            <TreeTableColumn fx:id="addressCol" prefWidth="105.0" text="Address" />
+            <TreeTableColumn fx:id="contactCol" prefWidth="74.0" text="Contact" />
+            <TreeTableColumn fx:id="BBANCol" prefWidth="106.0" text="Bank Account No" />
+            <TreeTableColumn fx:id="bankbranchCol" prefWidth="82.0" text="Bank Branch" />
+            <TreeTableColumn fx:id="OptionCol" prefWidth="87.0" text="Option" />
+         </columns></JFXTreeTableView>
+      <Label layoutX="473.0" layoutY="114.0" text="Contact *:" />
+      <JFXTextField fx:id="employerContacttxt" layoutX="602.0" layoutY="110.0" prefHeight="25.0" prefWidth="258.0" promptText="Contact" />
+      <JFXButton layoutX="697.0" layoutY="235.0" onAction="#Clear" style="-fx-background-color: #38af52;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="782.0" layoutY="235.0" onAction="#saveEmployer" style="-fx-background-color: #3280c7;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="617.0" layoutY="235.0" onAction="#printEmployerReceipt" style="-fx-background-color: #e1af2e;" text="Print" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="473.0" layoutY="153.0" text="Bank Account *:" />
+      <JFXTextField fx:id="employerBBANtxt" layoutX="601.0" layoutY="149.0" prefHeight="25.0" prefWidth="258.0" promptText="XXXXXXXXXXXXXXXXXXXXXX" />
+      <JFXTextField fx:id="employerBankBranchtxt" layoutX="603.0" layoutY="184.0" prefHeight="25.0" prefWidth="258.0" promptText="Branch" />
+      <Label layoutX="473.0" layoutY="188.0" text="Bank Branch *:" />
+      <JFXTextField fx:id="searchTxt" layoutX="165.0" layoutY="242.0" prefHeight="25.0" prefWidth="258.0" promptText="Search" />
+      <Label layoutX="39.0" layoutY="246.0" text="Search :" />
+   </AnchorPane>
+</AnchorPane>

@@ -1,26 +1,22 @@
-package dto;
+package dto.composite;
 
 
-import dto.composite.OrdersCI;
+import dto.Orders;
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import java.io.Serializable;
 
 @Entity
-@IdClass(OrdersCI.class)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Orders {
-    @Id
+public class OrdersCI implements Serializable {
     private String orderId;
-    @Id
     private String date;
     private double total;
     private String custName;
