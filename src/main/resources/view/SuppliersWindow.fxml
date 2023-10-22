@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="supplierPane" prefHeight="611.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SuppliersController">
+   <ImageView fitHeight="611.0" fitWidth="1000.0">
+      <Image url="@../img/bg-img.jpg" />
+   </ImageView>
+   <AnchorPane layoutX="58.0" layoutY="32.0" prefHeight="548.0" prefWidth="885.0" style="-fx-background-color: white;">
+      <JFXButton layoutX="23.0" layoutY="20.0" onAction="#backToHome" style="-fx-background-color: #ff5100;" text="Back" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="23.0" layoutY="114.0" prefHeight="17.0" prefWidth="98.0" text="Title*:" />
+      <JFXComboBox fx:id="supplierTitleComboBox" layoutX="165.0" layoutY="110.0" promptText="Select " />
+      <Label layoutX="23.0" layoutY="81.0" text="Employer ID*:" />
+      <JFXTextField fx:id="supplierIdtxt" layoutX="165.0" layoutY="77.0" prefHeight="25.0" prefWidth="258.0" promptText="Employer ID" text="SUP-00001" />
+      <Label layoutX="23.0" layoutY="148.0" text="Name*:" />
+      <JFXTextField fx:id="supplierNametxt" layoutX="165.0" layoutY="144.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter name" />
+      <JFXTextField fx:id="supplierCompanytxt" layoutX="165.0" layoutY="209.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter company" />
+      <Label layoutX="23.0" layoutY="213.0" text="Company *:" />
+      <JFXTreeTableView fx:id="supplierTable" layoutX="124.0" layoutY="304.0" prefHeight="220.0" prefWidth="613.0">
+         <columns>
+            <TreeTableColumn fx:id="supplierIDCol" prefWidth="79.0" text="ID" />
+            <TreeTableColumn fx:id="titleCol" prefWidth="51.0" text="Title" />
+            <TreeTableColumn fx:id="nameCol" prefWidth="114.0" text="Name" />
+            <TreeTableColumn fx:id="contactCol" prefWidth="126.0" text="Contact" />
+            <TreeTableColumn fx:id="companyCol" prefWidth="140.0" text="Company" />
+            <TreeTableColumn fx:id="OptionCol" prefWidth="102.0" text="Option" />
+         </columns></JFXTreeTableView>
+      <Label layoutX="23.0" layoutY="180.0" text="Contact *:" />
+      <JFXTextField fx:id="supplierContacttxt" layoutX="165.0" layoutY="176.0" prefHeight="25.0" prefWidth="258.0" promptText="Email Contact" />
+      <JFXButton layoutX="695.0" layoutY="248.0" onAction="#Clear" style="-fx-background-color: #38af52;" text="Clear" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="610.0" layoutY="248.0" onAction="#printSupplierBill" style="-fx-background-color: #3280c7;" text="Print" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="780.0" layoutY="248.0" onAction="#saveSupplier" style="-fx-background-color: #e1af2e;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField fx:id="searchTxt" layoutX="121.0" layoutY="255.0" prefHeight="25.0" prefWidth="258.0" promptText="Search" />
+      <Label layoutX="41.0" layoutY="259.0" text="Search :" />
+      <JFXTreeTableView fx:id="supplierItemTable" layoutX="475.0" layoutY="22.0" prefHeight="205.0" prefWidth="369.0">
+         <columns>
+            <TreeTableColumn fx:id="itemCodeCol" prefWidth="75.0" text="Item Code"/>
+            <TreeTableColumn fx:id="descriptionCol" prefWidth="207.0" text="Description" />
+            <TreeTableColumn fx:id="qtyCol" prefWidth="86.0" text="Qty" />
+         </columns>
+      </JFXTreeTableView>
+   </AnchorPane>
+</AnchorPane>

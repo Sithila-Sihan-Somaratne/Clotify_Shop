@@ -1,11 +1,9 @@
 package dto.composite;
 
 
-import dto.Orders;
 import lombok.*;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity

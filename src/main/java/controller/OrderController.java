@@ -27,6 +27,12 @@ import java.util.ResourceBundle;
 public class OrderController {
 
     @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
+
+    @FXML
     private AnchorPane orderPane;
 
     @FXML

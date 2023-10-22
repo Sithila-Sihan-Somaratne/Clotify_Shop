@@ -3,7 +3,6 @@ package controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dto.Employers;
-import dto.Orders;
 import dto.User;
 import dto.tm.EmployersTM;
 import javafx.collections.FXCollections;
@@ -22,13 +21,17 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.HibernateUtilEmployer;
 
+import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class EmployersController {
+
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
 
     @FXML
     private AnchorPane employerPane;
@@ -91,15 +94,13 @@ public class EmployersController {
     private TreeTableColumn<?, ?> nameCol;
 
     @FXML
-    private AnchorPane orderPane;
-
-    @FXML
     private JFXTextField searchTxt;
 
     @FXML
     private TreeTableColumn<?, ?> titleCol;
 
     public static User user = new User();
+
     @FXML
     void Clear(ActionEvent event) {
         generateId();
@@ -163,17 +164,23 @@ public class EmployersController {
                 break;
             }
         }
-        if (!areEmpty) {
-            Employers employer = new Employers(employerIdtxt.getText(), employerTitleComboBox.getValue(), employerNameTxt.getText(), employerNICtxt.getText(), datePicker.getValue().toString(), employerAddresstxt.getText(), employerContacttxt.getText(), employerBBANtxt.getText(), employerBankBranchtxt.getText());
-            Session session = HibernateUtilEmployer.getSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(employer);
-            transaction.commit();
-            session.close();
-            clearFields();
-            loadTable();
-            generateId();
-            new Alert(Alert.AlertType.INFORMATION,"Employer has been added successfully!").show();
+        if (employerTitleComboBox.getValue() != null){
+            if (!areEmpty) {
+                Employers employer = new Employers(employerIdtxt.getText(), employerTitleComboBox.getValue(), employerNameTxt.getText(), employerNICtxt.getText(), datePicker.getValue().toString(), employerAddresstxt.getText(), employerContacttxt.getText(), employerBBANtxt.getText(), employerBankBranchtxt.getText());
+                Session session = HibernateUtilEmployer.getSession();
+                Transaction transaction = session.beginTransaction();
+                session.save(employer);
+                transaction.commit();
+                session.close();
+                clearFields();
+                loadTable();
+                generateId();
+                new Alert(Alert.AlertType.INFORMATION,"Employer has been added successfully!").show();
+            }else{
+                new Alert(Alert.AlertType.WARNING,"Text fields mustn't be empty.").show();
+            }
+        }else{
+            new Alert(Alert.AlertType.WARNING,"Please choose a title.").show();
         }
     }
 

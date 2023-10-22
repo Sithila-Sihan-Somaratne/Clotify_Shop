@@ -15,11 +15,19 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import util.HibernateUtilUser;
 
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class LogInController {
+
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
 
     @FXML
     private AnchorPane PaneContainer;
@@ -39,7 +47,7 @@ public class LogInController {
     private final JFXTextField txtVisiblePassword = new JFXTextField();
 
     @FXML
-    public void LogIn(ActionEvent ignored) {
+    public void LogIn(ActionEvent event) {
         String pass = txtPassword.getText();
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}";
         if (!pass.matches(pattern)){
@@ -105,7 +113,7 @@ public class LogInController {
     }
 
     @FXML
-    public void SignIn(ActionEvent ignored) {
+    public void SignIn(ActionEvent event) {
         Stage stage = (Stage) PaneContainer.getScene().getWindow();
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/SignInWindow.fxml")))));
@@ -118,7 +126,7 @@ public class LogInController {
     }
 
     @FXML
-    public void forgotPwd(ActionEvent ignored) {
+    public void forgotPwd(ActionEvent event) {
      if(!Objects.equals(txtUserName.getText(), "")){
         Stage stage = new Stage();
         stage.setTitle("Forgot Password Window");
@@ -137,7 +145,7 @@ public class LogInController {
     }
 
     @FXML
-    public void showPwd(ActionEvent ignored) {
+    public void showPwd(ActionEvent event) {
         if (showPwdCheckBox.isSelected()) {
             txtVisiblePassword.setVisible(true);
             txtPassword.setVisible(false);

@@ -22,8 +22,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 public class SignInController {
+
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
 
     @FXML
     private JFXTextField OTPtxt;

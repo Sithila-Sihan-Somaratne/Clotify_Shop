@@ -15,16 +15,12 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @ToString
-public class EmployersTM extends RecursiveTreeObject<EmployersTM> {
+public class SuppliersTM extends RecursiveTreeObject<SuppliersTM> {
     @Id
     private String id;
     private String title;
     private String name;
-    private String NIC;
-    private String DOB;
-    private String address;
+    private String company;
     private String contact;
-    private String BBAN;
-    private String bank_branch;
     private JFXButton option;
 }

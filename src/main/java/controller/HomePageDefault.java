@@ -51,8 +51,7 @@ public class HomePageDefault {
     public static User user = new User();
 
     @FXML
-    void employerBtn(ActionEvent ignored) {
-
+    void employerBtn(ActionEvent event) {
         Stage stage = (Stage) HomePane.getScene().getWindow();
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/EmployersWindow.fxml")))));
@@ -66,12 +65,21 @@ public class HomePageDefault {
     }
 
     @FXML
-    void itemBtn(ActionEvent ignored) {
-
+    void itemBtn(ActionEvent event) {
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/ItemWindow.fxml")))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.setTitle("Item Window");
+        stage.setResizable(false);
+        stage.show();
+        ItemController.user = user;
     }
 
     @FXML
-    void logOut(ActionEvent ignored) {
+    void logOut(ActionEvent event) {
         Optional<ButtonType> option = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to log out?", ButtonType.YES, ButtonType.NO).showAndWait();
         if (option.isPresent() && (option.get() == ButtonType.YES)){
             Stage stage = (Stage) pieClothes.getScene().getWindow();
@@ -89,7 +97,7 @@ public class HomePageDefault {
     }
 
     @FXML
-    void openCalculator(ActionEvent ignored) {
+    void openCalculator(ActionEvent event) {
         Runtime run = Runtime.getRuntime();
         try {
             run.exec("calc");
@@ -99,7 +107,7 @@ public class HomePageDefault {
     }
 
     @FXML
-    void orderBtn(ActionEvent ignored) {
+    void orderBtn(ActionEvent event) {
         Stage stage = (Stage) HomePane.getScene().getWindow();
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderWindow.fxml")))));
@@ -113,18 +121,27 @@ public class HomePageDefault {
     }
 
     @FXML
-    void orderDetailsBtn(ActionEvent ignored) {
+    void orderDetailsBtn(ActionEvent event) {
 
     }
     
     @FXML
-    void salesReturnBtn(ActionEvent ignored) {
+    void salesReturnBtn(ActionEvent event) {
 
     }
 
     @FXML
-    void supplierBtn(ActionEvent ignored) {
-
+    void supplierBtn(ActionEvent event) {
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/SuppliersWindow.fxml")))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.setTitle("Supplier Window");
+        stage.setResizable(false);
+        stage.show();
+        SuppliersController.user = user;
     }
 
     @FXML

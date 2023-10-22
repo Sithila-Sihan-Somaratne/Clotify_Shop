@@ -15,12 +15,20 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtilUser;
 
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 public class ForgotPwdWindow {
+
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
 
     @FXML
     private AnchorPane ForgotPane;
