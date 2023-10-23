@@ -2,7 +2,6 @@ package util;
 
 
 import dto.Orders;
-import dto.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
