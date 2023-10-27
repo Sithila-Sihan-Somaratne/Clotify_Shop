@@ -2,6 +2,8 @@ package controller;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import dto.AccessTablesFromOtherClasses_ATFOC.ItemsATFOC;
+import dto.Items;
 import dto.Suppliers;
 import dto.User;
 import dto.tm.SuppliersTM;
@@ -19,6 +21,7 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import util.HibernateUtilItem;
 import util.HibernateUtilSupplier;
 
 import java.net.URL;
@@ -45,7 +48,7 @@ public class SuppliersController {
     private TreeTableColumn<?, ?> companyCol;
 
     @FXML
-    private JFXTreeTableView<?> supplierItemTable;
+    private JFXTreeTableView<ItemsATFOC> supplierItemTable;
 
     @FXML
     private AnchorPane supplierPane;
@@ -99,7 +102,7 @@ public class SuppliersController {
         supplierContacttxt.setText("");
         supplierCompanytxt.setText("");
         supplierTitleComboBox.setValue(null);
-        supplierTitleComboBox.setPromptText("Select");
+        itemCodeCol.setGraphic(null);
     }
 
     @FXML
@@ -170,7 +173,6 @@ public class SuppliersController {
             Query query = session.createQuery("FROM Suppliers");
             List<Suppliers> list = query.list();
             session.close();
-
             for (Suppliers suppliers : list) {
                 JFXButton btn = getJfxButton(suppliers);
 
@@ -182,11 +184,10 @@ public class SuppliersController {
                         suppliers.getCompany(),
                         btn
                 ));
-            }
-            TreeItem<SuppliersTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
-            supplierTable.setRoot(treeItem);
-            supplierTable.setShowRoot(false);
-
+                TreeItem<SuppliersTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+                supplierTable.setRoot(treeItem);
+                supplierTable.setShowRoot(false);
+             }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -228,6 +229,9 @@ public class SuppliersController {
         contactCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Contact"));
         companyCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Company"));
         OptionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Option"));
+        itemCodeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("ItemCode"));
+        descriptionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Description"));
+        qtyCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Qty"));
         generateId();
         loadTable();
 
@@ -247,6 +251,25 @@ public class SuppliersController {
         supplierNametxt.setText(value.getValue().getName());
         supplierContacttxt.setText(value.getValue().getContact());
         supplierCompanytxt.setText(value.getValue().getCompany());
+
+        ObservableList<ItemsATFOC> TMList = FXCollections.observableArrayList();
+
+        Session sess = HibernateUtilItem.getSession();
+        String qry = "FROM Items WHERE supplierID = '" + supplierIdtxt.getText()+ "'";
+        Query Qry = sess.createQuery(qry);
+        List <Items> lst = Qry.list();
+        sess.close();
+        for (Items items : lst){
+            TMList.add(new ItemsATFOC(
+                    items.getCode(),
+                    items.getDescription(),
+                    items.getQty()
+            ));
+        }
+
+        TreeItem<ItemsATFOC> trItm = new RecursiveTreeItem<>(TMList, RecursiveTreeObject::getChildren); //Error comes here.
+        supplierItemTable.setRoot(trItm);
+        supplierItemTable.setShowRoot(false);
     }
 
     private void generateId() {

@@ -24,14 +24,14 @@
          </font>
       </JFXButton>
       <Label layoutX="25.0" layoutY="81.0" prefHeight="17.0" prefWidth="64.0" text="Employer *:" />
-      <JFXComboBox fx:id="employerComboBox" layoutX="165.0" layoutY="77.0" promptText="Select ID" />
-      <JFXTextField fx:id="employerNameTxt" layoutX="280.0" layoutY="77.0" promptText="Employer Name" />
+      <JFXComboBox fx:id="employerComboBox" layoutX="165.0" layoutY="77.0" onAction="#selectEmployerID" promptText="Select ID" />
+      <JFXTextField fx:id="employerNameTxt" layoutX="299.0" layoutY="77.0" promptText="Employer Name" />
       <Label layoutX="24.0" layoutY="114.0" text="Customer Name *:" />
       <JFXTextField fx:id="customerNametxt" layoutX="166.0" layoutY="110.0" prefHeight="25.0" prefWidth="258.0" promptText="Customer Name" />
       <Label layoutX="23.0" layoutY="148.0" text="Customer Contact *:" />
       <JFXTextField fx:id="customerContacttxt" layoutX="167.0" layoutY="144.0" prefHeight="25.0" prefWidth="258.0" promptText="Customer Contact" />
       <Label layoutX="25.0" layoutY="221.0" prefHeight="17.0" prefWidth="46.0" text="Date *:" />
-      <JFXTextField fx:id="customerEmail" layoutX="169.0" layoutY="179.0" prefHeight="25.0" prefWidth="258.0" promptText="Customer Email" />
+      <JFXTextField fx:id="customerEmailtxt" layoutX="169.0" layoutY="179.0" prefHeight="25.0" prefWidth="258.0" promptText="Customer Email" />
       <Label layoutX="25.0" layoutY="183.0" text="Customer Email *:" />
       <DatePicker fx:id="datePicker" layoutX="162.0" layoutY="217.0" prefHeight="25.0" prefWidth="269.0" />
       <Label layoutX="27.0" layoutY="256.0" prefHeight="17.0" prefWidth="71.0" text="Payment *:" />
@@ -39,7 +39,7 @@
       <JFXCheckBox fx:id="cardComboBox" layoutX="286.0" layoutY="256.0" prefHeight="18.0" prefWidth="64.0" text="Card" />
       <Label layoutX="668.0" layoutY="31.0" text="Order ID * : " />
       <Label fx:id="orderID" layoutX="771.0" layoutY="31.0" text="ORD-00000001" />
-      <JFXTreeTableView fx:id="orderTable" layoutX="39.0" layoutY="325.0" prefHeight="175.0" prefWidth="808.0">
+      <JFXTreeTableView fx:id="orderTable" layoutX="110.0" layoutY="331.0" prefHeight="175.0" prefWidth="692.0">
          <columns>
             <TreeTableColumn fx:id="ItemCodeCol" prefWidth="73.0" text="Item Code" />
             <TreeTableColumn fx:id="DescriptionCol" prefWidth="105.0" text="Description" />
@@ -50,10 +50,10 @@
             <TreeTableColumn fx:id="TypeCol" prefWidth="38.0" text="Type" />
             <TreeTableColumn fx:id="SizeCol" prefWidth="37.0" text="Size" />
             <TreeTableColumn fx:id="AmountCol" prefWidth="134.0" text="Amount" />
-            <TreeTableColumn fx:id="OptionCol" prefWidth="111.0" text="Option" />
-         </columns></JFXTreeTableView>
+         </columns>
+      </JFXTreeTableView>
       <Label layoutX="473.0" layoutY="81.0" prefHeight="17.0" prefWidth="72.0" text="Item Code *:" />
-      <JFXComboBox fx:id="supplierComboBox" layoutX="752.0" layoutY="77.0" promptText="Select " />
+      <JFXComboBox fx:id="supplierComboBox" layoutX="752.0" layoutY="77.0" onAction="#selectSupplierID" promptText="Select " />
       <JFXTextField fx:id="itemCodetxt" layoutX="608.0" layoutY="77.0" promptText="P-00000" />
       <Label layoutX="473.0" layoutY="114.0" text="Description *:" />
       <JFXTextField fx:id="Descriptiontxt" layoutX="602.0" layoutY="110.0" prefHeight="25.0" prefWidth="258.0" promptText="Description" />
@@ -110,5 +110,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
+      <JFXTextField fx:id="txtSearch" layoutX="54.0" layoutY="288.0" promptText="Search" />
    </AnchorPane>
 </AnchorPane>

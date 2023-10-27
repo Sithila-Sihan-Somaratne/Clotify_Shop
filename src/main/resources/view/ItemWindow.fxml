@@ -15,7 +15,7 @@
    <ImageView fitHeight="611.0" fitWidth="1000.0">
       <Image url="@../img/bg-img.jpg" />
    </ImageView>
-   <AnchorPane layoutX="49.0" layoutY="32.0" prefHeight="548.0" prefWidth="885.0" style="-fx-background-color: white;">
+   <AnchorPane layoutX="58.0" layoutY="32.0" prefHeight="548.0" prefWidth="885.0" style="-fx-background-color: white;">
       <JFXButton layoutX="23.0" layoutY="20.0" onAction="#backToHome" style="-fx-background-color: #ff5100;" text="Back" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -37,8 +37,6 @@
       <Label layoutX="23.0" layoutY="148.0" text="Description *:" />
       <JFXTextField fx:id="Descriptiontxt" layoutX="170.0" layoutY="144.0" prefHeight="25.0" prefWidth="258.0" promptText="Description" />
       <JFXTextField fx:id="Qtytxt" layoutX="168.0" layoutY="175.0" prefHeight="25.0" prefWidth="71.0" promptText="0" />
-      <Label layoutX="247.0" layoutY="179.0" prefHeight="17.0" prefWidth="82.0" text="Add Qty *:" />
-      <JFXTextField fx:id="AddQtytxt" layoutX="340.0" layoutY="175.0" prefHeight="25.0" prefWidth="89.0" promptText="0" />
       <Label layoutX="465.0" layoutY="81.0" prefHeight="17.0" prefWidth="77.0" text="Selling Price *:" />
       <JFXTextField fx:id="sellingPricetxt" layoutX="618.0" layoutY="79.0" prefHeight="25.0" prefWidth="135.0" promptText="0.00" />
       <Label layoutX="465.0" layoutY="188.0" prefHeight="17.0" prefWidth="54.0" text="Profit *:" />
@@ -59,7 +57,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="691.0" layoutY="274.0" onAction="#AddItemToCart" style="-fx-background-color: #f8c238;" text="📈Add to Stock" textFill="WHITE">
+      <JFXButton layoutX="691.0" layoutY="274.0" onAction="#AddItemToStock" style="-fx-background-color: #f8c238;" text="📈Add to Stock" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -68,12 +66,14 @@
       <Label layoutX="23.0" layoutY="81.0" prefHeight="17.0" prefWidth="72.0" text="Item Code *:" />
       <JFXTextField fx:id="itemCodetxt" layoutX="169.0" layoutY="77.0" promptText="P-00001" />
       <Label layoutX="23.0" layoutY="114.0" prefHeight="17.0" prefWidth="72.0" text="Supplier *:" />
-      <JFXComboBox fx:id="supplierComboBox" layoutX="170.0" layoutY="110.0" promptText="Select " />
-      <JFXTextField fx:id="supplierNametxt" layoutX="252.0" layoutY="110.0" promptText="Supplier Name" />
+      <JFXComboBox fx:id="supplierComboBox" layoutX="170.0" layoutY="110.0" onAction="#selectSupplierID" promptText="Select " />
+      <JFXTextField fx:id="supplierNametxt" layoutX="288.0" layoutY="111.0" promptText="Supplier Name" />
       <Label layoutX="23.0" layoutY="179.0" text="Qty *:" />
       <Label layoutX="20.0" layoutY="209.0" prefHeight="17.0" prefWidth="77.0" text="Buying Price *:" />
       <JFXTextField fx:id="buyingPricetxt" layoutX="168.0" layoutY="205.0" prefHeight="25.0" prefWidth="147.0" promptText="0.00" />
       <JFXComboBox fx:id="typeComboBox" layoutX="615.0" layoutY="119.0" promptText="Select " />
       <JFXComboBox fx:id="sizeComboBox" layoutX="615.0" layoutY="157.0" promptText="Select " />
+      <Label layoutX="78.0" layoutY="285.0" text="Search" />
+      <JFXTextField fx:id="txtSearch" layoutX="164.0" layoutY="281.0" />
    </AnchorPane>
 </AnchorPane>

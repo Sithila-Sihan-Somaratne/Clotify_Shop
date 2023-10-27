@@ -1,15 +1,12 @@
 package dto;
 
 
-import dto.composite.OrdersCI;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 
 @Entity
-@IdClass(OrdersCI.class)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +16,6 @@ import javax.persistence.IdClass;
 public class Orders {
     @Id
     private String orderId;
-    @Id
     private String date;
     private double total;
     private String custName;
