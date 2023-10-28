@@ -111,7 +111,16 @@ public class HomePageAdmin {
 
     @FXML
     void orderDetailsBtn(ActionEvent event) {
-
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderDetailForm.fxml")))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.setTitle("Order Details Window");
+        stage.setResizable(false);
+        stage.show();
+        OrderDetailController.user = user;
     }
 
     @FXML

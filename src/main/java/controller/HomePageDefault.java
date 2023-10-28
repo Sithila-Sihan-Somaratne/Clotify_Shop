@@ -110,7 +110,7 @@ public class HomePageDefault {
     void orderBtn(ActionEvent event) {
         Stage stage = (Stage) HomePane.getScene().getWindow();
         try {
-            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderWindow.fxml")))));
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderDetailForm.fxml")))));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,7 +122,16 @@ public class HomePageDefault {
 
     @FXML
     void orderDetailsBtn(ActionEvent event) {
-
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderDetailWindow.fxml")))));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.setTitle("Order Details Window");
+        stage.setResizable(false);
+        stage.show();
+        OrderDetailController.user = user;
     }
     
     @FXML

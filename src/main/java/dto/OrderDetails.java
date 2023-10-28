@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @ToString
-public class OrderDetails {
+public class OrderDetails{
     @Id
     private String itemCode;
     private String description;
