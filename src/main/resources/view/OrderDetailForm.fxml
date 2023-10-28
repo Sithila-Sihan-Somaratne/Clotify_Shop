@@ -42,9 +42,8 @@
             <TreeTableColumn fx:id="totalCol" prefWidth="69.0" text="Total" />
             <TreeTableColumn fx:id="custNameCol" prefWidth="116.0" text="Customer Name" />
             <TreeTableColumn fx:id="custContactCol" prefWidth="116.0" text="Customer Contact" />
-            <TreeTableColumn fx:id="custEmailCol" prefWidth="102.0" text="Customer Email" />
-            <TreeTableColumn fx:id="employersIDCol" prefWidth="78.0" text="Employer ID" />
-            <TreeTableColumn fx:id="arrearsCol" prefWidth="49.0" text="Arrears" />
+            <TreeTableColumn fx:id="custEmailCol" prefWidth="145.0" text="Customer Email" />
+            <TreeTableColumn fx:id="employersIDCol" prefWidth="85.0" text="Employer ID" />
          </columns>
       </JFXTreeTableView>
    </AnchorPane>

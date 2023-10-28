@@ -148,7 +148,7 @@ public class SuppliersController {
         }
         if(supplierTitleComboBox.getValue() != null ){
             if (!areEmpty) {
-                Suppliers suppliers = new Suppliers(supplierIdtxt.getText(), supplierTitleComboBox.getValue(), supplierNametxt.getText(), supplierContacttxt.getText(),  supplierContacttxt.getText());
+                Suppliers suppliers = new Suppliers(supplierIdtxt.getText(), supplierTitleComboBox.getValue(), supplierNametxt.getText(), supplierContacttxt.getText(),  supplierCompanytxt.getText());
                 Session session = HibernateUtilSupplier.getSession();
                 Transaction transaction = session.beginTransaction();
                 session.save(suppliers);

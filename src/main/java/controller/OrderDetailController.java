@@ -26,6 +26,7 @@ import util.HibernateUtilOrder;
 import util.HibernateUtilOrderDetails;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -64,9 +65,6 @@ public class OrderDetailController {
 
     @FXML
     private TreeTableColumn<?, ?> UnitPriceCol;
-
-    @FXML
-    private TreeTableColumn<?, ?> arrearsCol;
 
     @FXML
     private TreeTableColumn<?, ?> custContactCol;
@@ -134,7 +132,6 @@ public class OrderDetailController {
         custContactCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("CustContact"));
         custEmailCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("CustEmail"));
         employersIDCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("EmployerId"));
-        arrearsCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Arrears"));
         /*--------------------------------------------------------------------------------------*/
         ItemCodeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("ItemCode"));
         DescriptionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Description"));
@@ -145,8 +142,28 @@ public class OrderDetailController {
         TypeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Type"));
         SizeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Size"));
         AmountCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Amount"));
-
         LoadTables();
+
+        orderIDtxt.textProperty().addListener((observableValue, oldValue, newValue) -> orderTable.setPredicate(orderDetailsTMTreeItem -> orderDetailsTMTreeItem.getValue().getOrderId().contains(newValue)));
+        orderIDtxt.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            Session session = HibernateUtilOrder.getSession();
+            String string = "FROM Orders";
+            Query query = session.createQuery(string);
+            ArrayList<Orders> list = (ArrayList<Orders>) query.list();
+            String date;
+            for (Orders orders : list){
+                if (Objects.equals(orders.getOrderId(), orderIDtxt.getText())){
+                    date = orders.getDate();
+                    String finalDate = date;
+                    orderDetailsTable.setPredicate(ordersTMTreeItem -> ordersTMTreeItem.getValue().getDate().contains(finalDate));
+                    break;
+                }else{
+                    orderDetailsTable.setPredicate(null);
+                }
+            }
+            session.close();
+        });
+
     }
 
     private void LoadTables() {
@@ -165,8 +182,7 @@ public class OrderDetailController {
                         orders.getCustName(),
                         orders.getCustContact(),
                         orders.getCustEmail(),
-                        orders.getEmployerId(),
-                        orders.getArrears()
+                        orders.getEmployerId()
                 ));
             }
             TreeItem<OrdersTM> treeItem = new RecursiveTreeItem<>(tmList1, RecursiveTreeObject::getChildren); //Error comes here.

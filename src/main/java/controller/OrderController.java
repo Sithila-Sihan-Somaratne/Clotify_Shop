@@ -245,11 +245,7 @@ public class OrderController {
 
     @FXML
     void PlaceOrder(ActionEvent event) {
-        String arrears = "Yes";
-        if (Double.parseDouble(cashTxt.getText()) >= Double.parseDouble(Totaltxt.getText())){
-            arrears = "No";
-        }
-        Orders orders = new Orders(orderID.getText(), datePicker.getValue().toString(), Double.parseDouble(Totaltxt.getText()), customerNametxt.getText(), customerContacttxt.getText(), customerEmailtxt.getText(), employerComboBox.getValue(), arrears);
+        Orders orders = new Orders(orderID.getText(), datePicker.getValue().toString(), Double.parseDouble(Totaltxt.getText()), customerNametxt.getText(), customerContacttxt.getText(), customerEmailtxt.getText(), employerComboBox.getValue());
         Session sess = HibernateUtilOrder.getSession();
         Transaction trans = sess.beginTransaction();
         sess.save(orders);
@@ -405,7 +401,7 @@ public class OrderController {
 
         txtSearch.textProperty().addListener((observableValue, oldValue, newValue) -> orderTable.setPredicate(orderDetailsTMTreeItem -> orderDetailsTMTreeItem.getValue().getItemCode().contains(newValue)));
         cashTxt.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            String regex = "^[0-9]*\\.?[0-9]*$";
+            String regex = "^\\d*\\.?\\d*$";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(cashTxt.getText());
             if (matcher.matches() && !Objects.equals(cashTxt.getText(), "")) {
@@ -520,7 +516,7 @@ public class OrderController {
         if ((long) list.size() > 0){
             int num = Integer.parseInt(list.get(0).getOrderId().split("ORD-")[1]);
             num++;
-            orderID.setText(String.format("ORD-%07d",num));
+            orderID.setText(String.format("ORD-%08d",num));
         }else {
             orderID.setText("ORD-00000001");
         }

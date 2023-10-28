@@ -24,5 +24,4 @@ public class OrdersTM extends RecursiveTreeObject<OrdersTM> {
     private String custContact;
     private String custEmail;
     private String employerId;
-    private String arrears;
 }

@@ -22,5 +22,4 @@ public class Orders {
     private String custContact;
     private String custEmail;
     private String employerId;
-    private String arrears;
 }

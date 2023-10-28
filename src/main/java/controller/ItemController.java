@@ -294,7 +294,7 @@ public class ItemController {
         session.close();
         generateID();
         buyingPricetxt.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            String regex = "^[0-9]*\\.?[0-9]*$";
+            String regex = "^\\d*\\.?\\d*$";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(buyingPricetxt.getText());
             if (!matcher.matches()){
@@ -302,7 +302,7 @@ public class ItemController {
             }
         });
         sellingPricetxt.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            String regex = "^[0-9]*\\.?[0-9]*$";
+            String regex = "^\\d*\\.?\\d*$";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(sellingPricetxt.getText());
             double sellingPrice = 0.0;
