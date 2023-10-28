@@ -169,7 +169,7 @@ public class ItemController {
             itemTable.setShowRoot(false);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -192,7 +192,7 @@ public class ItemController {
                 }
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
         return btn;
@@ -208,10 +208,10 @@ public class ItemController {
     private void clearFields() {
         supplierNametxt.setText("");
         Descriptiontxt.setText("");
-        Qtytxt.setText("");
-        buyingPricetxt.setText("");
-        sellingPricetxt.setText("");
-        profitLabel.setText("");
+        Qtytxt.setText("0");
+        buyingPricetxt.setText("0");
+        sellingPricetxt.setText("0");
+        profitLabel.setText("0");
         supplierComboBox.setValue(null);
         supplierComboBox.setPromptText("Select");
         typeComboBox.setValue(null);
@@ -250,14 +250,14 @@ public class ItemController {
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }else if(Objects.equals(user.getType(),"Default")){
             stage.setTitle("Home Page (Default)");
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         stage.setResizable(false);

@@ -99,7 +99,7 @@ public class ForgotPwdWindow {
     }
 
     private String updatePwd(String newPassword) {
-        String encryptedpassword = null;
+        String encryptedpassword;
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
             m.update(newPassword.getBytes());
@@ -109,9 +109,8 @@ public class ForgotPwdWindow {
                 s.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             encryptedpassword = s.toString();
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        }catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
         return encryptedpassword;
     }

@@ -87,7 +87,7 @@ public class SignInController {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LogInWindow.fxml")))));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         stage.setTitle("Log In Window.");
         stage.show();
@@ -172,7 +172,7 @@ public class SignInController {
     }
 
     private String encryptPwd(String newPassword) {
-        String encryptedpassword = null;
+        String encryptedpassword;
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
             m.update(newPassword.getBytes());
@@ -184,7 +184,7 @@ public class SignInController {
             encryptedpassword = s.toString();
         }
         catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return encryptedpassword;
     }

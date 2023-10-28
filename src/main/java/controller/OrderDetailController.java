@@ -111,14 +111,14 @@ public class OrderDetailController {
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }else if(Objects.equals(user.getType(),"Default")){
             stage.setTitle("Home Page (Default)");
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         stage.setResizable(false);
@@ -172,8 +172,8 @@ public class OrderDetailController {
             TreeItem<OrdersTM> treeItem = new RecursiveTreeItem<>(tmList1, RecursiveTreeObject::getChildren); //Error comes here.
             orderTable.setRoot(treeItem);
             orderTable.setShowRoot(false);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         ObservableList<OrderDetailsTM> tmList2 = FXCollections.observableArrayList();
         try {
@@ -198,8 +198,8 @@ public class OrderDetailController {
             TreeItem<OrderDetailsTM> treeItem = new RecursiveTreeItem<>(tmList2, RecursiveTreeObject::getChildren); //Error comes here.
             orderDetailsTable.setRoot(treeItem);
             orderDetailsTable.setShowRoot(false);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -113,14 +113,14 @@ public class SuppliersController {
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }else if(Objects.equals(user.getType(),"Default")){
             stage.setTitle("Home Page (Default)");
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         stage.setResizable(false);
@@ -189,7 +189,7 @@ public class SuppliersController {
                 supplierTable.setShowRoot(false);
              }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -212,7 +212,7 @@ public class SuppliersController {
                 }
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
         return btn;

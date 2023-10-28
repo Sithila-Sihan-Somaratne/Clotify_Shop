@@ -211,7 +211,7 @@ public class OrderController {
             orderTable.setShowRoot(false);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -227,14 +227,15 @@ public class OrderController {
         customerEmailtxt.setText("");
         customerContacttxt.setText("");
         itemCodetxt.setText("");
-        sellingPricetxt.setText("");
         Descriptiontxt.setText("");
-        Qtytxt.setText("");
-        QtyOnhandtxt.setText("");
-        Discounttxt.setText("");
-        cashTxt.setText("");
-        Totaltxt.setText("");
-        Balancetxt.setText("");
+        Qtytxt.setText("0");
+        QtyOnhandtxt.setText("0");
+        sellingPricetxt.setText("0");
+        Profittxt.setText("");
+        Discounttxt.setText("0");
+        cashTxt.setText("0");
+        Totaltxt.setText("0");
+        Balancetxt.setText("0");
         employerComboBox.setValue(null);
         supplierComboBox.setValue(null);
         cardComboBox.setSelected(false);
@@ -343,14 +344,14 @@ public class OrderController {
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }else if(Objects.equals(user.getType(),"Default")){
             stage.setTitle("Home Page (Default)");
             try {
                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         stage.setResizable(false);
@@ -363,7 +364,7 @@ public class OrderController {
         try {
             run.exec("calc");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -483,8 +484,8 @@ public class OrderController {
                 Discounttxt.setText(String.valueOf(newValue.getValue().getDiscount()));
                 Totaltxt.setText(String.valueOf(newValue.getValue().getAmount()));
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
     }
 

@@ -56,7 +56,7 @@ public class HomePageDefault {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/EmployersWindow.fxml")))));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         stage.setTitle("Employer Window");
         stage.setResizable(false);
@@ -70,7 +70,7 @@ public class HomePageDefault {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/ItemWindow.fxml")))));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         stage.setTitle("Item Window");
         stage.setResizable(false);
@@ -89,7 +89,7 @@ public class HomePageDefault {
             try {
                 stg.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/LogInWindow.fxml")))));
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             stg.setResizable(false);
             stg.show();
@@ -102,7 +102,7 @@ public class HomePageDefault {
         try {
             run.exec("calc");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -112,7 +112,7 @@ public class HomePageDefault {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderDetailForm.fxml")))));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         stage.setTitle("Order Window");
         stage.setResizable(false);
@@ -126,7 +126,7 @@ public class HomePageDefault {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderDetailWindow.fxml")))));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         stage.setTitle("Order Details Window");
         stage.setResizable(false);
@@ -145,7 +145,7 @@ public class HomePageDefault {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/SuppliersWindow.fxml")))));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         stage.setTitle("Supplier Window");
         stage.setResizable(false);

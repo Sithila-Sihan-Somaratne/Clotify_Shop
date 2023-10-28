@@ -118,7 +118,7 @@ public class LogInController {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/SignInWindow.fxml")))));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         stage.setTitle("Sign In Window.");
         stage.show();
@@ -133,8 +133,8 @@ public class LogInController {
         try {
             stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/forgotPwdWindow.fxml")))));
             stage.setResizable(false);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         stage.show();
         ForgotPwdWindow forgotPwdWindow = new ForgotPwdWindow();
