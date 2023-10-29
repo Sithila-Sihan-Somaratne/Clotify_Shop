@@ -1,19 +1,20 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import dto.Items;
 import dto.OrderDetails;
 import dto.Orders;
 import dto.User;
-import dto.tm.withoutBtn.OrderDetailsTM;
+import dto.tm.OrderDetailTM;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,13 +22,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import util.HibernateUtilItem;
 import util.HibernateUtilOrder;
 import util.HibernateUtilOrderDetails;
 
@@ -73,7 +76,7 @@ public class SalesReturnController {
     private AnchorPane salesReturnPane;
 
     @FXML
-    private JFXTreeTableView<OrderDetailsTM> orderDetailsTable;
+    private JFXTreeTableView<OrderDetailTM> orderDetailsTable;
 
     @FXML
     private JFXTextField orderIDtxt;
@@ -81,10 +84,21 @@ public class SalesReturnController {
     @FXML
     private JFXTextField qtyText;
 
+    @FXML
+    private Label refundTxt;
+
     public static User user;
+
     private ChangeListener<String> changeListener;
 
     private boolean isListenerActive = true;
+
+    private double total = 0;
+
+    private int qty = 0;
+
+    private String itemCode = "";
+
 
     @FXML
     void backToHome(ActionEvent event) {
@@ -122,8 +136,20 @@ public class SalesReturnController {
 
     @FXML
     void placeReturn(ActionEvent event) {
-
+        if (!Objects.equals(qtyText.getText(), "") && !Objects.equals(orderIDtxt.getText(), "")){
+            Session session = HibernateUtilItem.getSession();
+            Items items = session.find(Items.class, itemCode);
+            Transaction transaction = session.beginTransaction();
+            items.setQty(items.getQty() + Integer.parseInt(qtyText.getText()));
+            session.save(items);
+            transaction.commit();
+            session.close();
+            new Alert(Alert.AlertType.INFORMATION,"The sales return has been done successfully!").show();
+        }else{
+            new Alert(Alert.AlertType.WARNING, "Text Fields mustn't be empty!").show();
+        }
     }
+
 
     @FXML
     void updateReturn(ActionEvent event) {
@@ -142,7 +168,7 @@ public class SalesReturnController {
         SizeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Size"));
         AmountCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Amount"));
         OptionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Option"));
-        LoadTables();
+        LoadTable();
 
         orderDetailsTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
             if (newValue!=null){
@@ -163,6 +189,7 @@ public class SalesReturnController {
             for (Orders orders : list){
                 if (Objects.equals(orders.getOrderId(), newValue)){
                     date = orders.getDate();
+                    total = orders.getTotal();
                     String finalDate = date;
                     orderDetailsTable.setPredicate(ordersTMTreeItem -> ordersTMTreeItem.getValue().getDate().contains(finalDate));
                     break;
@@ -174,10 +201,23 @@ public class SalesReturnController {
         };
 
         orderIDtxt.textProperty().addListener(changeListener);
+
+        qtyText.textProperty().addListener(((observableValue, oldValue, newValue) -> {
+            String regex = "\\d+";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(qtyText.getText());
+            if (matcher.matches()){
+                int returnQty = Integer.parseInt(qtyText.getText());
+                refundTxt.setText(String.valueOf(total / qty * returnQty));
+            }else{
+                new Alert(Alert.AlertType.WARNING,"PLease enter digits between 0 and 9.").show();
+            }
+        }));
     }
 
-    private void setData(TreeItem<OrderDetailsTM> newValue) {
-        qtyText.setText(String.valueOf(newValue.getValue().getQty()));
+    private void setData(TreeItem<OrderDetailTM> newValue) {
+        itemCode = newValue.getValue().getItemCode();
+        qty = newValue.getValue().getQty();
         String date = newValue.getValue().getDate();
         try{
             Session session = HibernateUtilOrder.getSession();
@@ -198,8 +238,8 @@ public class SalesReturnController {
         }
     }
 
-    private void LoadTables() {
-        ObservableList<OrderDetailsTM> tmList2 = FXCollections.observableArrayList();
+    private void LoadTable() {
+        ObservableList<OrderDetailTM> tmList = FXCollections.observableArrayList();
         try {
             Session session = HibernateUtilOrderDetails.getSession();
             Query query = session.createQuery("FROM OrderDetails");
@@ -207,7 +247,8 @@ public class SalesReturnController {
             session.close();
 
             for (OrderDetails orderDetails : list) {
-                tmList2.add(new OrderDetailsTM(
+                JFXButton btn = getJfxButton(orderDetails);
+                tmList.add(new OrderDetailTM(
                         orderDetails.getItemCode(),
                         orderDetails.getDescription(),
                         orderDetails.getQty(),
@@ -216,15 +257,41 @@ public class SalesReturnController {
                         orderDetails.getDiscount(),
                         orderDetails.getType(),
                         orderDetails.getSize(),
-                        orderDetails.getAmount()
+                        orderDetails.getAmount(),
+                        btn
                 ));
             }
-            TreeItem<OrderDetailsTM> treeItem = new RecursiveTreeItem<>(tmList2, RecursiveTreeObject::getChildren); //Error comes here.
+            TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
             orderDetailsTable.setRoot(treeItem);
             orderDetailsTable.setShowRoot(false);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private JFXButton getJfxButton(OrderDetails orderDetails) {
+        JFXButton btn = new JFXButton("Delete");
+        btn.setStyle("-fx-background-color: #e12e2e; -fx-font-weight: BOLD");
+        btn.setTextFill(Color.rgb(255,255,255));
+        btn.setOnAction(actionEvent -> {
+            try {
+                Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete " + orderDetails.getItemCode() + " item from cart? ", ButtonType.YES, ButtonType.NO).showAndWait();
+                if ((buttonType.isPresent()) &&  buttonType.get() == ButtonType.YES){
+                    Session session = HibernateUtilOrderDetails.getSession();
+                    Transaction transaction = session.beginTransaction();
+                    session.delete(session.find(OrderDetails.class, orderDetails.getItemCode()));
+                    transaction.commit();
+                    session.close();
+                    new Alert(Alert.AlertType.INFORMATION,"Employer has been deleted successfully from cart!").show();
+                    LoadTable();
+                }
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
+                throw new RuntimeException(e);
+            }
+        });
+        return btn;
     }
 
 }

@@ -102,7 +102,11 @@ public class ItemController {
     @FXML
     private JFXComboBox<String> typeComboBox;
 
+    @FXML
     public JFXTextField txtSearch;
+
+    @FXML
+    private JFXTextField sizeTxt;
 
     public static User user;
 
@@ -123,17 +127,34 @@ public class ItemController {
             }
         }
         if (typeComboBox.getValue() != null && sizeComboBox.getValue() != null && supplierComboBox.getValue() != null){
-            if (!areEmpty) {
-                Items item = new Items(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(Qtytxt.getText()), Double.parseDouble(buyingPricetxt.getText()), Double.parseDouble(sellingPricetxt.getText()), typeComboBox.getValue(), sizeComboBox.getValue(), Double.parseDouble(profitLabel.getText()), supplierComboBox.getValue());
-                Session session = HibernateUtilItem.getSession();
-                Transaction transaction = session.beginTransaction();
-                session.save(item);
-                transaction.commit();
-                session.close();
-                clearFields();
-                loadTable();
-                generateID();
-                new Alert(Alert.AlertType.INFORMATION,"Item has been added successfully!").show();
+            if (Objects.equals(sizeComboBox.getValue(), "None") && !Objects.equals(sizeTxt.getText(), "")){
+                if (!areEmpty) {
+                    Items item = new Items(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(Qtytxt.getText()), Double.parseDouble(buyingPricetxt.getText()), Double.parseDouble(sellingPricetxt.getText()), typeComboBox.getValue(), sizeTxt.getText(), Double.parseDouble(profitLabel.getText()), supplierComboBox.getValue());
+                    Session session = HibernateUtilItem.getSession();
+                    Transaction transaction = session.beginTransaction();
+                    session.save(item);
+                    transaction.commit();
+                    session.close();
+                    clearFields();
+                    loadTable();
+                    generateID();
+                    new Alert(Alert.AlertType.INFORMATION,"Item has been added successfully!").show();
+                }
+            }else if(!Objects.equals(sizeComboBox.getValue(), "None") && Objects.equals(sizeTxt.getText(), "")){
+                if (!areEmpty) {
+                    Items item = new Items(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(Qtytxt.getText()), Double.parseDouble(buyingPricetxt.getText()), Double.parseDouble(sellingPricetxt.getText()), typeComboBox.getValue(), sizeComboBox.getValue(), Double.parseDouble(profitLabel.getText()), supplierComboBox.getValue());
+                    Session session = HibernateUtilItem.getSession();
+                    Transaction transaction = session.beginTransaction();
+                    session.save(item);
+                    transaction.commit();
+                    session.close();
+                    clearFields();
+                    loadTable();
+                    generateID();
+                    new Alert(Alert.AlertType.INFORMATION,"Item has been added successfully!").show();
+                }
+            }else{
+                new Alert(Alert.AlertType.WARNING,"Please select something on the Size Combo Box if you don't select  \"None\" \n(so you don't need to insert the value in the near Text Field).\nIf its value is \"None\", then you must insert the size in the Text field \n(the one near the combo box).").show();
             }
         }else{
             new Alert(Alert.AlertType.WARNING,"Please choose an item for the combo boxes.").show();
@@ -218,6 +239,7 @@ public class ItemController {
         typeComboBox.setPromptText("Select");
         sizeComboBox.setValue(null);
         sizeComboBox.setPromptText("Select");
+        sizeTxt.setText("");
     }
 
     @FXML
@@ -283,7 +305,10 @@ public class ItemController {
         sizeComboBox.getItems().add(new Label("L").getText());
         sizeComboBox.getItems().add(new Label("XL").getText());
         sizeComboBox.getItems().add(new Label("XXL").getText());
+        sizeComboBox.getItems().add(new Label("None").getText());
         sizeComboBox.setPromptText("Select");
+        sizeTxt.setEditable(false);
+        sizeComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> sizeTxt.setEditable(Objects.equals(newValue, "None")));
         Session session = HibernateUtilSupplier.getSession();
         String qry = "FROM Suppliers ORDER BY id DESC";
         Query query = session.createQuery(qry);
@@ -359,6 +384,7 @@ public class ItemController {
         sellingPricetxt.setText(String.valueOf(value.getValue().getSellingPrice()));
         typeComboBox.setValue(value.getValue().getType());
         sizeComboBox.setValue(value.getValue().getSize());
+        sizeTxt.setText(value.getValue().getSize());
         profitLabel.setText(String.valueOf(value.getValue().getProfit()));
     }
 

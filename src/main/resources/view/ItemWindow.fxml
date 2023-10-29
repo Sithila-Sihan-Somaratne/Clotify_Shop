@@ -76,7 +76,8 @@
       <JFXTextField fx:id="buyingPricetxt" layoutX="168.0" layoutY="205.0" prefHeight="25.0" prefWidth="147.0" promptText="0.00" />
       <JFXComboBox fx:id="typeComboBox" layoutX="615.0" layoutY="119.0" promptText="Select " />
       <JFXComboBox fx:id="sizeComboBox" layoutX="615.0" layoutY="157.0" promptText="Select " />
-      <Label layoutX="78.0" layoutY="285.0" text="Search" />
+      <Label layoutX="78.0" layoutY="285.0" text="Search :" />
       <JFXTextField fx:id="txtSearch" layoutX="164.0" layoutY="281.0" />
+      <JFXTextField fx:id="sizeTxt" layoutX="710.0" layoutY="157.0" prefHeight="25.0" prefWidth="86.0" promptText="Enter size" />
    </AnchorPane>
 </AnchorPane>

@@ -21,7 +21,7 @@
          </font>
       </JFXButton>
       <Label layoutX="668.0" layoutY="31.0" text="Order ID * : " />
-      <JFXTreeTableView fx:id="orderDetailsTable" layoutX="56.0" layoutY="319.0" prefHeight="175.0" prefWidth="800.0">
+      <JFXTreeTableView fx:id="orderDetailsTable" layoutX="43.0" layoutY="132.0" prefHeight="356.0" prefWidth="800.0">
          <columns>
             <TreeTableColumn fx:id="ItemCodeCol" prefWidth="73.0" text="Item Code" />
             <TreeTableColumn fx:id="DescriptionCol" prefWidth="105.0" text="Description" />
@@ -53,5 +53,11 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
+      <Label layoutX="25.0" layoutY="508.0" text="Refund : " />
+      <Label fx:id="refundTxt" layoutX="73.0" layoutY="506.0" text="0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </AnchorPane>
 </AnchorPane>
