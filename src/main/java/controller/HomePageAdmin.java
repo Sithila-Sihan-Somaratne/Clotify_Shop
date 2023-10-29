@@ -1,5 +1,6 @@
 package controller;
 
+import dto.OrderDetails;
 import dto.User;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -17,9 +18,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import util.HibernateUtilOrderDetails;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -113,7 +118,7 @@ public class HomePageAdmin {
     void orderDetailsBtn(ActionEvent event) {
         Stage stage = (Stage) HomePane.getScene().getWindow();
         try {
-            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderDetailForm.fxml")))));
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/OrderDetailsWindow.fxml")))));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -130,7 +135,16 @@ public class HomePageAdmin {
 
     @FXML
     void salesReturnBtn(ActionEvent event) {
-
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/SalesReturnWindow.fxml")))));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        stage.setTitle("Sales Return Window");
+        stage.setResizable(false);
+        stage.show();
+        SalesReturnController.user = user;
     }
 
     @FXML
@@ -149,14 +163,52 @@ public class HomePageAdmin {
 
     @FXML
     void initialize() {
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Gents", 0),
-                        new PieChart.Data("Ladies", 0),
-                        new PieChart.Data("Kids", 0),
-                        new PieChart.Data("Others", 0));
-        pieClothes.setData(pieChartData);
         manageDateAndTime();
+        pieClothes.setData(setPieChartData());
+    }
+
+    private ObservableList<PieChart.Data> setPieChartData() {
+        ObservableList<PieChart.Data> pieChartData;
+        Session session = HibernateUtilOrderDetails.getSession();
+        String string = "SELECT COUNT(*) FROM OrderDetails";
+        Query query = session.createQuery(string);
+        int count = query.list().size();
+        int gents = 0;
+        int ladies = 0;
+        int kids = 0;
+        int others = 0;
+        session.close();
+        if (count != 0){
+            Session sess = HibernateUtilOrderDetails.getSession();
+            String str = "FROM OrderDetails";
+            Query qry = sess.createQuery(str);
+            List<OrderDetails> list = qry.list();
+            for (OrderDetails orderDetails : list){
+                int numCount = 0;
+                while(numCount != count){
+                    numCount++;
+                    if (Objects.equals(orderDetails.getType(), "Gents")){
+                        gents = orderDetails.getQty();
+                    } else if (Objects.equals(orderDetails.getType(), "Ladies")) {
+                        ladies = orderDetails.getQty();
+                    } else if (Objects.equals(orderDetails.getType(), "Kids")) {
+                        kids = orderDetails.getQty();
+                    } else if (Objects.equals(orderDetails.getType(), "Others")) {
+                        others = orderDetails.getQty();
+                    }
+                }
+            }
+        }
+        float gentsData = ((float) gents / 4) * 100;
+        float ladiesData = ((float) ladies / 4) * 100;
+        float kidsData = ((float) kids / 4) * 100;
+        float othersData = ((float) others / 4) * 100;
+        pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Gents", gentsData),
+                new PieChart.Data("Ladies", ladiesData),
+                new PieChart.Data("Kids", kidsData),
+                new PieChart.Data("Others", othersData));
+        return pieChartData;
     }
 
     private void manageDateAndTime() {

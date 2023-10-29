@@ -39,7 +39,7 @@
       <JFXCheckBox fx:id="cardComboBox" layoutX="286.0" layoutY="256.0" prefHeight="18.0" prefWidth="64.0" text="Card" />
       <Label layoutX="668.0" layoutY="31.0" text="Order ID * : " />
       <Label fx:id="orderID" layoutX="771.0" layoutY="31.0" text="ORD-00000001" />
-      <JFXTreeTableView fx:id="orderTable" layoutX="110.0" layoutY="331.0" prefHeight="175.0" prefWidth="692.0">
+      <JFXTreeTableView fx:id="orderTable" layoutX="56.0" layoutY="319.0" prefHeight="175.0" prefWidth="800.0">
          <columns>
             <TreeTableColumn fx:id="ItemCodeCol" prefWidth="73.0" text="Item Code" />
             <TreeTableColumn fx:id="DescriptionCol" prefWidth="105.0" text="Description" />
@@ -50,6 +50,7 @@
             <TreeTableColumn fx:id="TypeCol" prefWidth="38.0" text="Type" />
             <TreeTableColumn fx:id="SizeCol" prefWidth="37.0" text="Size" />
             <TreeTableColumn fx:id="AmountCol" prefWidth="134.0" text="Amount" />
+            <TreeTableColumn fx:id="optionCol" prefWidth="103.0" text="Option" />
          </columns>
       </JFXTreeTableView>
       <Label layoutX="473.0" layoutY="81.0" prefHeight="17.0" prefWidth="72.0" text="Item Code *:" />
@@ -98,14 +99,23 @@
          </font>
       </JFXButton>
       <Label layoutX="49.0" layoutY="517.0" text="Total *:" />
-      <Label fx:id="Totaltxt" layoutX="98.0" layoutY="517.0" text="0.00" />
+      <Label fx:id="Totaltxt" layoutX="98.0" layoutY="515.0" text="0.00">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
       <Label layoutX="230.0" layoutY="517.0" text="Discount:" />
-      <Label fx:id="discountLabeltxt" layoutX="287.0" layoutY="517.0" text="0.00" />
+      <Label fx:id="discountLabeltxt" layoutX="285.0" layoutY="515.0" text="0.00">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
       <Label layoutX="387.0" layoutY="517.0" text="Balance:" />
-      <Label fx:id="Balancetxt" layoutX="444.0" layoutY="517.0" text="0.00" />
+      <Label fx:id="Balancetxt" layoutX="441.0" layoutY="515.0" text="0.00">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
       <Label layoutX="513.0" layoutY="517.0" prefHeight="17.0" prefWidth="44.0" text="Cash:" />
       <JFXTextField fx:id="cashTxt" layoutX="555.0" layoutY="513.0" prefHeight="25.0" prefWidth="98.0" />
-      <JFXButton layoutX="751.0" layoutY="506.0" onAction="#PlaceOrder" style="-fx-background-color: #e12e2e;" text="Place Order" textFill="WHITE">
+      <JFXButton layoutX="751.0" layoutY="506.0" onAction="#PlaceOrder" style="-fx-background-color: #3c0ca8;" text="Place Order" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

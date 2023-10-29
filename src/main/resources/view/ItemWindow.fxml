@@ -62,7 +62,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <Label fx:id="profitLabel" layoutX="615.0" layoutY="188.0" />
+      <Label fx:id="profitLabel" layoutX="615.0" layoutY="188.0" text="0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
       <Label layoutX="23.0" layoutY="81.0" prefHeight="17.0" prefWidth="72.0" text="Item Code *:" />
       <JFXTextField fx:id="itemCodetxt" layoutX="169.0" layoutY="77.0" promptText="P-00001" />
       <Label layoutX="23.0" layoutY="114.0" prefHeight="17.0" prefWidth="72.0" text="Supplier *:" />

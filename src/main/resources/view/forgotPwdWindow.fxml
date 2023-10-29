@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ForgotPane" maxHeight="518.0" maxWidth="465.0" prefHeight="518.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ForgotPwdWindow">
+<AnchorPane fx:id="ForgotPane" maxHeight="518.0" maxWidth="465.0" prefHeight="518.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ForgotPwdController">
     <Label layoutX="12.0" layoutY="54.0" prefHeight="31.0" prefWidth="395.0" text="If you forgot your password, then click the “Send OTP” button,">
         <font>
           <Font name="System Bold" size="12.0" />

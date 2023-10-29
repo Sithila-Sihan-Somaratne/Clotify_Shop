@@ -2,14 +2,19 @@ package controller;
 
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import dto.Employers;
 import dto.OrderDetails;
 import dto.Orders;
 import dto.User;
 import dto.tm.withoutBtn.OrderDetailsTM;
-import dto.tm.withoutBtn.OrdersTM;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,17 +28,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import util.HibernateUtilEmployer;
 import util.HibernateUtilOrder;
 import util.HibernateUtilOrderDetails;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
-
-public class OrderDetailController {
+public class SalesReturnController {
 
     @FXML
     private ResourceBundle resources;
@@ -57,6 +55,9 @@ public class OrderDetailController {
     private TreeTableColumn<?, ?> ItemCodeCol;
 
     @FXML
+    private TreeTableColumn<?, ?> OptionCol;
+
+    @FXML
     private TreeTableColumn<?, ?> QtyCol;
 
     @FXML
@@ -69,43 +70,25 @@ public class OrderDetailController {
     private TreeTableColumn<?, ?> UnitPriceCol;
 
     @FXML
-    private TreeTableColumn<?, ?> custContactCol;
-
-    @FXML
-    private TreeTableColumn<?, ?> custEmailCol;
-
-    @FXML
-    private TreeTableColumn<?, ?> custNameCol;
-
-    @FXML
-    private TreeTableColumn<?, ?> dateCol;
-
-    @FXML
-    private TreeTableColumn<?, ?> employersIDCol;
+    private AnchorPane salesReturnPane;
 
     @FXML
     private JFXTreeTableView<OrderDetailsTM> orderDetailsTable;
 
     @FXML
-    private TreeTableColumn<?, ?> orderIDCol;
-
-    @FXML
     private JFXTextField orderIDtxt;
 
     @FXML
-    private AnchorPane orderDetailsPane;
-
-    @FXML
-    private JFXTreeTableView<OrdersTM> orderTable;
-
-    @FXML
-    private TreeTableColumn<?, ?> totalCol;
+    private JFXTextField qtyText;
 
     public static User user;
+    private ChangeListener<String> changeListener;
+
+    private boolean isListenerActive = true;
 
     @FXML
     void backToHome(ActionEvent event) {
-        Stage stage = (Stage) orderDetailsPane.getScene().getWindow();
+        Stage stage = (Stage) salesReturnPane.getScene().getWindow();
         if (Objects.equals(user.getType(), "Admin")){
             stage.setTitle("Home Page (Admin)");
             try {
@@ -126,15 +109,29 @@ public class OrderDetailController {
     }
 
     @FXML
-    void initialize(){
-        orderIDCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("OrderId"));
-        dateCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Date"));
-        totalCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Total"));
-        custNameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("CustName"));
-        custContactCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("CustContact"));
-        custEmailCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("CustEmail"));
-        employersIDCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("EmployerId"));
-        /*--------------------------------------------------------------------------------------*/
+    void clear(ActionEvent event) {
+        clearFields();
+    }
+
+    private void clearFields() {
+        orderIDtxt.textProperty().removeListener(changeListener);
+        orderIDtxt.setText("");
+        qtyText.setText("0");
+        orderIDtxt.textProperty().addListener(changeListener);
+    }
+
+    @FXML
+    void placeReturn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateReturn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void initialize() {
         ItemCodeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("ItemCode"));
         DescriptionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Description"));
         QtyCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Qty"));
@@ -144,17 +141,27 @@ public class OrderDetailController {
         TypeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Type"));
         SizeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Size"));
         AmountCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Amount"));
+        OptionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Option"));
         LoadTables();
 
-        orderIDtxt.textProperty().addListener((observableValue, oldValue, newValue) -> orderTable.setPredicate(orderDetailsTMTreeItem -> orderDetailsTMTreeItem.getValue().getOrderId().contains(newValue)));
-        orderIDtxt.textProperty().addListener((observableValue, oldValue, newValue) -> {
+        orderDetailsTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
+            if (newValue!=null){
+                setData(newValue);
+            }
+        });
+
+        changeListener = (observableValue, oldValue, newValue) -> {
+            if (!isListenerActive) {
+                return;
+            }
+
             Session session = HibernateUtilOrder.getSession();
             String string = "FROM Orders";
             Query query = session.createQuery(string);
             ArrayList<Orders> list = (ArrayList<Orders>) query.list();
             String date;
             for (Orders orders : list){
-                if (Objects.equals(orders.getOrderId(), orderIDtxt.getText())){
+                if (Objects.equals(orders.getOrderId(), newValue)){
                     date = orders.getDate();
                     String finalDate = date;
                     orderDetailsTable.setPredicate(ordersTMTreeItem -> ordersTMTreeItem.getValue().getDate().contains(finalDate));
@@ -164,39 +171,34 @@ public class OrderDetailController {
                 }
             }
             session.close();
-        });
+        };
 
+        orderIDtxt.textProperty().addListener(changeListener);
+    }
+
+    private void setData(TreeItem<OrderDetailsTM> newValue) {
+        qtyText.setText(String.valueOf(newValue.getValue().getQty()));
+        String date = newValue.getValue().getDate();
+        try{
+            Session session = HibernateUtilOrder.getSession();
+            String string = "FROM Orders";
+            Query query = session.createQuery(string);
+            List<Orders> list = query.list();
+            for(Orders orders : list){
+                if (Objects.equals(date, orders.getDate())){
+                    isListenerActive = false;
+                    orderIDtxt.setText(orders.getOrderId());
+                    isListenerActive = true;
+                    break;
+                }
+            }
+            session.close();
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     private void LoadTables() {
-        ObservableList<OrdersTM> tmList1 = FXCollections.observableArrayList();
-        try {
-            Session session = HibernateUtilOrder.getSession();
-            Query query = session.createQuery("FROM Orders");
-            List<Orders> list = query.list();
-            session.close();
-
-            for (Orders orders : list) {
-                Session sess = HibernateUtilEmployer.getSession();
-                Employers employer = sess.find(Employers.class, orders.getEmployerId());
-                String name = employer.getName();
-                sess.close();
-                tmList1.add(new OrdersTM(
-                        orders.getOrderId(),
-                        orders.getDate(),
-                        orders.getTotal(),
-                        orders.getCustName(),
-                        orders.getCustContact(),
-                        orders.getCustEmail(),
-                        name
-                ));
-            }
-            TreeItem<OrdersTM> treeItem = new RecursiveTreeItem<>(tmList1, RecursiveTreeObject::getChildren); //Error comes here.
-            orderTable.setRoot(treeItem);
-            orderTable.setShowRoot(false);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         ObservableList<OrderDetailsTM> tmList2 = FXCollections.observableArrayList();
         try {
             Session session = HibernateUtilOrderDetails.getSession();
@@ -224,4 +226,5 @@ public class OrderDetailController {
             throw new RuntimeException(e);
         }
     }
+
 }

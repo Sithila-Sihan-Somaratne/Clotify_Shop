@@ -3,7 +3,7 @@ package controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dto.*;
-import dto.tm.OrderDetailsTM;
+import dto.tm.OrderDetailTM;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -59,6 +60,9 @@ public class OrderController {
 
     @FXML
     private TreeTableColumn<?, ?> ItemCodeCol;
+
+    @FXML
+    private TreeTableColumn<?,?> optionCol;
 
     @FXML
     private JFXTextField Profittxt;
@@ -127,7 +131,7 @@ public class OrderController {
     private Label orderID;
 
     @FXML
-    private JFXTreeTableView<OrderDetailsTM> orderTable;
+    private JFXTreeTableView<OrderDetailTM> orderTable;
 
     @FXML
     private JFXTextField sellingPricetxt;
@@ -149,7 +153,6 @@ public class OrderController {
         textList.add(datePicker.getValue().toString());
         textList.add(itemCodetxt.getText());
         textList.add(Discounttxt.getText());
-        textList.add(cashTxt.getText());
         boolean areEmpty = false;
         for(String textValues : textList){
             if (Objects.equals(textValues, "")){
@@ -163,7 +166,7 @@ public class OrderController {
                 new Alert(Alert.AlertType.WARNING,"PLease select only one of the two options.").show();
             }else if(cashComboBox.isSelected() && !cardComboBox.isSelected() || !cashComboBox.isSelected() && cardComboBox.isSelected()){
                 if (!areEmpty){
-                    OrderDetails orderDetails = new OrderDetails(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(QtyOnhandtxt.getText()), Double.parseDouble(Profittxt.getText()), datePicker.getValue().toString(), Double.parseDouble(Discounttxt.getText()), Typetxt.getText(), Sizetxt.getText(), Double.parseDouble(Totaltxt.getText()));
+                    OrderDetails orderDetails = new OrderDetails(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(QtyOnhandtxt.getText()), Double.parseDouble(sellingPricetxt.getText()), datePicker.getValue().toString(), Double.parseDouble(Discounttxt.getText()), Typetxt.getText(), Sizetxt.getText(), Double.parseDouble(Totaltxt.getText()));
                     Session session = HibernateUtilOrderDetails.getSession();
                     Transaction transaction = session.beginTransaction();
                     session.save(orderDetails);
@@ -177,16 +180,46 @@ public class OrderController {
                     itemTransaction.commit();
                     itemSession.close();
                     loadTable();
-                    new Alert(Alert.AlertType.INFORMATION,"Item has been added to cart successfully successfully!").show();
+                    double total = getTotal();
+                    double discount = getDiscount();
+                    Totaltxt.setText(String.valueOf(total));
+                    discountLabeltxt.setText(String.valueOf(discount));
                 }
             }else{
-                new Alert(Alert.AlertType.WARNING,"PLease select one of the two options.").show();
+                new Alert(Alert.AlertType.WARNING,"Please select one of the two options.").show();
             }
         }
+
+    }
+
+    private static double getDiscount() {
+        double discount = 0;
+        Session sess = HibernateUtilOrderDetails.getSession();
+        String string = "FROM OrderDetails";
+        Query query = sess.createQuery(string);
+        List<OrderDetails> list = query.list();
+        sess.close();
+        for (OrderDetails details : list){
+            discount = discount + details.getDiscount();
+        }
+        return discount;
+    }
+
+    private static double getTotal() {
+        double total = 0;
+        Session sess = HibernateUtilOrderDetails.getSession();
+        String string = "FROM OrderDetails";
+        Query query = sess.createQuery(string);
+        List<OrderDetails> list = query.list();
+        sess.close();
+        for (OrderDetails details : list){
+            total = total + details.getAmount();
+        }
+        return total;
     }
 
     private void loadTable() {
-        ObservableList<OrderDetailsTM> tmList = FXCollections.observableArrayList();
+        ObservableList<OrderDetailTM> tmList = FXCollections.observableArrayList();
         try {
             Session session = HibernateUtilOrderDetails.getSession();
             Query query = session.createQuery("FROM OrderDetails");
@@ -194,7 +227,8 @@ public class OrderController {
             session.close();
 
             for (OrderDetails orderDetails : list) {
-                tmList.add(new OrderDetailsTM(
+                JFXButton btn = getJfxButton(orderDetails);
+                tmList.add(new OrderDetailTM(
                         orderDetails.getItemCode(),
                         orderDetails.getDescription(),
                         orderDetails.getQty(),
@@ -203,16 +237,41 @@ public class OrderController {
                         orderDetails.getDiscount(),
                         orderDetails.getType(),
                         orderDetails.getSize(),
-                        orderDetails.getAmount()
+                        orderDetails.getAmount(),
+                        btn
                 ));
             }
-            TreeItem<OrderDetailsTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+            TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
             orderTable.setRoot(treeItem);
             orderTable.setShowRoot(false);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private JFXButton getJfxButton(OrderDetails orderDetails) {
+        JFXButton btn = new JFXButton("Delete");
+        btn.setStyle("-fx-background-color: #e12e2e; -fx-font-weight: BOLD");
+        btn.setTextFill(Color.rgb(255,255,255));
+        btn.setOnAction(actionEvent -> {
+            try {
+                Optional<ButtonType> buttonType = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete " + orderDetails.getItemCode() + " item from cart? ", ButtonType.YES, ButtonType.NO).showAndWait();
+                if ((buttonType.isPresent()) &&  buttonType.get() == ButtonType.YES){
+                    Session session = HibernateUtilOrderDetails.getSession();
+                    Transaction transaction = session.beginTransaction();
+                    session.delete(session.find(OrderDetails.class, orderDetails.getItemCode()));
+                    transaction.commit();
+                    session.close();
+                    new Alert(Alert.AlertType.INFORMATION,"Employer has been deleted successfully from cart!").show();
+                    loadTable();
+                }
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
+                throw new RuntimeException(e);
+            }
+        });
+        return btn;
     }
 
     @FXML
@@ -275,17 +334,12 @@ public class OrderController {
         String string = "FROM OrderDetails WHERE date = '"+date+"'";
         Query query = sess.createQuery(string);
         List<OrderDetails> list = query.list();
-        String code = "";
         for (OrderDetails orderDetails : list){
-            code = orderDetails.getItemCode();
+            Transaction trans = sess.beginTransaction();
+            sess.delete(orderDetails);
+            trans.commit();
         }
         sess.close();
-        Session newSession = HibernateUtilOrderDetails.getSession();
-        OrderDetails orderDetails = newSession.find(OrderDetails.class, code);
-        Transaction trans = newSession.beginTransaction();
-        newSession.delete(orderDetails);
-        trans.commit();
-        newSession.close();
         generateId();
         clearFields();
         loadTable();
@@ -298,6 +352,9 @@ public class OrderController {
         Orders orders = session1.find(Orders.class, orderID.getText());
         orders.setDate(datePicker.getValue().toString());
         orders.setTotal(Double.parseDouble(Totaltxt.getText()));
+        orders.setCustName(customerNametxt.getText());
+        orders.setCustContact(customerContacttxt.getText());
+        orders.setCustEmail(customerEmailtxt.getText());
         Transaction transaction = session1.beginTransaction();
         session1.save(orders);
         transaction.commit();
@@ -305,16 +362,22 @@ public class OrderController {
         Session session2 = HibernateUtilOrderDetails.getSession();
         String string = "FROM OrderDetails";
         Query query = session2.createQuery(string);
-        OrderDetails orderDetails = (OrderDetails) query.list();
-        orderDetails.setItemCode(itemCodetxt.getText());
-        orderDetails.setDescription(Descriptiontxt.getText());
-        orderDetails.setQty(Integer.parseInt(QtyOnhandtxt.getText()));
-        orderDetails.setUnitPrice(Double.parseDouble(Profittxt.getText()));
-        orderDetails.setDate(datePicker.getValue().toString());
-        orderDetails.setDiscount(Double.parseDouble(Discounttxt.getText()));
-        orderDetails.setType(Typetxt.getText());
-        orderDetails.setSize(Sizetxt.getText());
-        orderDetails.setAmount(Double.parseDouble(Totaltxt.getText()));
+        List<OrderDetails> lst =  query.list();
+        OrderDetails orderDetails = null;
+        for(OrderDetails details : lst){
+            orderDetails = details;
+        }
+        if (orderDetails != null) {
+            orderDetails.setItemCode(itemCodetxt.getText());
+            orderDetails.setDescription(Descriptiontxt.getText());
+            orderDetails.setQty(Integer.parseInt(QtyOnhandtxt.getText()));
+            orderDetails.setUnitPrice(Double.parseDouble(Profittxt.getText()));
+            orderDetails.setDate(datePicker.getValue().toString());
+            orderDetails.setDiscount(Double.parseDouble(Discounttxt.getText()));
+            orderDetails.setType(Typetxt.getText());
+            orderDetails.setSize(Sizetxt.getText());
+            orderDetails.setAmount(Double.parseDouble(Totaltxt.getText()));
+        }
         Transaction trans = session2.beginTransaction();
         session2.save(orderDetails);
         trans.commit();
@@ -391,6 +454,7 @@ public class OrderController {
         TypeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Type"));
         SizeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Size"));
         AmountCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Amount"));
+        optionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Option"));
         loadTable();
 
         orderTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
@@ -405,7 +469,7 @@ public class OrderController {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(cashTxt.getText());
             if (matcher.matches() && !Objects.equals(cashTxt.getText(), "")) {
-                Balancetxt.setText(String.valueOf(Double.parseDouble(Totaltxt.getText()) - Double.parseDouble(cashTxt.getText())));
+                Balancetxt.setText(String.valueOf(Double.parseDouble(cashTxt.getText()) - Double.parseDouble(Totaltxt.getText())));
             }else{
                 new Alert(Alert.AlertType.WARNING,"Please enter digits between 0 and 9 and a dot (.) .").show();
             }
@@ -417,7 +481,7 @@ public class OrderController {
             Matcher matcher = pattern.matcher(QtyOnhandtxt.getText());
             if (matcher.matches()) {
                 if (!Objects.equals(Profittxt.getText(), "") && !Objects.equals(QtyOnhandtxt.getText(), "")) {
-                    Totaltxt.setText(String.valueOf(Double.parseDouble(Profittxt.getText()) * Integer.parseInt(QtyOnhandtxt.getText())));
+                    Totaltxt.setText(String.valueOf(Double.parseDouble(sellingPricetxt.getText()) * Integer.parseInt(QtyOnhandtxt.getText())));
                 }
             }else{
                 new Alert(Alert.AlertType.WARNING,"Please enter digits between 0 and 9.").show();
@@ -440,7 +504,6 @@ public class OrderController {
                     new Alert(Alert.AlertType.WARNING,"Please enter digits between 0 and 9.").show();
                 }
         });
-
     }
 
     @FXML
@@ -457,7 +520,7 @@ public class OrderController {
         }
     }
 
-    private void setData(TreeItem<OrderDetailsTM> newValue) {
+    private void setData(TreeItem<OrderDetailTM> newValue) {
         try{
             Session session = HibernateUtilOrder.getSession();
             String string = "FROM Orders WHERE date = '"+newValue.getValue().getDate()+"'";
@@ -473,7 +536,7 @@ public class OrderController {
                 datePicker.setValue(LocalDate.parse(orders.getDate()));
                 itemCodetxt.setText(newValue.getValue().getItemCode());
                 Descriptiontxt.setText(newValue.getValue().getDescription());
-                Qtytxt.setText(String.valueOf(newValue.getValue().getQty()));
+                QtyOnhandtxt.setText(String.valueOf(newValue.getValue().getQty()));
                 Profittxt.setText(String.valueOf(newValue.getValue().getUnitPrice()));
                 Typetxt.setText(newValue.getValue().getType());
                 Sizetxt.setText(newValue.getValue().getSize());

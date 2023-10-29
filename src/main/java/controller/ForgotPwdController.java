@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class ForgotPwdWindow {
+public class ForgotPwdController {
 
     @FXML
     private ResourceBundle resources;

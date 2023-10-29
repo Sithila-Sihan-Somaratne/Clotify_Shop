@@ -137,7 +137,7 @@ public class LogInController {
             throw new RuntimeException(e);
         }
         stage.show();
-        ForgotPwdWindow forgotPwdWindow = new ForgotPwdWindow();
+        ForgotPwdController forgotPwdWindow = new ForgotPwdController();
         forgotPwdWindow.storeUser(txtUserName.getText());
      }else{
          new Alert(Alert.AlertType.WARNING,"You must enter the username before you click the link!").show();
