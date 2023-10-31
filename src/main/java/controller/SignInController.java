@@ -11,7 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -216,6 +216,15 @@ public class SignInController {
 
     @FXML
     void initialize() {
+        var image = new Image("file:/C:/desktop%20copy/NEW%20SHARED%20FOLDER/JavaFX-Final-Project/Code/Clotify_Shop/src/main/resources/img/bg-img.jpg");
+        var bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true,false,false)
+        );
+        SignInPane.setBackground(new Background(bgImage));
         SignInPane.getChildren().add(showAdminpwd);
         showAdminpwd.managedProperty().bind(showAdminpwd.visibleProperty());
         adminPwdtxt.managedProperty().bind(adminPwdtxt.visibleProperty());

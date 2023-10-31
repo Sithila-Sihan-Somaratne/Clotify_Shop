@@ -10,7 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import util.HibernateUtilUser;
@@ -157,6 +158,17 @@ public class LogInController {
 
     @FXML
     public void initialize() {
+
+        var image = new Image("file:/C:/desktop%20copy/NEW%20SHARED%20FOLDER/JavaFX-Final-Project/Code/Clotify_Shop/src/main/resources/img/bg-img.jpg");
+        var bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true,false,false)
+        );
+        dashboardPane.setBackground(new Background(bgImage));
+
         PaneContainer.getChildren().add(txtVisiblePassword);
         txtVisiblePassword.managedProperty().bind(txtVisiblePassword.visibleProperty());
         txtPassword.managedProperty().bind(txtPassword.visibleProperty());

@@ -14,7 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.hibernate.Session;
@@ -293,6 +294,15 @@ public class ItemController {
 
     @FXML
     void initialize() {
+        var image = new Image("file:/C:/desktop%20copy/NEW%20SHARED%20FOLDER/JavaFX-Final-Project/Code/Clotify_Shop/src/main/resources/img/bg-img.jpg");
+        var bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true,false,false)
+        );
+        itemPane.setBackground(new Background(bgImage));
         itemCodetxt.setEditable(false);
         supplierComboBox.setPromptText("Select");
         typeComboBox.getItems().add(new Label("Gents").getText());
@@ -383,9 +393,18 @@ public class ItemController {
         buyingPricetxt.setText(String.valueOf(value.getValue().getBuyingPrice()));
         sellingPricetxt.setText(String.valueOf(value.getValue().getSellingPrice()));
         typeComboBox.setValue(value.getValue().getType());
-        sizeComboBox.setValue(value.getValue().getSize());
-        sizeTxt.setText(value.getValue().getSize());
         profitLabel.setText(String.valueOf(value.getValue().getProfit()));
+
+        String regex = "\\d+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(value.getValue().getSize());
+        if (matcher.matches()){
+            sizeTxt.setText(value.getValue().getSize());
+            sizeComboBox.setValue("None");
+        }else{
+            sizeComboBox.setValue(value.getValue().getSize());
+            sizeTxt.setText("");
+        }
     }
 
     private void generateID() {

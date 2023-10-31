@@ -15,7 +15,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.hibernate.Session;
@@ -130,7 +131,15 @@ public class HomePageAdmin {
 
     @FXML
     void salesReportBtn(ActionEvent event) {
-
+        Stage stage = (Stage) HomePane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/SalesReportWindow.fxml")))));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        stage.setTitle("Sales Report Window");
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -163,6 +172,15 @@ public class HomePageAdmin {
 
     @FXML
     void initialize() {
+        var image = new Image("file:/C:/desktop%20copy/NEW%20SHARED%20FOLDER/JavaFX-Final-Project/Code/Clotify_Shop/src/main/resources/img/bg-img.jpg");
+        var bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true,false,false)
+        );
+        HomePane.setBackground(new Background(bgImage));
         manageDateAndTime();
         pieClothes.setData(setPieChartData());
     }
@@ -177,6 +195,7 @@ public class HomePageAdmin {
         int ladies = 0;
         int kids = 0;
         int others = 0;
+        int totQty = 0;
         session.close();
         if (count != 0){
             Session sess = HibernateUtilOrderDetails.getSession();
@@ -197,12 +216,13 @@ public class HomePageAdmin {
                         others = orderDetails.getQty();
                     }
                 }
+                totQty = gents+ladies+kids+others;
             }
         }
-        float gentsData = ((float) gents / 4) * 100;
-        float ladiesData = ((float) ladies / 4) * 100;
-        float kidsData = ((float) kids / 4) * 100;
-        float othersData = ((float) others / 4) * 100;
+        float gentsData = ((float) gents / totQty) * 100;
+        float ladiesData = ((float) ladies / totQty) * 100;
+        float kidsData = ((float) kids / totQty) * 100;
+        float othersData = ((float) others / totQty) * 100;
         pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data("Gents", gentsData),
                 new PieChart.Data("Ladies", ladiesData),

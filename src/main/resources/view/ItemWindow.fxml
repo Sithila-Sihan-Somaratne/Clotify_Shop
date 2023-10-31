@@ -6,15 +6,10 @@
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="itemPane" prefHeight="611.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemController">
-   <ImageView fitHeight="611.0" fitWidth="1000.0">
-      <Image url="@../img/bg-img.jpg" />
-   </ImageView>
    <AnchorPane layoutX="58.0" layoutY="32.0" prefHeight="548.0" prefWidth="885.0" style="-fx-background-color: white;">
       <JFXButton layoutX="23.0" layoutY="20.0" onAction="#backToHome" style="-fx-background-color: #ff5100;" text="Back" textFill="WHITE">
          <font>

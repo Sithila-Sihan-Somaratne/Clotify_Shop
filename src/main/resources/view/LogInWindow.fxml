@@ -12,9 +12,6 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="dashboardPane" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
-   <ImageView fitHeight="507.0" fitWidth="680.0" layoutY="-1.0">
-      <Image url="@../img/bg-img.jpg" />
-   </ImageView>
    <AnchorPane fx:id="PaneContainer" layoutX="127.0" layoutY="25.0" prefHeight="455.0" prefWidth="427.0" style="-fx-background-color: white; -fx-border-radius: 20px;">
       <ImageView layoutX="169.0" layoutY="14.0">
          <Image url="@../img/User-img.png" />

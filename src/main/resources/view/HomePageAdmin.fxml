@@ -3,15 +3,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="HomePane" prefHeight="611.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomePageAdmin">
-   <ImageView fitHeight="611.0" fitWidth="1000.0">
-      <Image url="@../img/bg-img.jpg" />
-   </ImageView>
    <AnchorPane layoutX="58.0" layoutY="33.0" prefHeight="548.0" prefWidth="885.0" style="-fx-background-color: white;">
       <AnchorPane layoutX="346.0" layoutY="20.0" maxHeight="100.0" maxWidth="200.0" prefHeight="87.0" prefWidth="194.0"
                   style="-fx-border-color: #ff5000; -fx-border-radius: 40px; -fx-border-width: 5px;">
@@ -46,7 +41,7 @@
             <Font name="System Bold" size="18.0"/>
          </font>
       </JFXButton>
-      <JFXButton contentDisplay="TOP" layoutX="51.0" layoutY="458.0"  prefHeight="49.0"
+      <JFXButton contentDisplay="TOP" layoutX="51.0" layoutY="458.0" onAction="#salesReportBtn"  prefHeight="49.0"
                  prefWidth="167.0" style="-fx-background-color: lightgrey;" text="📈 Sales Report" textFill="#ff5100">
          <font>
             <Font name="System Bold" size="18.0"/>

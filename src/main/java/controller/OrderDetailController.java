@@ -19,7 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -127,6 +128,15 @@ public class OrderDetailController {
 
     @FXML
     void initialize(){
+        var image = new Image("file:/C:/desktop%20copy/NEW%20SHARED%20FOLDER/JavaFX-Final-Project/Code/Clotify_Shop/src/main/resources/img/bg-img.jpg");
+        var bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true,false,false)
+        );
+        orderDetailsPane.setBackground(new Background(bgImage));
         orderIDCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("OrderId"));
         dateCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Date"));
         totalCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Total"));

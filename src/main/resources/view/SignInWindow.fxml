@@ -12,9 +12,6 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="527.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignInController">
-   <ImageView fitHeight="534.0" fitWidth="680.0" layoutY="-1.0">
-      <Image url="@../img/bg-img.jpg" />
-   </ImageView>
     <AnchorPane fx:id="SignInPane" layoutX="124.0" layoutY="23.0" prefHeight="486.0" prefWidth="433.0"
                 style="-fx-background-color: white; -fx-border-radius: 20px;">
         <Label layoutX="111.0" layoutY="14.0" text="User Registration" textFill="#0288d1">

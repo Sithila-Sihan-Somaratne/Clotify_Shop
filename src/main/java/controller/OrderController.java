@@ -12,7 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.hibernate.Session;
@@ -179,7 +180,7 @@ public class OrderController {
                     itemSession.save(items);
                     itemTransaction.commit();
                     itemSession.close();
-                    loadTable();
+                    loadTable(datePicker.getValue().toString());
                     double total = getTotal();
                     double discount = getDiscount();
                     Totaltxt.setText(String.valueOf(total));
@@ -218,32 +219,34 @@ public class OrderController {
         return total;
     }
 
-    private void loadTable() {
+    private void loadTable(String date) {
         ObservableList<OrderDetailTM> tmList = FXCollections.observableArrayList();
         try {
             Session session = HibernateUtilOrderDetails.getSession();
-            Query query = session.createQuery("FROM OrderDetails");
+            Query query = session.createQuery("FROM OrderDetails WHERE date = '"+date+"'");
             List<OrderDetails> list = query.list();
             session.close();
 
-            for (OrderDetails orderDetails : list) {
-                JFXButton btn = getJfxButton(orderDetails);
-                tmList.add(new OrderDetailTM(
-                        orderDetails.getItemCode(),
-                        orderDetails.getDescription(),
-                        orderDetails.getQty(),
-                        orderDetails.getUnitPrice(),
-                        orderDetails.getDate(),
-                        orderDetails.getDiscount(),
-                        orderDetails.getType(),
-                        orderDetails.getSize(),
-                        orderDetails.getAmount(),
-                        btn
-                ));
+            if (list != null){
+                for (OrderDetails orderDetails : list) {
+                    JFXButton btn = getJfxButton(orderDetails);
+                    tmList.add(new OrderDetailTM(
+                            orderDetails.getItemCode(),
+                            orderDetails.getDescription(),
+                            orderDetails.getQty(),
+                            orderDetails.getUnitPrice(),
+                            orderDetails.getDate(),
+                            orderDetails.getDiscount(),
+                            orderDetails.getType(),
+                            orderDetails.getSize(),
+                            orderDetails.getAmount(),
+                            btn
+                    ));
+                }
+                TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+                orderTable.setRoot(treeItem);
+                orderTable.setShowRoot(false);
             }
-            TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
-            orderTable.setRoot(treeItem);
-            orderTable.setShowRoot(false);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -264,7 +267,7 @@ public class OrderController {
                     transaction.commit();
                     session.close();
                     new Alert(Alert.AlertType.INFORMATION,"Employer has been deleted successfully from cart!").show();
-                    loadTable();
+                    loadTable(LocalDate.now().toString());
                 }
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
@@ -342,7 +345,7 @@ public class OrderController {
         sess.close();
         generateId();
         clearFields();
-        loadTable();
+        loadTable(LocalDate.now().toString());
         new Alert(Alert.AlertType.INFORMATION,"Order has been deleted successfully!").show();
     }
 
@@ -360,24 +363,16 @@ public class OrderController {
         transaction.commit();
         session1.close();
         Session session2 = HibernateUtilOrderDetails.getSession();
-        String string = "FROM OrderDetails";
-        Query query = session2.createQuery(string);
-        List<OrderDetails> lst =  query.list();
-        OrderDetails orderDetails = null;
-        for(OrderDetails details : lst){
-            orderDetails = details;
-        }
-        if (orderDetails != null) {
-            orderDetails.setItemCode(itemCodetxt.getText());
-            orderDetails.setDescription(Descriptiontxt.getText());
-            orderDetails.setQty(Integer.parseInt(QtyOnhandtxt.getText()));
-            orderDetails.setUnitPrice(Double.parseDouble(Profittxt.getText()));
-            orderDetails.setDate(datePicker.getValue().toString());
-            orderDetails.setDiscount(Double.parseDouble(Discounttxt.getText()));
-            orderDetails.setType(Typetxt.getText());
-            orderDetails.setSize(Sizetxt.getText());
-            orderDetails.setAmount(Double.parseDouble(Totaltxt.getText()));
-        }
+        OrderDetails orderDetails = session2.find(OrderDetails.class,itemCodetxt.getText());
+        orderDetails.setItemCode(itemCodetxt.getText());
+        orderDetails.setDescription(Descriptiontxt.getText());
+        orderDetails.setQty(Integer.parseInt(QtyOnhandtxt.getText()));
+        orderDetails.setUnitPrice(Double.parseDouble(Profittxt.getText()));
+        orderDetails.setDate(datePicker.getValue().toString());
+        orderDetails.setDiscount(Double.parseDouble(Discounttxt.getText()));
+        orderDetails.setType(Typetxt.getText());
+        orderDetails.setSize(Sizetxt.getText());
+        orderDetails.setAmount(Double.parseDouble(Totaltxt.getText()));
         Transaction trans = session2.beginTransaction();
         session2.save(orderDetails);
         trans.commit();
@@ -389,7 +384,7 @@ public class OrderController {
         session3.save(item);
         itemTrans.commit();
         session3.close();
-        loadTable();
+        loadTable(orders.getDate());
         clearFields();
         generateId();
         new Alert(Alert.AlertType.INFORMATION,"Order has been updated successfully!").show();
@@ -429,6 +424,15 @@ public class OrderController {
 
     @FXML
     void initialize() {
+        var image = new Image("file:/C:/desktop%20copy/NEW%20SHARED%20FOLDER/JavaFX-Final-Project/Code/Clotify_Shop/src/main/resources/img/bg-img.jpg");
+        var bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true,false,false)
+        );
+        orderPane.setBackground(new Background(bgImage));
         generateId();
         Session session = HibernateUtilSupplier.getSession();
         String strQry = "SELECT id FROM Suppliers";
@@ -455,7 +459,7 @@ public class OrderController {
         SizeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Size"));
         AmountCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Amount"));
         optionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Option"));
-        loadTable();
+        loadTable(LocalDate.now().toString());
 
         orderTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->{
             if (newValue!=null){
@@ -542,6 +546,7 @@ public class OrderController {
                 Sizetxt.setText(newValue.getValue().getSize());
                 Discounttxt.setText(String.valueOf(newValue.getValue().getDiscount()));
                 Totaltxt.setText(String.valueOf(newValue.getValue().getAmount()));
+                sellingPricetxt.setText(String.valueOf(orders.getTotal() - Double.parseDouble(QtyOnhandtxt.getText())));
             }
         }catch (Exception e){
             throw new RuntimeException(e);

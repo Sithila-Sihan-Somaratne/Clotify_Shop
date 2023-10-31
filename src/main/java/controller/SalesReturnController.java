@@ -24,7 +24,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.hibernate.Session;
@@ -158,6 +159,15 @@ public class SalesReturnController {
 
     @FXML
     void initialize() {
+        var image = new Image("file:/C:/desktop%20copy/NEW%20SHARED%20FOLDER/JavaFX-Final-Project/Code/Clotify_Shop/src/main/resources/img/bg-img.jpg");
+        var bgImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true,false,false)
+        );
+        salesReturnPane.setBackground(new Background(bgImage));
         ItemCodeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("ItemCode"));
         DescriptionCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Description"));
         QtyCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("Qty"));
