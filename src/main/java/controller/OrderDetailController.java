@@ -188,18 +188,22 @@ public class OrderDetailController {
 
             for (Orders orders : list) {
                 Session sess = HibernateUtilEmployer.getSession();
-                Employers employer = sess.find(Employers.class, orders.getEmployerId());
-                String name = employer.getName();
-                sess.close();
-                tmList1.add(new OrdersTM(
-                        orders.getOrderId(),
-                        orders.getDate(),
-                        orders.getTotal(),
-                        orders.getCustName(),
-                        orders.getCustContact(),
-                        orders.getCustEmail(),
-                        name
-                ));
+                String hql = "FROM Employers WHERE id = :employerId";
+                Query qry = sess.createQuery(hql);
+                qry.setParameter("employerId",orders.getEmployer().getId());
+                List<Employers> lst = qry.list();
+                for (Employers employers : lst){
+                    String name = employers.getName();
+                    tmList1.add(new OrdersTM(
+                            orders.getOrderId(),
+                            orders.getDate(),
+                            orders.getTotal(),
+                            orders.getCustName(),
+                            orders.getCustContact(),
+                            orders.getCustEmail(),
+                            name
+                    ));
+                }
             }
             TreeItem<OrdersTM> treeItem = new RecursiveTreeItem<>(tmList1, RecursiveTreeObject::getChildren); //Error comes here.
             orderTable.setRoot(treeItem);

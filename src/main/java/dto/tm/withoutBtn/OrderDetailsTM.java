@@ -4,11 +4,7 @@ package dto.tm.withoutBtn;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 @EqualsAndHashCode(callSuper = true)
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +12,6 @@ import javax.persistence.Id;
 @Setter
 @ToString
 public class OrderDetailsTM extends RecursiveTreeObject<OrderDetailsTM> {
-    @Id
     private String itemCode;
     private String description;
     private int qty;

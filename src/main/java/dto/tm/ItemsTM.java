@@ -5,7 +5,6 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import lombok.*;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity
 @EqualsAndHashCode(callSuper = true)
@@ -16,7 +15,6 @@ import javax.persistence.Id;
 @Setter
 @ToString
 public class ItemsTM extends RecursiveTreeObject<ItemsTM> {
-    @Id
     private String code;
     private String description;
     private int qty;

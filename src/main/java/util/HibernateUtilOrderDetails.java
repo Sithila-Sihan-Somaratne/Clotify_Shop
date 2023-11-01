@@ -1,7 +1,7 @@
 package util;
 
 
-import dto.OrderDetails;
+import dto.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -20,6 +20,10 @@ public class HibernateUtilOrderDetails {
 
         Metadata metadata = new MetadataSources(standardRegistry)
                 .addAnnotatedClass(OrderDetails.class)
+                .addAnnotatedClass(Items.class)
+                .addAnnotatedClass(Orders.class)
+                .addAnnotatedClass(Suppliers.class)
+                .addAnnotatedClass(Employers.class)
                 .getMetadataBuilder()
                 .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
                 .build();

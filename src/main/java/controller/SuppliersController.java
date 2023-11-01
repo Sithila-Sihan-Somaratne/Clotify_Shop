@@ -265,9 +265,10 @@ public class SuppliersController {
         ObservableList<ItemsATFOC> TMList = FXCollections.observableArrayList();
 
         Session sess = HibernateUtilItem.getSession();
-        String qry = "FROM Items WHERE supplierID = '" + supplierIdtxt.getText()+ "'";
-        Query Qry = sess.createQuery(qry);
-        List <Items> lst = Qry.list();
+        String hql = "FROM Items WHERE supplier.id = :supplierId";
+        Query query = sess.createQuery(hql);
+        query.setParameter("supplierId", supplierIdtxt.getText());
+        List<Items> lst = query.list();
         sess.close();
         for (Items items : lst){
             TMList.add(new ItemsATFOC(

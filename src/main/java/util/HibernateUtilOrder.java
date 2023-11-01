@@ -1,6 +1,7 @@
 package util;
 
 
+import dto.Employers;
 import dto.Orders;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,6 +21,7 @@ public class HibernateUtilOrder{
 
         Metadata metadata = new MetadataSources(standardRegistry)
                 .addAnnotatedClass(Orders.class)
+                .addAnnotatedClass(Employers.class)
                 .getMetadataBuilder()
                 .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
                 .build();

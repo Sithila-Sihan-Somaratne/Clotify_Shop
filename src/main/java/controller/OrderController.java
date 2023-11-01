@@ -167,9 +167,12 @@ public class OrderController {
                 new Alert(Alert.AlertType.WARNING,"PLease select only one of the two options.").show();
             }else if(cashComboBox.isSelected() && !cardComboBox.isSelected() || !cashComboBox.isSelected() && cardComboBox.isSelected()){
                 if (!areEmpty){
-                    OrderDetails orderDetails = new OrderDetails(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(QtyOnhandtxt.getText()), Double.parseDouble(sellingPricetxt.getText()), datePicker.getValue().toString(), Double.parseDouble(Discounttxt.getText()), Typetxt.getText(), Sizetxt.getText(), Double.parseDouble(Totaltxt.getText()));
+                    Session itmSession = HibernateUtilItem.getSession();
+                    Items item = itmSession.find(Items.class, itemCodetxt.getText());
+                    itmSession.close();
                     Session session = HibernateUtilOrderDetails.getSession();
                     Transaction transaction = session.beginTransaction();
+                    OrderDetails orderDetails = new OrderDetails(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(QtyOnhandtxt.getText()), Double.parseDouble(sellingPricetxt.getText()), datePicker.getValue().toString(), Double.parseDouble(Discounttxt.getText()), Typetxt.getText(), Sizetxt.getText(), Double.parseDouble(Totaltxt.getText()), null, item);
                     session.save(orderDetails);
                     transaction.commit();
                     session.close();
@@ -181,8 +184,8 @@ public class OrderController {
                     itemTransaction.commit();
                     itemSession.close();
                     loadTable(datePicker.getValue().toString());
-                    double total = getTotal();
-                    double discount = getDiscount();
+                    double total = getTotal(datePicker.getValue().toString(), Totaltxt.getText());
+                    double discount = getDiscount(datePicker.getValue().toString(), Discounttxt.getText());
                     Totaltxt.setText(String.valueOf(total));
                     discountLabeltxt.setText(String.valueOf(discount));
                 }
@@ -193,30 +196,36 @@ public class OrderController {
 
     }
 
-    private static double getDiscount() {
+    private static double getDiscount(String date, String text) {
         double discount = 0;
         Session sess = HibernateUtilOrderDetails.getSession();
-        String string = "FROM OrderDetails";
+        String string = "FROM OrderDetails WHERE date = '"+date+"'";
         Query query = sess.createQuery(string);
         List<OrderDetails> list = query.list();
         sess.close();
-        for (OrderDetails details : list){
-            discount = discount + details.getDiscount();
+        if (list != null){
+            for (OrderDetails details : list){
+                discount = discount + details.getDiscount();
+            }
+            return discount;
         }
-        return discount;
+        return Double.parseDouble(text);
     }
 
-    private static double getTotal() {
+    private static double getTotal(String date, String text) {
         double total = 0;
         Session sess = HibernateUtilOrderDetails.getSession();
-        String string = "FROM OrderDetails";
+        String string = "FROM OrderDetails WHERE date = '"+date+"'";
         Query query = sess.createQuery(string);
         List<OrderDetails> list = query.list();
         sess.close();
-        for (OrderDetails details : list){
-            total = total + details.getAmount();
+        if (list != null){
+            for (OrderDetails details : list){
+                total = total + details.getAmount();
+            }
+            return total;
         }
-        return total;
+        return Double.parseDouble(text);
     }
 
     private void loadTable(String date) {
@@ -263,11 +272,17 @@ public class OrderController {
                 if ((buttonType.isPresent()) &&  buttonType.get() == ButtonType.YES){
                     Session session = HibernateUtilOrderDetails.getSession();
                     Transaction transaction = session.beginTransaction();
-                    session.delete(session.find(OrderDetails.class, orderDetails.getItemCode()));
-                    transaction.commit();
+                    String hql = "FROM OrderDetails WHERE itemCode = :itemCode";
+                    Query query = session.createQuery(hql);
+                    query.setParameter("itemCode",orderDetails.getItemCode());
+                    List<OrderDetails> list = query.list();
+                    for (OrderDetails details : list){
+                        session.delete(details);
+                        transaction.commit();
+                    }
                     session.close();
-                    new Alert(Alert.AlertType.INFORMATION,"Employer has been deleted successfully from cart!").show();
-                    loadTable(LocalDate.now().toString());
+                    new Alert(Alert.AlertType.INFORMATION,"Item has been deleted successfully from cart!").show();
+                    loadTable(datePicker.getValue().toString());
                 }
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
@@ -307,12 +322,26 @@ public class OrderController {
 
     @FXML
     void PlaceOrder(ActionEvent event) {
-        Orders orders = new Orders(orderID.getText(), datePicker.getValue().toString(), Double.parseDouble(Totaltxt.getText()), customerNametxt.getText(), customerContacttxt.getText(), customerEmailtxt.getText(), employerComboBox.getValue());
+        Session empSession = HibernateUtilEmployer.getSession();
+        Employers employers = empSession.find(Employers.class, employerComboBox.getValue());
+        empSession.close();
+        Orders orders = new Orders(orderID.getText(), datePicker.getValue().toString(), Double.parseDouble(Totaltxt.getText()), customerNametxt.getText(), customerContacttxt.getText(), customerEmailtxt.getText(), employers);
         Session sess = HibernateUtilOrder.getSession();
         Transaction trans = sess.beginTransaction();
         sess.save(orders);
         trans.commit();
         sess.close();
+        Session ordDetailsSession = HibernateUtilOrderDetails.getSession();
+        String s = "FROM OrderDetails WHERE date = '"+datePicker.getValue().toString()+"'";
+        Query query = ordDetailsSession.createQuery(s);
+        List<OrderDetails> list = query.list();
+        OrderDetails details = null;
+        for (OrderDetails orderDetails : list){
+            details = orderDetails;
+        }
+        if (details != null) {
+            Objects.requireNonNull(details).setOrder(orders);
+        }
         clearFields();
         generateId();
         Optional<ButtonType> option =  new Alert(Alert.AlertType.CONFIRMATION,"Order has been placed successfully! Do you want to print bill?",ButtonType.YES,ButtonType.NO).showAndWait();
@@ -325,27 +354,30 @@ public class OrderController {
 
     @FXML
     void RemoveOrder(ActionEvent event) {
-        Session session = HibernateUtilOrder.getSession();
-        Transaction transaction = session.beginTransaction();
-        System.out.println();
-        Orders orders = session.find(Orders.class, orderID.getText());
-        String date = orders.getDate();
-        session.delete(orders);
-        transaction.commit();
-        session.close();
+        String date = LocalDate.now().toString();
         Session sess = HibernateUtilOrderDetails.getSession();
         String string = "FROM OrderDetails WHERE date = '"+date+"'";
         Query query = sess.createQuery(string);
         List<OrderDetails> list = query.list();
         for (OrderDetails orderDetails : list){
-            Transaction trans = sess.beginTransaction();
-            sess.delete(orderDetails);
-            trans.commit();
+            if (orderDetails!=null){
+                Transaction trans = sess.beginTransaction();
+                sess.delete(orderDetails);
+                trans.commit();
+            }
         }
         sess.close();
-        generateId();
-        clearFields();
-        loadTable(LocalDate.now().toString());
+        Session session = HibernateUtilOrder.getSession();
+        Transaction transaction = session.beginTransaction();
+        Orders orders = session.find(Orders.class, orderID.getText());
+        if (orders!=null){
+            session.delete(orders);
+            transaction.commit();
+            session.close();
+            generateId();
+            clearFields();
+            loadTable(orders.getDate());
+        }
         new Alert(Alert.AlertType.INFORMATION,"Order has been deleted successfully!").show();
     }
 
@@ -532,7 +564,7 @@ public class OrderController {
             List<Orders> list = query.list();
             for(Orders orders : list){
                 orderID.setText(orders.getOrderId());
-                employerComboBox.setValue(orders.getEmployerId());
+                employerComboBox.setValue(orders.getEmployer().getId());
                 setEmployerName(employerComboBox.getValue());
                 customerNametxt.setText(orders.getCustName());
                 customerContacttxt.setText(orders.getCustContact());
@@ -562,9 +594,10 @@ public class OrderController {
 
     private void setItemsData(String newValue) {
         Session session = HibernateUtilItem.getSession();
-        String strQry = "FROM Items WHERE supplierID = '"+newValue+"'";
-        Query query = session.createQuery(strQry);
-        List <Items> list = query.list();
+        String hql = "FROM Items WHERE supplier.id = :supplierId";
+        Query query = session.createQuery(hql);
+        query.setParameter("supplierId", newValue);
+        List<Items> list = query.list();
         for (Items items : list){
             itemCodetxt.setText(items.getCode());
             Descriptiontxt.setText(items.getDescription());

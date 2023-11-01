@@ -4,10 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
@@ -16,7 +12,6 @@ import javax.persistence.Id;
 @Setter
 @ToString
 public class EmployersTM extends RecursiveTreeObject<EmployersTM> {
-    @Id
     private String id;
     private String title;
     private String name;

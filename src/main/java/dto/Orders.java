@@ -1,10 +1,8 @@
 package dto;
 
-
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -21,5 +19,8 @@ public class Orders {
     private String custName;
     private String custContact;
     private String custEmail;
-    private String employerId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Employers employer;
 }

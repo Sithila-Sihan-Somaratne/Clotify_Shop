@@ -2,6 +2,7 @@ package util;
 
 
 import dto.Items;
+import dto.Suppliers;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -20,6 +21,7 @@ public class HibernateUtilItem {
 
         Metadata metadata = new MetadataSources(standardRegistry)
                 .addAnnotatedClass(Items.class)
+                .addAnnotatedClass(Suppliers.class)
                 .getMetadataBuilder()
                 .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
                 .build();

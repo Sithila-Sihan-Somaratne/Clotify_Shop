@@ -130,7 +130,10 @@ public class ItemController {
         if (typeComboBox.getValue() != null && sizeComboBox.getValue() != null && supplierComboBox.getValue() != null){
             if (Objects.equals(sizeComboBox.getValue(), "None") && !Objects.equals(sizeTxt.getText(), "")){
                 if (!areEmpty) {
-                    Items item = new Items(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(Qtytxt.getText()), Double.parseDouble(buyingPricetxt.getText()), Double.parseDouble(sellingPricetxt.getText()), typeComboBox.getValue(), sizeTxt.getText(), Double.parseDouble(profitLabel.getText()), supplierComboBox.getValue());
+                    Session supSession = HibernateUtilSupplier.getSession();
+                    Suppliers suppliers = supSession.find(Suppliers.class, supplierComboBox.getValue());
+                    supSession.close();
+                    Items item = new Items(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(Qtytxt.getText()), Double.parseDouble(buyingPricetxt.getText()), Double.parseDouble(sellingPricetxt.getText()), typeComboBox.getValue(), sizeTxt.getText(), Double.parseDouble(profitLabel.getText()), suppliers);
                     Session session = HibernateUtilItem.getSession();
                     Transaction transaction = session.beginTransaction();
                     session.save(item);
@@ -143,7 +146,10 @@ public class ItemController {
                 }
             }else if(!Objects.equals(sizeComboBox.getValue(), "None") && Objects.equals(sizeTxt.getText(), "")){
                 if (!areEmpty) {
-                    Items item = new Items(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(Qtytxt.getText()), Double.parseDouble(buyingPricetxt.getText()), Double.parseDouble(sellingPricetxt.getText()), typeComboBox.getValue(), sizeComboBox.getValue(), Double.parseDouble(profitLabel.getText()), supplierComboBox.getValue());
+                    Session supSession = HibernateUtilSupplier.getSession();
+                    Suppliers suppliers = supSession.find(Suppliers.class, supplierComboBox.getValue());
+                    supSession.close();
+                    Items item = new Items(itemCodetxt.getText(), Descriptiontxt.getText(), Integer.parseInt(Qtytxt.getText()), Double.parseDouble(buyingPricetxt.getText()), Double.parseDouble(sellingPricetxt.getText()), typeComboBox.getValue(), sizeComboBox.getValue(), Double.parseDouble(profitLabel.getText()), suppliers);
                     Session session = HibernateUtilItem.getSession();
                     Transaction transaction = session.beginTransaction();
                     session.save(item);
@@ -182,7 +188,7 @@ public class ItemController {
                         items.getType(),
                         items.getSize(),
                         items.getProfit(),
-                        items.getSupplierID(),
+                        items.getSupplier().getId(),
                         btn
                 ));
             }
@@ -253,8 +259,15 @@ public class ItemController {
         item.setSellingPrice(Double.parseDouble(sellingPricetxt.getText()));
         item.setProfit(Double.parseDouble(profitLabel.getText()));
         item.setType(typeComboBox.getValue());
-        item.setSize(sizeComboBox.getValue());
-        item.setSupplierID(supplierComboBox.getValue());
+        if (Objects.equals(sizeComboBox.getValue(), "None") && !Objects.equals(sizeTxt.getText(), "")){
+            item.setSize(sizeTxt.getText());
+        } else if (!Objects.equals(sizeComboBox.getValue(), "None") && Objects.equals(sizeTxt.getText(), "")) {
+            item.setSize(sizeComboBox.getValue());
+        }
+        Session supSession = HibernateUtilSupplier.getSession();
+        Suppliers suppliers = supSession.find(Suppliers.class, supplierComboBox.getValue());
+        supSession.close();
+        item.setSupplier(suppliers);
         Transaction transaction = session.beginTransaction();
         session.save(item);
         transaction.commit();

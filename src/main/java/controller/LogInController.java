@@ -73,14 +73,18 @@ public class LogInController {
                             try {
                                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageAdmin.fxml")))));
                                 HomePageAdmin.user = user;
-                            } catch (Exception ignoreException) {}
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
 
                         }else{
                             stage.setTitle("Home Window (Default)");
                             try {
                                 stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/HomePageDefault.fxml")))));
                                 HomePageDefault.user = user;
-                            } catch (Exception ignoreException) {}
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                         stage.show();
                         stage.setResizable(false);
@@ -92,6 +96,7 @@ public class LogInController {
                 }
             }catch(Exception ex){
                 new Alert(Alert.AlertType.WARNING,"Username is unknown. Please try again!").show();
+                throw new RuntimeException(ex);
             }
         }
     }

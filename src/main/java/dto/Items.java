@@ -1,10 +1,10 @@
+
 package dto;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -24,5 +24,8 @@ public class Items extends RecursiveTreeObject<Items> {
     private String type;
     private String size;
     private double profit;
-    private String supplierID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Suppliers supplier;
 }
