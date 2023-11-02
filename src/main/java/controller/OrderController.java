@@ -23,6 +23,7 @@ import util.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -331,17 +332,18 @@ public class OrderController {
         sess.save(orders);
         trans.commit();
         sess.close();
-        Session ordDetailsSession = HibernateUtilOrderDetails.getSession();
-        String s = "FROM OrderDetails WHERE date = '"+datePicker.getValue().toString()+"'";
-        Query query = ordDetailsSession.createQuery(s);
-        List<OrderDetails> list = query.list();
-        OrderDetails details = null;
-        for (OrderDetails orderDetails : list){
-            details = orderDetails;
+        Result result = getResult();
+        result.query.setParameter("date", LocalDateTime.now().toString());
+        List<OrderDetails> results = result.query.list();
+
+        for (OrderDetails orderDetails : results) {
+            orderDetails.setOrder(orders);
+            result.ordDetailsSession.getTransaction().begin();
+            result.ordDetailsSession.save(orderDetails);
+            result.ordDetailsSession.getTransaction().commit();
         }
-        if (details != null) {
-            Objects.requireNonNull(details).setOrder(orders);
-        }
+
+
         clearFields();
         generateId();
         Optional<ButtonType> option =  new Alert(Alert.AlertType.CONFIRMATION,"Order has been placed successfully! Do you want to print bill?",ButtonType.YES,ButtonType.NO).showAndWait();
@@ -349,6 +351,23 @@ public class OrderController {
             if (option.get() == ButtonType.YES){
                 System.out.println("Printing bill...");
             }
+        }
+    }
+
+    private static Result getResult() {
+        Session ordDetailsSession = HibernateUtilOrderDetails.getSession();
+        String hql = "FROM OrderDetails WHERE date = :date";
+        Query query = ordDetailsSession.createQuery(hql);
+        return new Result(ordDetailsSession, query);
+    }
+
+    private static class Result {
+        public final Session ordDetailsSession;
+        public final Query query;
+
+        public Result(Session ordDetailsSession, Query query) {
+            this.ordDetailsSession = ordDetailsSession;
+            this.query = query;
         }
     }
 

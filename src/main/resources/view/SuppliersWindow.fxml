@@ -40,7 +40,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="610.0" layoutY="248.0" onAction="#printSupplierBill" style="-fx-background-color: #3280c7;" text="Print" textFill="WHITE">
+      <JFXButton layoutX="610.0" layoutY="248.0" onAction="#printSupplierReport" style="-fx-background-color: #3280c7;" text="Print" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

@@ -129,7 +129,7 @@ public class SuppliersController {
     }
 
     @FXML
-    void printSupplierBill(ActionEvent event) {
+    void printSupplierReport(ActionEvent event) {
 
     }
 

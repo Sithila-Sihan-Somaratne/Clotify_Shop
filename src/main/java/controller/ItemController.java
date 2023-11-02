@@ -192,7 +192,7 @@ public class ItemController {
                         btn
                 ));
             }
-            TreeItem<ItemsTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+            TreeItem<ItemsTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
             itemTable.setRoot(treeItem);
             itemTable.setShowRoot(false);
 

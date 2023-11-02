@@ -53,7 +53,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="617.0" layoutY="235.0" onAction="#printEmployerReceipt" style="-fx-background-color: #e1af2e;" text="Print" textFill="WHITE">
+      <JFXButton layoutX="617.0" layoutY="235.0" onAction="#printEmployerReport" style="-fx-background-color: #e1af2e;" text="Print" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

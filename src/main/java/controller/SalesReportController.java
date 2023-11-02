@@ -198,15 +198,16 @@ public class SalesReportController {
                 double sales = 0;
                 LocalDate date = LocalDate.now();
                 int month = date.getMonthValue();
+                ArrayList<Double> salesList = new ArrayList<>();
                 for (Orders orders : list){
                     if (orders!=null){
                         ord = orders;
                         date = LocalDate.parse(orders.getDate());
+                        salesList.add(ord.getTotal());
                         sales = sales + ord.getTotal();
                     }
                 }
                 int sizeOfMonth = date.lengthOfMonth();
-                OrderDetails details = new OrderDetails();
                 if (Objects.equals(Objects.requireNonNull(ord).getDate(), LocalDate.now().toString())){
                     Session sess = HibernateUtilOrderDetails.getSession();
                     String str = "FROM OrderDetails";
@@ -229,7 +230,6 @@ public class SalesReportController {
                                         profit = profit + items.getProfit();
                                     }
                                 }
-                                details = orderDetails;
                             }
                         }
                     }
@@ -237,7 +237,6 @@ public class SalesReportController {
                 salesTxt.setText(String.valueOf(sales));
                 profitTxt.setText(String.valueOf(profit));
                 salesCountTxt.setText(String.valueOf(salesCount));
-                double finalSales = sales;
                 final CategoryAxis xAxis = new CategoryAxis();
                 xAxis.setAutoRanging(false);
 
@@ -267,16 +266,19 @@ public class SalesReportController {
 
                 XYChart.Series series = new XYChart.Series();
                 series.setName("Sales");
-                List<OrderDetails> orderDetailsList = Collections.singletonList(details);
-                for (OrderDetails detailsList : orderDetailsList) {
+                for (Orders ORDList : list) {
                     if (categories != null) {
                         for(int i = 1; i < categories.size()+1; i++){
-                            LocalDate localDate = LocalDate.parse(detailsList.getDate());
-                            int number = localDate.getDayOfMonth();
-                            if (i != number){
-                                series.getData().add(new XYChart.Data(i+"", 0));
-                            }else{
-                                series.getData().add(new XYChart.Data(number+"", finalSales));
+                            for (Double aDouble : salesList) {
+                                LocalDate localDate = LocalDate.parse(ORDList.getDate());
+                                int number = localDate.getDayOfMonth();
+                                if (i != number) {
+                                    series.getData().add(new XYChart.Data(i + "", 0));
+                                } else {
+                                    if (aDouble == ORDList.getTotal()) {
+                                        series.getData().add(new XYChart.Data(number + "", aDouble));
+                                    }
+                                }
                             }
                         }
                     }

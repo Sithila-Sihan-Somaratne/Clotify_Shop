@@ -25,6 +25,7 @@ import org.hibernate.query.Query;
 import util.HibernateUtilOrderDetails;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -203,14 +204,16 @@ public class HomePageDefault {
                 int numCount = 0;
                 while(numCount != count){
                     numCount++;
-                    if (Objects.equals(orderDetails.getType(), "Gents")){
-                        gents = orderDetails.getQty();
-                    } else if (Objects.equals(orderDetails.getType(), "Ladies")) {
-                        ladies = orderDetails.getQty();
-                    } else if (Objects.equals(orderDetails.getType(), "Kids")) {
-                        kids = orderDetails.getQty();
-                    } else if (Objects.equals(orderDetails.getType(), "Others")) {
-                        others = orderDetails.getQty();
+                    if (Objects.equals(orderDetails.getDate(), LocalDate.now().toString())){
+                        if (Objects.equals(orderDetails.getType(), "Gents")){
+                            gents = orderDetails.getQty();
+                        } else if (Objects.equals(orderDetails.getType(), "Ladies")) {
+                            ladies = orderDetails.getQty();
+                        } else if (Objects.equals(orderDetails.getType(), "Kids")) {
+                            kids = orderDetails.getQty();
+                        } else if (Objects.equals(orderDetails.getType(), "Others")) {
+                            others = orderDetails.getQty();
+                        }
                     }
                 }
                 totQty = gents+ladies+kids+others;
