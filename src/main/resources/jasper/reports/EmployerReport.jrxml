@@ -65,22 +65,42 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="100" splitType="Stretch">
+		<band height="107" splitType="Stretch">
 			<staticText>
-				<reportElement x="140" y="10" width="380" height="40" uuid="43513ac7-92db-4fb2-bc35-1a412c76c70c"/>
+				<reportElement x="-10" y="60" width="380" height="30" uuid="43513ac7-92db-4fb2-bc35-1a412c76c70c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Black" size="24" isBold="true"/>
+					<font fontName="Arial Black" size="20" isBold="true"/>
 				</textElement>
 				<text><![CDATA[EMPLOYERS REPORT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="250" y="50" width="160" height="40" uuid="23440cb2-f43c-4200-ba6d-b0f6f47fdd58">
+				<reportElement x="490" y="55" width="160" height="40" uuid="23440cb2-f43c-4200-ba6d-b0f6f47fdd58">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[223 A 1/2, Galle Road, Panadura]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-20" y="101" width="700" height="1" uuid="209ea33d-cc21-4a61-ba6b-49200fd1ec44"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="157" y="-20" width="345" height="70" forecolor="#FFFFFF" backcolor="#FF7105" uuid="ddc38a69-b52b-443c-b0b4-15b564c3d3bf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clotify Shop]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="-20" y="-20" width="700" height="70" backcolor="#FF7105" uuid="718eb1e0-d5fe-48c2-816e-a99bdb467ccb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="209" y="-20" width="240" height="70" forecolor="#FFFFFF" backcolor="#FF7105" uuid="79847c43-8bc4-469b-ac48-cca29de3c7dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clotify Shop]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -246,7 +266,7 @@
 		<band height="5" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch">
+		<band height="43" splitType="Stretch">
 			<staticText>
 				<reportElement x="200" y="1" width="260" height="40" uuid="5ec054b8-c400-4da1-9b67-b94b409afecf">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -256,6 +276,9 @@
 				</textElement>
 				<text><![CDATA[Thank you for viewing the employers table.]]></text>
 			</staticText>
+			<rectangle>
+				<reportElement x="-20" y="42" width="700" height="1" uuid="42c6a101-fb62-4d7a-8494-e262b0f15727"/>
+			</rectangle>
 		</band>
 	</summary>
 </jasperReport>

@@ -37,7 +37,7 @@
       <Label layoutX="465.0" layoutY="188.0" prefHeight="17.0" prefWidth="54.0" text="Profit *:" />
       <Label layoutX="466.0" layoutY="123.0" prefHeight="17.0" prefWidth="77.0" text="Type *:" />
       <Label layoutX="465.0" layoutY="157.0" prefHeight="17.0" prefWidth="54.0" text="Size*:" />
-      <JFXButton layoutX="426.0" layoutY="274.0" onAction="#printItemBill" style="-fx-background-color: #c82ee1;" text="Print" textFill="WHITE">
+      <JFXButton layoutX="426.0" layoutY="274.0" onAction="#printItemReport" style="-fx-background-color: #c82ee1;" text="Print" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

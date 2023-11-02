@@ -198,12 +198,10 @@ public class SalesReportController {
                 double sales = 0;
                 LocalDate date = LocalDate.now();
                 int month = date.getMonthValue();
-                ArrayList<Double> salesList = new ArrayList<>();
                 for (Orders orders : list){
                     if (orders!=null){
                         ord = orders;
                         date = LocalDate.parse(orders.getDate());
-                        salesList.add(ord.getTotal());
                         sales = sales + ord.getTotal();
                     }
                 }
@@ -264,27 +262,26 @@ public class SalesReportController {
                 lineChart.setPrefHeight(chartPane.getPrefHeight());
                 chartPane.getChildren().add(lineChart);
 
+                Map<String, Double> salesTotals = new HashMap<>();
+                for (Orders ORDList : list) {
+                    LocalDate localDate = LocalDate.parse(ORDList.getDate());
+                    int number = localDate.getDayOfMonth();
+                    salesTotals.put(number + "", ORDList.getTotal());
+                }
+
                 XYChart.Series series = new XYChart.Series();
                 series.setName("Sales");
-                for (Orders ORDList : list) {
-                    if (categories != null) {
-                        for(int i = 1; i < categories.size()+1; i++){
-                            for (Double aDouble : salesList) {
-                                LocalDate localDate = LocalDate.parse(ORDList.getDate());
-                                int number = localDate.getDayOfMonth();
-                                if (i != number) {
-                                    series.getData().add(new XYChart.Data(i + "", 0));
-                                } else {
-                                    if (aDouble == ORDList.getTotal()) {
-                                        series.getData().add(new XYChart.Data(number + "", aDouble));
-                                    }
-                                }
-                            }
-                        }
+
+                if (categories != null) {
+                    for (int i = 1; i <= categories.size(); i++) {
+                        Double total = salesTotals.getOrDefault(i + "", 0.0);
+                        series.getData().add(new XYChart.Data(i + "", total));
                     }
                 }
+
                 lineChart.getData().clear();
                 lineChart.getData().add(series);
+
             }else if (Objects.equals(selectDayComboBox.getValue(), "This year")){
                 Session session = HibernateUtilOrder.getSession();
                 String string = "FROM Orders";
