@@ -314,6 +314,7 @@ public class OrderController {
         cashTxt.setText("0");
         Totaltxt.setText("0");
         Balancetxt.setText("0");
+        discountLabeltxt.setText("0");
         employerComboBox.setValue(null);
         supplierComboBox.setValue(null);
         cardComboBox.setSelected(false);
