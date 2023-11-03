@@ -16,7 +16,7 @@ public class SuppliersTM extends RecursiveTreeObject<SuppliersTM> {
     private String id;
     private String title;
     private String name;
-    private String company;
     private String contact;
+    private String company;
     private JFXButton option;
 }
