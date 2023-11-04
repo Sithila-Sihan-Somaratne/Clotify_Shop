@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import db.DBConnection;
 import dto.*;
 import dto.tm.OrderDetailTM;
 import javafx.collections.FXCollections;
@@ -16,6 +17,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -23,7 +32,6 @@ import util.*;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -279,9 +287,11 @@ public class OrderController {
                     List<OrderDetails> list = query.list();
                     for (OrderDetails details : list){
                         session.delete(details);
-                        transaction.commit();
                     }
+                    transaction.commit();
                     session.close();
+                    Totaltxt.setText(String.valueOf(Double.parseDouble(Totaltxt.getText())-orderDetails.getAmount()));
+                    Discounttxt.setText(String.valueOf(Double.parseDouble(Discounttxt.getText())-orderDetails.getDiscount()));
                     new Alert(Alert.AlertType.INFORMATION,"Item has been deleted successfully from cart!").show();
                     loadTable(datePicker.getValue().toString());
                 }
@@ -333,43 +343,51 @@ public class OrderController {
         sess.save(orders);
         trans.commit();
         sess.close();
-        Result result = getResult();
-        result.query.setParameter("date", LocalDateTime.now().toString());
-        List<OrderDetails> results = result.query.list();
+        Session session = null;
+        Transaction tx = null;
+        try {
+            session = HibernateUtilOrderDetails.getSession();
+            tx = session.beginTransaction();
 
-        for (OrderDetails orderDetails : results) {
-            orderDetails.setOrder(orders);
-            result.ordDetailsSession.getTransaction().begin();
-            result.ordDetailsSession.save(orderDetails);
-            result.ordDetailsSession.getTransaction().commit();
+            String hqlUpdate = "update OrderDetails as od set od.order.orderId = :newOrderId where od.date = :date";
+            int updatedEntities = session.createQuery(hqlUpdate)
+                    .setParameter("newOrderId", orders.getOrderId())
+                    .setParameter("date", orders.getDate())
+                    .executeUpdate();
+
+
+            System.out.println(updatedEntities);
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx != null && tx.isActive()) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
         }
-
-
         clearFields();
         generateId();
         Optional<ButtonType> option =  new Alert(Alert.AlertType.CONFIRMATION,"Order has been placed successfully! Do you want to print bill?",ButtonType.YES,ButtonType.NO).showAndWait();
         if (option.isPresent()){
             if (option.get() == ButtonType.YES){
-                System.out.println("Printing bill...");
+                try {
+                    JasperDesign design = JRXmlLoader.load("src/main/resources/jasper/reports/OrderBill.jrxml");
+                    JRDesignQuery designQuery = getJrDesignQuery(orders);
+                    design.setQuery(designQuery);
+                    JasperReport jasperReport = JasperCompileManager.compileReport(design);
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
+                    JasperViewer.viewReport(jasperPrint, false);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
-    private static Result getResult() {
-        Session ordDetailsSession = HibernateUtilOrderDetails.getSession();
-        String hql = "FROM OrderDetails WHERE date = :date";
-        Query query = ordDetailsSession.createQuery(hql);
-        return new Result(ordDetailsSession, query);
-    }
-
-    private static class Result {
-        public final Session ordDetailsSession;
-        public final Query query;
-
-        public Result(Session ordDetailsSession, Query query) {
-            this.ordDetailsSession = ordDetailsSession;
-            this.query = query;
-        }
+    private static JRDesignQuery getJrDesignQuery(Orders orders) {
+        JRDesignQuery designQuery = new JRDesignQuery();
+        String string = "SELECT orders.orderId, items.description, orderDetails.itemCode, orders.date, SUM(orderDetails.qty), AVG(orderDetails.unitPrice), AVG(orderDetails.discount), TRUNCATE(SUM((orderDetails.unitPrice-orderDetails.unitPrice/100*orderDetails.discount)*orderDetails.qty),2) AS amount, AVG(orders.total), orders.custName, employers.name FROM orderDetails INNER JOIN orders ON orders.orderId=orderDetails.orderId INNER JOIN items ON items.code=orderDetails.itemCode INNER JOIN employers ON employers.id=orders.id WHERE orderDetails.orderId='"+ orders.getOrderId()+"' GROUP BY orders.orderId, items.description, orderDetails.itemCode, orders.date, orders.custName, employers.name";
+        designQuery.setText(string);
+        return designQuery;
     }
 
     @FXML
