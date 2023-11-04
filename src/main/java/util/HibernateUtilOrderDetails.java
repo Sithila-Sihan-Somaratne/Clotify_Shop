@@ -33,6 +33,12 @@ public class HibernateUtilOrderDetails {
     }
 
     public static Session getSession(){
-        return sessionFactory.openSession();
+        try {
+            return sessionFactory.openSession();
+        } catch (Exception he) {
+            System.err.println("Error opening session. " + he.getMessage());
+            throw he;
+        }
     }
+
 }

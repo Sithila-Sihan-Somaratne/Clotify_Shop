@@ -8,6 +8,7 @@ import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.*;
 
+import db.DBConnection;
 import dto.Items;
 import dto.OrderDetails;
 import dto.Orders;
@@ -25,6 +26,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import util.HibernateUtilItem;
@@ -74,17 +82,38 @@ public class SalesReportController {
 
     @FXML
     void getAnnualReport(ActionEvent event) {
-
+        try {
+            JasperDesign design = JRXmlLoader.load("src/main/resources/jasper/reports/SalesReportThisYear.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(design);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void getDailyReport(ActionEvent event) {
-
+        try {
+            JasperDesign design = JRXmlLoader.load("src/main/resources/jasper/reports/SalesReportToday.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(design);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void getMonthlyReport(ActionEvent event) {
-
+        try {
+            JasperDesign design = JRXmlLoader.load("src/main/resources/jasper/reports/SalesReportThisMonth.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(design);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -105,7 +134,7 @@ public class SalesReportController {
         selectDayComboBox.getSelectionModel().selectedItemProperty().addListener((observableValue, stringSingleSelectionModel, t1) -> {
             if (Objects.equals(selectDayComboBox.getValue(), "Today")){
                 Session session = HibernateUtilOrder.getSession();
-                String string = "FROM Orders";
+                String string = "FROM Orders WHERE date_format(date, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')";
                 Query query = session.createQuery(string);
                 List<Orders> list = query.list();
                 session.close();
@@ -188,7 +217,7 @@ public class SalesReportController {
                 lineChart.getData().add(series);
             }else if (Objects.equals(selectDayComboBox.getValue(), "This month")){
                 Session session = HibernateUtilOrder.getSession();
-                String string = "FROM Orders";
+                String string = "FROM Orders WHERE date_format(date, '%Y-%m') = date_format(now(), '%Y-%m')";
                 Query query = session.createQuery(string);
                 List<Orders> list = query.list();
                 session.close();
@@ -208,7 +237,7 @@ public class SalesReportController {
                 int sizeOfMonth = date.lengthOfMonth();
                 if (Objects.equals(Objects.requireNonNull(ord).getDate(), LocalDate.now().toString())){
                     Session sess = HibernateUtilOrderDetails.getSession();
-                    String str = "FROM OrderDetails";
+                    String str = "FROM OrderDetails WHERE date_format(date, '%Y-%m') = date_format(now(), '%Y-%m')";
                     Query qry = sess.createQuery(str);
                     List<OrderDetails> lst = qry.list();
                     sess.close();
@@ -284,7 +313,7 @@ public class SalesReportController {
 
             }else if (Objects.equals(selectDayComboBox.getValue(), "This year")){
                 Session session = HibernateUtilOrder.getSession();
-                String string = "FROM Orders";
+                String string = "FROM Orders WHERE date_format(date, '%Y') = date_format(now(), '%Y')";
                 Query query = session.createQuery(string);
                 List<Orders> list = query.list();
                 session.close();
@@ -304,7 +333,7 @@ public class SalesReportController {
                 OrderDetails details = new OrderDetails();
                 if (Objects.equals(Objects.requireNonNull(ord).getDate(), LocalDate.now().toString())){
                     Session sess = HibernateUtilOrderDetails.getSession();
-                    String str = "FROM OrderDetails";
+                    String str = "SELECT * FROM OrderDetails WHERE date_format(date, '%Y') = date_format(now(), '%Y')";
                     Query qry = sess.createQuery(str);
                     List<OrderDetails> lst = qry.list();
                     sess.close();
@@ -354,14 +383,16 @@ public class SalesReportController {
                 series.setName("Sales");
                 List<OrderDetails> orderDetailsList = Collections.singletonList(details);
                 for (OrderDetails detailsList : orderDetailsList) {
-                    for (String category : categories) {
-                        LocalDate localDate = LocalDate.parse(detailsList.getDate());
-                        Month month = localDate.getMonth();
-                        monthName = month.getDisplayName(TextStyle.SHORT, Locale.US);
-                        if (!Objects.equals(category, monthName)) {
-                            series.getData().add(new XYChart.Data(category, 0));
-                        } else {
-                            series.getData().add(new XYChart.Data(monthName, finalSales));
+                    if(detailsList != null){
+                        for (String category : categories) {
+                            LocalDate localDate = LocalDate.parse(detailsList.getDate());
+                            Month month = localDate.getMonth();
+                            monthName = month.getDisplayName(TextStyle.SHORT, Locale.US);
+                            if (!Objects.equals(category, monthName)) {
+                                series.getData().add(new XYChart.Data(category, 0));
+                            } else {
+                                series.getData().add(new XYChart.Data(monthName, finalSales));
+                            }
                         }
                     }
                 }
