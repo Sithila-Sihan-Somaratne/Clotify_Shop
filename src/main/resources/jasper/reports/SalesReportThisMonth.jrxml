@@ -7,7 +7,7 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="632"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="354"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT orderId, date, total FROM orders  WHERE date_format(date, '%Y-%m-%d') = date_format(now(), '%Y-%m-%d')]]>
+		<![CDATA[SELECT orderId, date, total FROM orders  WHERE date_format(date, '%Y-%m') = date_format(now(), '%Y-%m')]]>
 	</queryString>
 	<field name="orderId">
 		<property name="com.jaspersoft.studio.field.name" value="orderId"/>
