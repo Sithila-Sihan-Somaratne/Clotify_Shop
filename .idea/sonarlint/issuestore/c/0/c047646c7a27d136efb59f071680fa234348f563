@@ -1,0 +1,67 @@
+
+a	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112¬"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112ü"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112×"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112Ş"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112ë"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112î"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+K
+java:S3740Ô"/Provide the parametrized type for this generic.(»†“Àûÿÿÿÿ
+K
+java:S3740ä"/Provide the parametrized type for this generic.(»†“Àûÿÿÿÿ
+K
+java:S3740ô"/Provide the parametrized type for this generic.(ó·¥üÿÿÿÿ
+K
+java:S3740"/Provide the parametrized type for this generic.(¬œ‘âşÿÿÿÿ
+K
+java:S3740"/Provide the parametrized type for this generic.(»†“Àûÿÿÿÿ
+F
+java:S3740ı"/Provide the parametrized type for this generic.(ó˜¬Ü
+E
+java:S3740„"/Provide the parametrized type for this generic.(õ‘Ø
+K
+java:S3740Ù"/Provide the parametrized type for this generic.(ÏˆË‰øÿÿÿÿ
+K
+java:S3740ü"/Provide the parametrized type for this generic.(¬œ‘âşÿÿÿÿ
+K
+java:S3740"/Provide the parametrized type for this generic.(ğ‚ùÊüÿÿÿÿ
+x
+java:S1192Ó"aDefine a constant instead of duplicating this literal "FROM OrderDetails WHERE date = '" 4 times.(¶¡˜Š
+F
+java:S1066ó"/Merge this if statement with the enclosing one.(­ù¾“
+f	java:S117ƒ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Şœ8
+f	java:S117„"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õ‘Ø
+g	java:S117¼"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆÙƒê
+g
+java:S1104›"PMake user a static final constant or non-public and provide accessors if needed.(ôŠÙÊ
+A
+java:S1444›"*Make this "public static user" field final(ôŠÙÊ
+n	java:S1163"TRename this field "AmountCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şÖ½ÿÿÿÿÿ
+o	java:S1166"URename this field "Balancetxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ùª„šøÿÿÿÿ
+g	java:S1169"RRename this field "DateCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(áÖ
+n	java:S116<"YRename this field "DescriptionCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÄÍ²î
+n	java:S116?"YRename this field "Descriptiontxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åïÑ¡
+k	java:S116B"VRename this field "DiscountCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”–
+p	java:S116E"VRename this field "Discounttxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åä×·ıÿÿÿÿ
+p	java:S116H"VRename this field "ItemCodeCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€û¹´úÿÿÿÿ
+i	java:S116N"TRename this field "Profittxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò“˜Õ
+k	java:S116Q"QRename this field "QtyCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­æ«Êùÿÿÿÿ
+l	java:S116T"WRename this field "QtyOnhandtxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿Ê©‹
+e	java:S116W"QRename this field "Qtytxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹èÒK
+l	java:S116Z"RRename this field "SizeCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨¹˜×øÿÿÿÿ
+l	java:S116]"RRename this field "Sizetxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ŞÃÚüÿÿÿÿ
+m	java:S116`"SRename this field "Totaltxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚£¼·ùÿÿÿÿ
+l	java:S116c"RRename this field "TypeCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º‰ìşşÿÿÿÿ
+l	java:S116f"RRename this field "Typetxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Èª˜µıÿÿÿÿ
+l	java:S116i"WRename this field "UnitPriceCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—¡¨ò
+d	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Œ‹êñ
+i
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(Œ‹êñ
+i	java:S100³"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™‚óùÿÿÿÿÿ
+i	java:S100Ğ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™Üï÷ûÿÿÿÿ
+F	java:S106ç"+Replace this use of System.out by a logger.(Ó¥ìµûÿÿÿÿ
+i	java:S100Š"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”‹¤îşÿÿÿÿ
+c	java:S100§"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°À¿c
+n
+java:S3776ğ"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(÷‹¾†ÿÿÿÿÿ

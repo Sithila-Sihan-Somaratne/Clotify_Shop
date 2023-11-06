@@ -158,22 +158,26 @@ public class OrderDetailController {
 
         orderIDtxt.textProperty().addListener((observableValue, oldValue, newValue) -> orderTable.setPredicate(orderDetailsTMTreeItem -> orderDetailsTMTreeItem.getValue().getOrderId().contains(newValue)));
         orderIDtxt.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            Session session = HibernateUtilOrder.getSession();
-            String string = "FROM Orders";
-            Query query = session.createQuery(string);
-            ArrayList<Orders> list = (ArrayList<Orders>) query.list();
-            String date;
-            for (Orders orders : list){
-                if (Objects.equals(orders.getOrderId(), orderIDtxt.getText())){
-                    date = orders.getDate();
-                    String finalDate = date;
-                    orderDetailsTable.setPredicate(ordersTMTreeItem -> ordersTMTreeItem.getValue().getDate().contains(finalDate));
-                    break;
-                }else{
-                    orderDetailsTable.setPredicate(null);
+            if(!orderIDtxt.getText().isEmpty()){
+                Session session = HibernateUtilOrder.getSession();
+                String string = "FROM Orders";
+                Query query = session.createQuery(string);
+                ArrayList<Orders> list = (ArrayList<Orders>) query.list();
+                String date;
+                for (Orders orders : list){
+                    if (Objects.equals(orders.getOrderId(), orderIDtxt.getText())){
+                        date = orders.getDate();
+                        String finalDate = date;
+                        orderDetailsTable.setPredicate(ordersTMTreeItem -> ordersTMTreeItem.getValue().getDate().contains(finalDate));
+                        break;
+                    }else{
+                        orderDetailsTable.setPredicate(null);
+                    }
                 }
+                session.close();
+            }else{
+                orderDetailsTable.setPredicate(null);
             }
-            session.close();
         });
 
     }
@@ -205,7 +209,7 @@ public class OrderDetailController {
                     ));
                 }
             }
-            TreeItem<OrdersTM> treeItem = new RecursiveTreeItem<>(tmList1, RecursiveTreeObject::getChildren); //Error comes here.
+            TreeItem<OrdersTM> treeItem = new RecursiveTreeItem<>(tmList1, RecursiveTreeObject::getChildren);
             orderTable.setRoot(treeItem);
             orderTable.setShowRoot(false);
         } catch (Exception e) {

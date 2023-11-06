@@ -1,0 +1,54 @@
+
+`	java:S112N"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+`	java:S112]"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+`	java:S112i"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+`	java:S112u"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+E
+java:S3740F"/Provide the parametrized type for this generic.(Ü…è—
+K
+java:S3740‹"/Provide the parametrized type for this generic.(İ”ÕÙùÿÿÿÿ
+K
+java:S3740’"/Provide the parametrized type for this generic.(ÏˆË‰øÿÿÿÿ
+K
+java:S3740¦"/Provide the parametrized type for this generic.(Ê§Çüÿÿÿÿ
+K
+java:S3740®"/Provide the parametrized type for this generic.(¸çÖÁıÿÿÿÿ
+F
+java:S3740Ö"/Provide the parametrized type for this generic.(õë–ó
+F
+java:S3740Ö"/Provide the parametrized type for this generic.(õë–ó
+K
+java:S3740Ø"/Provide the parametrized type for this generic.(°Õ¨øÿÿÿÿ
+K
+java:S3740Ü"/Provide the parametrized type for this generic.(‘­íûÿÿÿÿ
+K
+java:S3740å"/Provide the parametrized type for this generic.(ÏˆË‰øÿÿÿÿ
+K
+java:S3740ù"/Provide the parametrized type for this generic.(Ê§Çüÿÿÿÿ
+K
+java:S3740„"/Provide the parametrized type for this generic.(¸çÖÁıÿÿÿÿ
+F
+java:S3740µ"/Provide the parametrized type for this generic.(õë–ó
+F
+java:S3740µ"/Provide the parametrized type for this generic.(õë–ó
+F
+java:S3740»"/Provide the parametrized type for this generic.(øİª
+K
+java:S3740Æ"/Provide the parametrized type for this generic.(ÏˆË‰øÿÿÿÿ
+K
+java:S3740İ"/Provide the parametrized type for this generic.(Ê§Çüÿÿÿÿ
+K
+java:S3740ê"/Provide the parametrized type for this generic.(¸çÖÁıÿÿÿÿ
+F
+java:S3740•"/Provide the parametrized type for this generic.(õë–ó
+F
+java:S3740•"/Provide the parametrized type for this generic.(õë–ó
+K
+java:S3740š"/Provide the parametrized type for this generic.(çëœƒıÿÿÿÿ
+b
+java:S1192×"FDefine a constant instead of duplicating this literal "Sales" 3 times.(•ç·àúÿÿÿÿ
+v
+java:S1192­"ZDefine a constant instead of duplicating this literal "FROM Items WHERE code = '" 3 times.(åôÉ³úÿÿÿÿ
+g	java:S117›"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üº†—
+n
+java:S3776z"SRefactor this method to reduce its Cognitive Complexity from 205 to the 15 allowed.(÷‹¾†ÿÿÿÿÿ

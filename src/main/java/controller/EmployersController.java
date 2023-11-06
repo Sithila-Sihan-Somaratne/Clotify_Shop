@@ -224,7 +224,7 @@ public class EmployersController {
                         btn
                 ));
             }
-            TreeItem<EmployersTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+            TreeItem<EmployersTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
             employerTable.setRoot(treeItem);
             employerTable.setShowRoot(false);
 

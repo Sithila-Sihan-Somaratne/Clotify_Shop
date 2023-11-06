@@ -261,7 +261,7 @@ public class OrderController {
                             btn
                     ));
                 }
-                TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+                TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
                 orderTable.setRoot(treeItem);
                 orderTable.setShowRoot(false);
             }

@@ -131,7 +131,6 @@ public class SalesReturnController {
     private void clearFields() {
         orderIDtxt.textProperty().removeListener(changeListener);
         orderIDtxt.setText("");
-        qtyText.setText("0");
         orderIDtxt.textProperty().addListener(changeListener);
     }
 
@@ -149,12 +148,6 @@ public class SalesReturnController {
         }else{
             new Alert(Alert.AlertType.WARNING, "Text Fields mustn't be empty!").show();
         }
-    }
-
-
-    @FXML
-    void updateReturn(ActionEvent event) {
-
     }
 
     @FXML
@@ -191,23 +184,27 @@ public class SalesReturnController {
                 return;
             }
 
-            Session session = HibernateUtilOrder.getSession();
-            String string = "FROM Orders";
-            Query query = session.createQuery(string);
-            ArrayList<Orders> list = (ArrayList<Orders>) query.list();
-            String date;
-            for (Orders orders : list){
-                if (Objects.equals(orders.getOrderId(), newValue)){
-                    date = orders.getDate();
-                    total = orders.getTotal();
-                    String finalDate = date;
-                    orderDetailsTable.setPredicate(ordersTMTreeItem -> ordersTMTreeItem.getValue().getDate().contains(finalDate));
-                    break;
-                }else{
-                    orderDetailsTable.setPredicate(null);
+            if(!orderIDtxt.getText().isEmpty()){
+                Session session = HibernateUtilOrder.getSession();
+                String string = "FROM Orders";
+                Query query = session.createQuery(string);
+                ArrayList<Orders> list = (ArrayList<Orders>) query.list();
+                String date;
+                for (Orders orders : list){
+                    if (Objects.equals(orders.getOrderId(), newValue)){
+                        date = orders.getDate();
+                        total = orders.getTotal();
+                        String finalDate = date;
+                        orderDetailsTable.setPredicate(ordersTMTreeItem -> ordersTMTreeItem.getValue().getDate().contains(finalDate));
+                        break;
+                    }else{
+                        orderDetailsTable.setPredicate(null);
+                    }
                 }
+                session.close();
+            }else{
+                orderDetailsTable.setPredicate(null);
             }
-            session.close();
         };
 
         orderIDtxt.textProperty().addListener(changeListener);
@@ -220,7 +217,7 @@ public class SalesReturnController {
                 int returnQty = Integer.parseInt(qtyText.getText());
                 refundTxt.setText(String.valueOf(total / qty * returnQty));
             }else{
-                new Alert(Alert.AlertType.WARNING,"PLease enter digits between 0 and 9.").show();
+                new Alert(Alert.AlertType.WARNING,"Please enter digits between 0 and 9.").show();
             }
         }));
     }
@@ -271,7 +268,7 @@ public class SalesReturnController {
                         btn
                 ));
             }
-            TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+            TreeItem<OrderDetailTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
             orderDetailsTable.setRoot(treeItem);
             orderDetailsTable.setShowRoot(false);
 

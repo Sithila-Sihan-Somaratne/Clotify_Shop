@@ -200,7 +200,7 @@ public class SuppliersController {
                         suppliers.getCompany(),
                         btn
                 ));
-                TreeItem<SuppliersTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren); //Error comes here.
+                TreeItem<SuppliersTM> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
                 supplierTable.setRoot(treeItem);
                 supplierTable.setShowRoot(false);
              }
@@ -293,7 +293,7 @@ public class SuppliersController {
             ));
         }
 
-        TreeItem<ItemsATFOC> trItm = new RecursiveTreeItem<>(TMList, RecursiveTreeObject::getChildren); //Error comes here.
+        TreeItem<ItemsATFOC> trItm = new RecursiveTreeItem<>(TMList, RecursiveTreeObject::getChildren);
         supplierItemTable.setRoot(trItm);
         supplierItemTable.setShowRoot(false);
     }
