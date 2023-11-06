@@ -33,12 +33,7 @@
       <JFXTextField fx:id="orderIDtxt" layoutX="732.0" layoutY="27.0" promptText="Order ID" />
       <Label layoutX="23.0" layoutY="93.0" text="Qty * : " />
       <JFXTextField fx:id="qtyText" layoutX="87.0" layoutY="89.0" promptText="Qty" />
-      <JFXButton layoutX="684.0" layoutY="82.0" onAction="#clear" style="-fx-background-color: #38af52;" text="Clear" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </JFXButton>
-      <JFXButton layoutX="775.0" layoutY="82.0" onAction="#updateReturn" style="-fx-background-color: #3280c7;" text="Update" textFill="WHITE">
+      <JFXButton layoutX="760.0" layoutY="82.0" onAction="#clear" style="-fx-background-color: #38af52;" text="Clear" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
