@@ -8,7 +8,7 @@ import javax.mail.internet.*;
 import java.util.*;
 
 public class Email {
-    public static User user = new User();
+    public final User user = new User();
     public void sendOTPByMail(int randomNumber) {
         String from = "sithi.ss23@gmail.com";
         String to = user.getEmail();
@@ -23,6 +23,7 @@ public class Email {
         props.put("mail.smtp.password", "sithila2010");
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(from, password);
                     }
@@ -57,6 +58,7 @@ public class Email {
         props.put("mail.smtp.password", "sithila2010");
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(from, password);
                     }

@@ -1,0 +1,19 @@
+
+a	java:S112Œ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112“"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112¢"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112è"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+a	java:S112ÿ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+K
+java:S3740Ï"/Provide the parametrized type for this generic.(ˆçñ”üÿÿÿÿ
+K
+java:S3740¼"/Provide the parametrized type for this generic.(ğ‚ùÊüÿÿÿÿ
+f
+java:S1104o"PMake user a static final constant or non-public and provide accessors if needed.(ôŠÙÊ
+@
+java:S1444o"*Make this "public static user" field final(ôŠÙÊ
+l	java:S1161"RRename this field "BBANCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ü“Úúÿÿÿÿ
+k	java:S1164"QRename this field "DOBCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿ§Á€úÿÿÿÿ
+k	java:S1167"QRename this field "NICCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À¶’øÿÿÿÿ
+i	java:S116:"TRename this field "OptionCol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³·Á±
+h	java:S100r"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™‚óùÿÿÿÿÿ

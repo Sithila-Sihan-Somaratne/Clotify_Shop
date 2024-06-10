@@ -1,0 +1,9 @@
+
+`	java:S112q"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+j	java:S116""URename this field "ForgotPane" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€áÕ±
+u	java:S116%"[Rename this field "ConfirmNewPwdTxt" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(é‚Ú—þÿÿÿÿ
+Q
+java:S2696<"6Make the enclosing method "static" or remove this set.(ê²Òóøÿÿÿÿ
+>	java:S108C")Either remove or fill this block of code.(¨šþµ
+3
+java:S2119x"Save and re-use this "Random".(¼ÝÅf
